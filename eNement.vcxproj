@@ -87,12 +87,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include=".clang-tidy" />
     <None Include=".gitignore" />
     <None Include="openal32.dll" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EntryPoint.cpp" />
+    <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ResourceManager\ResourceManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

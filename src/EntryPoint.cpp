@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "ResourceManager\\ResourceManager.h"
+
 //SFML:
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -9,11 +11,9 @@
 
 int main() {
 	sf::RenderWindow window;
-
-	sf::Sound sound;
-
 	sf::VideoMode mode = { 1024, 576, 32 };
 	window.create(mode, "eNement", sf::Style::Default);
+
 
 	std::cin.get();
 }
