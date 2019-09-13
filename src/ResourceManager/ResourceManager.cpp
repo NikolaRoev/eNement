@@ -1,6 +1,11 @@
 #include "ResourceManager.h"
 
+#include <string>
 #include <utility>
+#include <unordered_map>
+
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 
 
 
