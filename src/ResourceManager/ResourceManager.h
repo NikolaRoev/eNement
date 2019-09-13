@@ -11,20 +11,25 @@
 //====================================================================================================================================
 //====================================================================================================================================
 
-class ResourceManager {
-private:
-	std::unordered_map<std::string, sf::Texture> textures;
-	std::unordered_map<std::string, sf::Font> fonts;
-	std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
-public:
-	void add_texture(const std::string& file_path, const std::string& texture_name);
-	void add_font(const std::string& file_path, const std::string& font_name);
-	void add_sound(const std::string& file_path, const std::string& sound_buffer_name);
+namespace en {
 
-	const sf::Texture& get_texture(const std::string& texture_name);
-	const sf::Font& get_font(const std::string& font_name);
-	const sf::SoundBuffer& get_sound_buffer(const std::string& sound_buffer_name);
-};
+	class ResourceManager {
+	private:
+		std::unordered_map<std::string, sf::Texture> textures;
+		std::unordered_map<std::string, sf::Font> fonts;
+		std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
+
+	public:
+		void add_texture(const std::string& file_path, const std::string& texture_name);
+		void add_font(const std::string& file_path, const std::string& font_name);
+		void add_sound(const std::string& file_path, const std::string& sound_buffer_name);
+
+		const sf::Texture& get_texture(const std::string& texture_name);
+		const sf::Font& get_font(const std::string& font_name);
+		const sf::SoundBuffer& get_sound_buffer(const std::string& sound_buffer_name);
+	};
+
+}
 
 //====================================================================================================================================
 //====================================================================================================================================
