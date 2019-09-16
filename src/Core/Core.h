@@ -24,22 +24,22 @@ namespace en {
 	//====================================================================================================================================
 
 	struct Settings {
-		unsigned int width{ 0 };
-		unsigned int height{ 0 };
-		uint32_t style{ 0 };
-		unsigned int frames{ 0 };
+		unsigned int width{ 1024 };
+		unsigned int height{ 576 };
+		uint32_t style{ 7 };
+		unsigned int frames{ 30 };
 	};
 
 	//====================================================================================================================================
 
 	class Core {
 	private:
-		float native_width{ 1920 };
-		float native_height{ 1080 };
+		const float native_width{ 1920 };
+		const float native_height{ 1080 };
 
-		unsigned int window_width{ 0 };
-		unsigned int window_height{ 0 };
+		Settings settings;
 
+		void load_settings();
 
 		void set_delta_values();
 
@@ -48,13 +48,12 @@ namespace en {
 		sf::Event event{ sf::Event::MouseMoved };;
 		sf::Mouse mouse;
 
-		Settings settings;
-
 
 		void set_window();
 
-		void on_resize_event();
+		void save_settings();
 
+		void on_resize_event();
 	};
 }
 
