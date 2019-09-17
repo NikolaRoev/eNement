@@ -37,19 +37,19 @@ void en::ResourceManager::add_sound(const std::string& file_path, const std::str
 //====================================================================================================================================
 
 
-const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_name) {
+const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_name) const {
 	const sf::Texture& found_texture = textures.find(texture_name)->second;
 
 	return found_texture;
 }
 
-const sf::Font& en::ResourceManager::get_font(const std::string& font_name) {
+const sf::Font& en::ResourceManager::get_font(const std::string& font_name) const {
 	const sf::Font& found_font = fonts.find(font_name)->second;
 
 	return found_font;
 }
 
-const sf::SoundBuffer& en::ResourceManager::get_sound_buffer(const std::string& sound_buffer_name) {
+const sf::SoundBuffer& en::ResourceManager::get_sound_buffer(const std::string& sound_buffer_name) const {
 	const sf::SoundBuffer& found_sound_buffer = sound_buffers.find(sound_buffer_name)->second;
 
 	return found_sound_buffer;

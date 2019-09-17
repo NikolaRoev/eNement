@@ -27,9 +27,9 @@ namespace en {
 		void add_font(const std::string& file_path, const std::string& font_name);
 		void add_sound(const std::string& file_path, const std::string& sound_buffer_name);
 
-		const sf::Texture& get_texture(const std::string& texture_name);
-		const sf::Font& get_font(const std::string& font_name);
-		const sf::SoundBuffer& get_sound_buffer(const std::string& sound_buffer_name);
+		const sf::Texture& get_texture(const std::string& texture_name) const;
+		const sf::Font& get_font(const std::string& font_name) const;
+		const sf::SoundBuffer& get_sound_buffer(const std::string& sound_buffer_name) const;
 	};
 
 }

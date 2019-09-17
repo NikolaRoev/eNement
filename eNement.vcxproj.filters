@@ -19,6 +19,9 @@
     <None Include="README.md" />
     <None Include="openal32.dll" />
     <None Include=".clang-tidy" />
+    <None Include="settings.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EntryPoint.cpp">
