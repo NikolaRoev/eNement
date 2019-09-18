@@ -204,3 +204,84 @@ void en::TextButton::set_function(std::function<void()> _function) {
 }
 
 //====================================================================================================================================
+
+void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+	sprite.setTexture(texture);
+	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
+	sprite.scale(DELTA_X, DELTA_Y);
+
+	hl_sprite.setTexture(hl_texture);
+	hl_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
+	hl_sprite.scale(DELTA_X, DELTA_Y);
+
+	pressed_sprite.setTexture(pressed_texture);
+	pressed_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
+	pressed_sprite.scale(DELTA_X, DELTA_Y);
+
+	text.setFont(font);
+	text.setCharacterSize(text_size);
+	text.setFillColor(text_color);
+	text.setPosition(text_x * DELTA_X, text_y * DELTA_Y);
+	text.setString(_text);
+	text.scale(DELTA_X, DELTA_Y);
+}
+
+void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {
+	sf::FloatRect temp = sprite.getGlobalBounds();
+	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.scale(resize_delta_x, resize_delta_y);
+
+	temp = hl_sprite.getGlobalBounds();
+	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	hl_sprite.scale(resize_delta_x, resize_delta_y);
+
+	temp = pressed_sprite.getGlobalBounds();
+	pressed_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	pressed_sprite.scale(resize_delta_x, resize_delta_y);
+
+	temp = text.getGlobalBounds();
+	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	text.scale(resize_delta_x, resize_delta_y);
+}
+
+void en::ToggleButton::draw(sf::RenderWindow& window) {
+	if (!pressed) {
+		window.draw(sprite);
+	}
+	else {
+		window.draw(pressed_sprite);
+	}
+	window.draw(text);
+}
+
+void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+	if (!pressed) {
+		window.draw(sprite);
+	}
+	else {
+		window.draw(pressed_sprite);
+	}
+	window.draw(text);
+
+	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+				window.waitEvent(event);
+				if (event.type == sf::Event::MouseButtonReleased) {
+					pressed = !pressed;
+					function();
+				}
+				mouse_position = sf::Mouse::getPosition(window);
+				break;
+			}
+		}
+		window.draw(hl_sprite);
+	}
+}
+
+void en::ToggleButton::set_function(std::function<void()> _function) {
+	function = _function;
+}
+
+//====================================================================================================================================
