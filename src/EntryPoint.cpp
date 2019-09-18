@@ -1,12 +1,9 @@
-#include "Core/Core.h"
-//#include "Drawable/Drawable.h"
-//#include "ResourceManager/ResourceManager.h"
+#include "Game.h"
+
 
 
 int main() {
-	en::Core core;
-	core.set_window();
-
-
-	core.save_settings();
+	en::Game* game = new en::Game;
+	game->main_loop();
+	delete game;
 }

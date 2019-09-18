@@ -97,11 +97,13 @@
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Drawable\Drawable.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Drawable\Drawable.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\ResourceManager\ResourceManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
