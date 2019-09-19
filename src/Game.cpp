@@ -4,6 +4,7 @@
 #include "ResourceManager/ResourceManager.h"
 
 #include <vector>
+#include <memory>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -14,48 +15,54 @@
 
 //====================================================================================================================================
 
-void en::Game::main_menu_loop() {
-	ResourceManager* manager = new ResourceManager;
+std::vector<std::shared_ptr<en::Drawable>> en::Game::main_menu_set_drawables(std::unique_ptr<ResourceManager>& manager) {
 	manager->add_texture("assets/Main_Menu_Background.png", "Main Menu Background");
 	manager->add_texture("assets/New_Game_Button.png", "New Game Button");
 	manager->add_texture("assets/Load_Game_Button.png", "Load Game Button");
 	manager->add_texture("assets/Options_Button.png", "Options Button");
 	manager->add_texture("assets/Quit_Button.png", "Quit Button");
 	manager->add_sound_buffer("assets/TEST_CLICK.wav", "Test Sound");
-	
-	Drawable* main_menu_background = new Image;
+
+	std::shared_ptr<Drawable> main_menu_background = std::make_shared<Image>();
 	main_menu_background->setup(manager->get_texture("Main Menu Background"), 0, 0);
 
-	Drawable* main_menu_new_game = new Button;
+	std::shared_ptr<Drawable> main_menu_new_game = std::make_shared<Button>();
 	main_menu_new_game->setup(manager->get_texture("New Game Button"), manager->get_texture("Quit Button"), 400, 350);
 	main_menu_new_game->set_function([]() {
 		std::cout << "new game\n";
-	});
+		});
 	main_menu_new_game->set_sound(manager->get_sound_buffer("Test Sound"));
 
-	Drawable* main_menu_load_game = new Button;
+	std::shared_ptr<Drawable> main_menu_load_game = std::make_shared<Button>();
 	main_menu_load_game->setup(manager->get_texture("Load Game Button"), manager->get_texture("Load Game Button"), 400, 550);
 	main_menu_load_game->set_function([]() {
 		std::cout << "load game\n";
-	});
+		});
 	main_menu_load_game->set_sound(manager->get_sound_buffer("Test Sound"));
 
-	Drawable* main_menu_options = new Button;
+	std::shared_ptr<Drawable> main_menu_options = std::make_shared<Button>();
 	main_menu_options->setup(manager->get_texture("Options Button"), manager->get_texture("Options Button"), 400, 750);
 	main_menu_options->set_function([]() {
 		std::cout << "options\n";
-	});
+		});
 	main_menu_options->set_sound(manager->get_sound_buffer("Test Sound"));
 
-	Drawable* main_menu_quit = new Button;
+	std::shared_ptr<Drawable> main_menu_quit = std::make_shared<Button>();
 	main_menu_quit->setup(manager->get_texture("Quit Button"), manager->get_texture("Quit Button"), 400, 950);
 	main_menu_quit->set_function([&]() {
 		application_state = EXIT;
-	});
+		});
 	main_menu_quit->set_sound(manager->get_sound_buffer("Test Sound"));
 
 
-	std::vector<Drawable*> in_frame = { main_menu_background, main_menu_new_game, main_menu_load_game, main_menu_options, main_menu_quit };
+	return { main_menu_background, main_menu_new_game, main_menu_load_game, main_menu_options, main_menu_quit };
+}
+
+//====================================================================================================================================
+
+void en::Game::main_menu_loop() {
+	std::unique_ptr<ResourceManager> manager = std::make_unique<ResourceManager>();
+	std::vector<std::shared_ptr<Drawable>> in_frame = main_menu_set_drawables(manager);
 	
 	while (application_state == MAIN_MENU) {
 

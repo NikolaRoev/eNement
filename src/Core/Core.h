@@ -2,6 +2,7 @@
 #include "../Drawable/Drawable.h"
 
 #include <vector>
+#include <memory>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -62,7 +63,7 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event(const std::vector<Drawable*>& in_frame);
+		void on_resize_event(const std::vector<std::shared_ptr<Drawable>>& in_frame);
 	};
 }
 

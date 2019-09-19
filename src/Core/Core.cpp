@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ios>
 #include <vector>
+#include <memory>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -57,7 +58,7 @@ void en::Core::save_settings() {
 	os.close();
 }
 
-void en::Core::on_resize_event(const std::vector<Drawable*>& in_frame) {
+void en::Core::on_resize_event(const std::vector<std::shared_ptr<Drawable>>& in_frame) {
 	sf::Vector2u new_size = window.getSize();
 
 	sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));

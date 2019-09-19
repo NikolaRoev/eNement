@@ -3,7 +3,8 @@
 #include "Drawable/Drawable.h"
 #include "ResourceManager/ResourceManager.h"
 
-
+#include <vector>
+#include <memory>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -36,6 +37,10 @@ namespace en {
 		int application_state{ MAIN_MENU };
 
 		Core* core{ nullptr };
+
+		//====================================================================================================================================
+
+		std::vector<std::shared_ptr<en::Drawable>> main_menu_set_drawables(std::unique_ptr<ResourceManager>& manager);
 
 		//====================================================================================================================================
 
