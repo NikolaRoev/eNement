@@ -124,13 +124,11 @@ void en::Button::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mou
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+			if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 				window.waitEvent(event);
 				if (event.type == sf::Event::MouseButtonReleased) {
 					function();
 				}
-				mouse_position = sf::Mouse::getPosition(window);
-				break;
 			}
 		}
 		window.draw(hl_sprite);
@@ -186,13 +184,11 @@ void en::TextButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse&
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+			if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 				window.waitEvent(event);
 				if (event.type == sf::Event::MouseButtonReleased) {
 					function();
 				}
-				mouse_position = sf::Mouse::getPosition(window);
-				break;
 			}
 		}
 		window.draw(hl_sprite);
@@ -266,14 +262,12 @@ void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mous
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+			if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 				window.waitEvent(event);
 				if (event.type == sf::Event::MouseButtonReleased) {
 					pressed = !pressed;
 					function();
 				}
-				mouse_position = sf::Mouse::getPosition(window);
-				break;
 			}
 		}
 		window.draw(hl_sprite);

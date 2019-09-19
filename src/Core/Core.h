@@ -1,4 +1,6 @@
 #pragma once
+#include "../Drawable/Drawable.h"
+
 #include <vector>
 
 #include <SFML/Audio.hpp>
@@ -30,6 +32,8 @@ namespace en {
 		unsigned int height{ 576 };
 		uint32_t style{ 7 };
 		unsigned int frames{ 30 };
+
+		//TO DO: Add other settings, like volume. Don't forget to update the save settings function.
 	};
 
 	//====================================================================================================================================
@@ -41,7 +45,6 @@ namespace en {
 
 		Settings settings;
 
-		void load_settings();
 
 		void set_delta_values();
 
@@ -52,6 +55,8 @@ namespace en {
 
 
 		void set_window();
+
+		void load_settings();
 
 		void save_settings();
 

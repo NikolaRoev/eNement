@@ -18,15 +18,21 @@
 
 namespace en {
 
-	#define	EXIT 0
-	#define MAIN_MENU 1
-	#define NEW_GAME 2
-	#define LOAD_GAME 3
-	#define OPTIONS_MENU 4
-	#define GAME 5
+	//====================================================================================================================================
+
+	constexpr int EXIT = 0;
+	constexpr int MAIN_MENU = 1;
+	constexpr int NEW_GAME = 2;
+	constexpr int LOAD_GAME = 3;
+	constexpr int OPTIONS_MENU = 4;
+	constexpr int GAME = 5;
+
+	//====================================================================================================================================
 
 	class Game {
 	private:
+		
+
 		int application_state{ MAIN_MENU };
 
 		Core* core{ nullptr };

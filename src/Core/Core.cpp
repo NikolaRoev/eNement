@@ -14,19 +14,6 @@
 
 //====================================================================================================================================
 
-void en::Core::load_settings() {
-	std::ifstream is("settings.bin", std::ios::binary | std::ios::in);
-	
-	if (is.is_open()) {
-		is.read((char*)& settings.width, sizeof(unsigned int));
-		is.read((char*)& settings.height, sizeof(unsigned int));
-		is.read((char*)& settings.style, sizeof(uint32_t));
-		is.read((char*)& settings.frames, sizeof(unsigned int));
-	}
-
-	is.close();
-}
-
 void en::Core::set_delta_values() {
 	en::DELTA_X = 1 - (((native_width - static_cast<float>(settings.width)) / (native_width / 100.0f)) / 100.0f);
 	en::DELTA_Y = 1 - (((native_height - static_cast<float>(settings.height)) / (native_height / 100.0f)) / 100.0f);
@@ -35,8 +22,6 @@ void en::Core::set_delta_values() {
 //====================================================================================================================================
 
 void en::Core::set_window() {
-	load_settings();
-
 	window.create(sf::VideoMode{settings.width, settings.height, 32}, "eNement", settings.style);
 	window.setFramerateLimit(settings.frames);
 
@@ -46,6 +31,19 @@ void en::Core::set_window() {
 	//window.setIcon(32, 32, icon.getPixelsPtr());
 
 	set_delta_values();
+}
+
+void en::Core::load_settings() {
+	std::ifstream is("settings.bin", std::ios::binary | std::ios::in);
+
+	if (is.is_open()) {
+		is.read((char*)& settings.width, sizeof(unsigned int));
+		is.read((char*)& settings.height, sizeof(unsigned int));
+		is.read((char*)& settings.style, sizeof(uint32_t));
+		is.read((char*)& settings.frames, sizeof(unsigned int));
+	}
+
+	is.close();
 }
 
 void en::Core::save_settings() {
@@ -73,7 +71,7 @@ void en::Core::on_resize_event(const std::vector<Drawable*>& in_frame) {
 
 	set_delta_values();
 
-	for (const auto& each : in_frame) {
+	for (const auto each : in_frame) {
 		each->resize(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
 	}
 }
