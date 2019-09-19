@@ -27,7 +27,7 @@ void en::ResourceManager::add_font(const std::string& file_path, const std::stri
 	fonts.insert(std::make_pair(font_name, temp));
 }
 
-void en::ResourceManager::add_sound(const std::string& file_path, const std::string& sound_buffer_name) {
+void en::ResourceManager::add_sound_buffer(const std::string& file_path, const std::string& sound_buffer_name) {
 	sf::SoundBuffer temp;
 	temp.loadFromFile(file_path);
 

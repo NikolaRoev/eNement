@@ -17,6 +17,8 @@
 namespace en {
 	inline float DELTA_X;
 	inline float DELTA_Y;
+
+	//TO DO: Add a global sound level variable. We can use it to set the sound level from set_sound function.
 }
 
 //====================================================================================================================================

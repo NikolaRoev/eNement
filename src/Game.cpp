@@ -10,18 +10,52 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-
+#include <iostream>
 
 //====================================================================================================================================
 
 void en::Game::main_menu_loop() {
-	ResourceManager manager;
-
+	ResourceManager* manager = new ResourceManager;
+	manager->add_texture("assets/Main_Menu_Background.png", "Main Menu Background");
+	manager->add_texture("assets/New_Game_Button.png", "New Game Button");
+	manager->add_texture("assets/Load_Game_Button.png", "Load Game Button");
+	manager->add_texture("assets/Options_Button.png", "Options Button");
+	manager->add_texture("assets/Quit_Button.png", "Quit Button");
+	manager->add_sound_buffer("assets/TEST_CLICK.wav", "Test Sound");
 	
-	//TO DO: Add the drawables here. Don't forget to delete them. Or use a unique pointer.
+	Drawable* main_menu_background = new Image;
+	main_menu_background->setup(manager->get_texture("Main Menu Background"), 0, 0);
+
+	Drawable* main_menu_new_game = new Button;
+	main_menu_new_game->setup(manager->get_texture("New Game Button"), manager->get_texture("Quit Button"), 400, 350);
+	main_menu_new_game->set_function([]() {
+		std::cout << "new game\n";
+	});
+	main_menu_new_game->set_sound(manager->get_sound_buffer("Test Sound"));
+
+	Drawable* main_menu_load_game = new Button;
+	main_menu_load_game->setup(manager->get_texture("Load Game Button"), manager->get_texture("Load Game Button"), 400, 550);
+	main_menu_load_game->set_function([]() {
+		std::cout << "load game\n";
+	});
+	main_menu_load_game->set_sound(manager->get_sound_buffer("Test Sound"));
+
+	Drawable* main_menu_options = new Button;
+	main_menu_options->setup(manager->get_texture("Options Button"), manager->get_texture("Options Button"), 400, 750);
+	main_menu_options->set_function([]() {
+		std::cout << "options\n";
+	});
+	main_menu_options->set_sound(manager->get_sound_buffer("Test Sound"));
+
+	Drawable* main_menu_quit = new Button;
+	main_menu_quit->setup(manager->get_texture("Quit Button"), manager->get_texture("Quit Button"), 400, 950);
+	main_menu_quit->set_function([&]() {
+		application_state = EXIT;
+	});
+	main_menu_quit->set_sound(manager->get_sound_buffer("Test Sound"));
 
 
-	std::vector<Drawable*> in_frame = {};
+	std::vector<Drawable*> in_frame = { main_menu_background, main_menu_new_game, main_menu_load_game, main_menu_options, main_menu_quit };
 	
 	while (application_state == MAIN_MENU) {
 
@@ -40,6 +74,7 @@ void en::Game::main_menu_loop() {
 		}
 
 	}
+
 }
 
 void en::Game::new_game_loop() {
@@ -68,12 +103,6 @@ void en::Game::main_loop() {
 
 	while (application_state != EXIT) {
 		switch (application_state) {
-			case EXIT:
-				core->save_settings();
-				//TO DO: Add the save game function here.
-				core->window.close();
-				delete core;
-				break;
 			case MAIN_MENU:
 				main_menu_loop();
 				break;
@@ -92,6 +121,10 @@ void en::Game::main_loop() {
 		}
 	}
 
+	core->save_settings();
+	//TO DO: Add the save game function here.
+	core->window.close();
+	delete core;
 }
 
 //====================================================================================================================================

@@ -48,6 +48,8 @@ namespace en {
 		//TO DO: Add a custom draw function for projectiles and if needed other drawables, maybe the player will also have a custom draw with the arrow controls being in it.
 
 		virtual void set_function(std::function<void()> _function) = 0;
+
+		virtual void set_sound(const sf::SoundBuffer& sound_buffer) = 0;
 	};
 
 	//====================================================================================================================================
@@ -71,6 +73,8 @@ namespace en {
 		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
 
 		void set_function(std::function<void()> _function) override {}
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 	};
 
 	//====================================================================================================================================
@@ -94,6 +98,8 @@ namespace en {
 		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
 
 		void set_function(std::function<void()> _function) override {}
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 	};
 
 	//====================================================================================================================================
@@ -118,6 +124,8 @@ namespace en {
 		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
 
 		void set_function(std::function<void()> _function) override {}
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 	};
 
 	//====================================================================================================================================
@@ -126,6 +134,7 @@ namespace en {
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
 		std::function<void()> function;
+		sf::Sound sound;
 
 
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override;
@@ -143,6 +152,8 @@ namespace en {
 		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
 
 		void set_function(std::function<void()> _function) override;
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 	};
 
 	//====================================================================================================================================
@@ -152,6 +163,7 @@ namespace en {
 		sf::Sprite hl_sprite;
 		sf::Text text;
 		std::function<void()> function;
+		sf::Sound sound;
 
 
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
@@ -169,6 +181,8 @@ namespace en {
 		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
 
 		void set_function(std::function<void()> _function) override;
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 	};
 
 	//====================================================================================================================================
@@ -180,6 +194,7 @@ namespace en {
 		sf::Text text;
 		bool pressed{ false };
 		std::function<void()> function;
+		sf::Sound sound;
 
 
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
@@ -197,6 +212,8 @@ namespace en {
 		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
 
 		void set_function(std::function<void()> _function) override;
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 	};
 
 	//====================================================================================================================================

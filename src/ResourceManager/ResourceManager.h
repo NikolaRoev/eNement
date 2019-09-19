@@ -25,7 +25,7 @@ namespace en {
 	public:
 		void add_texture(const std::string& file_path, const std::string& texture_name);
 		void add_font(const std::string& file_path, const std::string& font_name);
-		void add_sound(const std::string& file_path, const std::string& sound_buffer_name);
+		void add_sound_buffer(const std::string& file_path, const std::string& sound_buffer_name);
 
 		const sf::Texture& get_texture(const std::string& texture_name) const;
 		const sf::Font& get_font(const std::string& font_name) const;
