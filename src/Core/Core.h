@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -54,7 +55,7 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event();
+		void on_resize_event(const std::vector<Drawable*>& in_frame);
 	};
 }
 

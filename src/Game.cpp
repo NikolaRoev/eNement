@@ -44,6 +44,7 @@ void en::Game::main_loop() {
 	while (application_state != EXIT) {
 		switch (application_state) {
 			case EXIT:
+				//TO DO: Add update settings struct function here.
 				core->save_settings;
 				//TO DO: Add the save game function here.
 				core->window.close();
