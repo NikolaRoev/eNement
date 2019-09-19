@@ -19,7 +19,7 @@ namespace en {
 	inline float DELTA_X;
 	inline float DELTA_Y;
 
-	//TO DO: Add a global sound level variable. We can use it to set the sound level from set_sound function.
+	inline float VOLUME;
 }
 
 //====================================================================================================================================
@@ -35,8 +35,7 @@ namespace en {
 		unsigned int height{ 576 };
 		uint32_t style{ 7 };
 		unsigned int frames{ 30 };
-
-		//TO DO: Add other settings, like volume. Don't forget to update the save settings function.
+		float volume{ 100.0f };
 	};
 
 	//====================================================================================================================================

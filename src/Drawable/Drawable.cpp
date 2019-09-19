@@ -144,6 +144,7 @@ void en::Button::set_function(std::function<void()> _function) {
 
 void en::Button::set_sound(const sf::SoundBuffer& sound_buffer) {
 	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 //====================================================================================================================================
@@ -211,6 +212,7 @@ void en::TextButton::set_function(std::function<void()> _function) {
 
 void en::TextButton::set_sound(const sf::SoundBuffer& sound_buffer) {
 	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 //====================================================================================================================================
@@ -297,6 +299,7 @@ void en::ToggleButton::set_function(std::function<void()> _function) {
 
 void en::ToggleButton::set_sound(const sf::SoundBuffer& sound_buffer) {
 	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 //====================================================================================================================================
