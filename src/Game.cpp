@@ -29,7 +29,7 @@ std::vector<sf::VideoMode> en::Game::get_fullscreen_modes()
 
 //====================================================================================================================================
 
-std::vector<std::shared_ptr<en::Drawable>> en::Game::main_menu_set_drawables(std::unique_ptr<ResourceManager>& manager) {
+std::vector<std::shared_ptr<en::Drawable>> en::Game::main_menu_set_drawables(const std::unique_ptr<ResourceManager>& manager) {
 	manager->add_texture("assets/Main_Menu_Background.png", "Main Menu Background");
 	manager->add_texture("assets/New_Game_Button.png", "New Game Button");
 	manager->add_texture("assets/Load_Game_Button.png", "Load Game Button");
@@ -72,7 +72,7 @@ std::vector<std::shared_ptr<en::Drawable>> en::Game::main_menu_set_drawables(std
 	return { main_menu_background, main_menu_new_game, main_menu_load_game, main_menu_options, main_menu_quit };
 }
 
-std::vector<std::shared_ptr<en::Drawable>> en::Game::options_menu_set_drawables(std::unique_ptr<ResourceManager>& manager) {
+std::vector<std::shared_ptr<en::Drawable>> en::Game::options_menu_set_drawables(const std::unique_ptr<ResourceManager>& manager) {
 	std::vector<sf::VideoMode> fullscreen_modes = get_fullscreen_modes();
 	
 	
@@ -91,7 +91,7 @@ void en::Game::main_menu_loop() {
 	
 	while (application_state == MAIN_MENU) {
 
-		for (const auto each : in_frame) {
+		for (const auto& each : in_frame) {
 			each->draw(core->window, core->event, core->mouse);
 		}
 
@@ -123,7 +123,7 @@ void en::Game::options_menu_loop() {
 
 	while (application_state == OPTIONS_MENU) {
 
-		for (const auto each : in_frame) {
+		for (const auto& each : in_frame) {
 			each->draw(core->window, core->event, core->mouse);
 		}
 

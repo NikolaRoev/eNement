@@ -44,9 +44,9 @@ namespace en {
 
 		//====================================================================================================================================
 
-		std::vector<std::shared_ptr<en::Drawable>> main_menu_set_drawables(std::unique_ptr<ResourceManager>& manager);
+		std::vector<std::shared_ptr<en::Drawable>> main_menu_set_drawables(const std::unique_ptr<ResourceManager>& manager);
 
-		std::vector<std::shared_ptr<en::Drawable>> options_menu_set_drawables(std::unique_ptr<ResourceManager>& manager);
+		std::vector<std::shared_ptr<en::Drawable>> options_menu_set_drawables(const std::unique_ptr<ResourceManager>& manager);
 
 		//====================================================================================================================================
 
