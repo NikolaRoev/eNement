@@ -35,7 +35,7 @@ namespace en {
 		unsigned int height{ 576 };
 		uint32_t style{ 7 };
 		unsigned int frames{ 30 };
-		float volume{ 100.0f };
+		unsigned int volume{ 100 };
 	};
 
 	//====================================================================================================================================

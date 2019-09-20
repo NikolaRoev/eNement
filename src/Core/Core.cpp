@@ -42,8 +42,8 @@ void en::Core::load_settings() {
 		is.read((char*)& settings.height, sizeof(unsigned int));
 		is.read((char*)& settings.style, sizeof(uint32_t));
 		is.read((char*)& settings.frames, sizeof(unsigned int));
-		is.read((char*)& settings.volume, sizeof(float));
-		VOLUME = settings.volume;
+		is.read((char*)& settings.volume, sizeof(unsigned int));
+		VOLUME = static_cast<float>(settings.volume);
 	}
 
 	is.close();
@@ -55,7 +55,7 @@ void en::Core::save_settings() {
 	os.write((char*)& settings.height, sizeof(unsigned int));
 	os.write((char*)& settings.style, sizeof(uint32_t));
 	os.write((char*)& settings.frames, sizeof(unsigned int));
-	os.write((char*)& settings.volume, sizeof(float));
+	os.write((char*)& settings.volume, sizeof(unsigned int));
 
 	os.flush();
 	os.close();
