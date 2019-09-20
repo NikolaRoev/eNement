@@ -37,6 +37,7 @@ std::vector<std::shared_ptr<en::Drawable>> en::Game::main_menu_set_drawables(con
 	manager->add_texture("assets/Quit_Button.png", "Quit Button");
 	manager->add_sound_buffer("assets/TEST_CLICK.wav", "Test Sound");
 
+
 	std::shared_ptr<Drawable> main_menu_background = std::make_shared<Image>();
 	main_menu_background->setup(manager->get_texture("Main Menu Background"), 0, 0);
 
