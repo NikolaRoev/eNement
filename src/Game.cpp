@@ -121,28 +121,31 @@ std::vector<std::shared_ptr<en::Drawable>> en::Game::options_menu_set_drawables(
 		});
 	full_screen_button->set_sound(manager->get_sound_buffer("Test Sound"));
 
+	std::shared_ptr<Drawable> volume_label = std::make_shared<Label>();
+	volume_label->setup(manager->get_font("Test Font"), 30, sf::Color::White, 1200, 700, std::to_string(core->settings.volume));
+
 	std::shared_ptr<Drawable> volume_arrow_left = std::make_shared<Button>();
 	volume_arrow_left->setup(manager->get_texture("Volume Arrow Left"), manager->get_texture("Volume Arrow Left HL"), 900, 700);
-	volume_arrow_left->set_function([&]()
+	volume_arrow_left->set_function([&, volume_label]()
 		{
 			if (VOLUME > 0) {
 				VOLUME -= 5;
 				core->settings.volume -= 5;
 			}
+			volume_label->set_text(std::to_string(core->settings.volume));
 		});
 	volume_arrow_left->set_sound(manager->get_sound_buffer("Test Sound"));
 
-	std::shared_ptr<Drawable> volume_label = std::make_shared<Label>();
-	volume_label->setup(manager->get_font("Test Font"), 30, sf::Color::White, 1200, 700, std::to_string(core->settings.volume));
 
 	std::shared_ptr<Drawable> volume_arrow_right = std::make_shared<Button>();
 	volume_arrow_right->setup(manager->get_texture("Volume Arrow Right"), manager->get_texture("Volume Arrow Right HL"), 1400, 700);
-	volume_arrow_right->set_function([&]()
+	volume_arrow_right->set_function([&, volume_label]()
 		{
 			if (VOLUME < 100) {
 				VOLUME += 5;
 				core->settings.volume += 5;
 			}
+			volume_label->set_text(std::to_string(core->settings.volume));
 		});
 	volume_arrow_right->set_sound(manager->get_sound_buffer("Test Sound"));
 

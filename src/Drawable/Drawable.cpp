@@ -2,6 +2,7 @@
 #include "..\\Core\Core.h"
 
 #include <functional>
+#include <string>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -57,6 +58,10 @@ void en::Label::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mous
 	window.draw(text);
 }
 
+void en::Label::set_text(const std::string& new_text) {
+	text.setString(new_text);
+}
+
 //====================================================================================================================================
 
 void en::ImageLabel::setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
@@ -90,6 +95,10 @@ void en::ImageLabel::draw(sf::RenderWindow& window) {
 void en::ImageLabel::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
 	window.draw(sprite);
 	window.draw(text);
+}
+
+void en::ImageLabel::set_text(const std::string& new_text) {
+	text.setString(new_text);
 }
 
 //====================================================================================================================================
@@ -213,6 +222,10 @@ void en::TextButton::set_function(std::function<void()> _function) {
 void en::TextButton::set_sound(const sf::SoundBuffer& sound_buffer) {
 	sound.setBuffer(sound_buffer);
 	sound.setVolume(VOLUME);
+}
+
+void en::TextButton::set_text(const std::string& new_text) {
+	text.setString(new_text);
 }
 
 //====================================================================================================================================

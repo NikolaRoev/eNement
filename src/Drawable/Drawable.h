@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <string>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -50,6 +51,8 @@ namespace en {
 		virtual void set_function(std::function<void()> _function) = 0;
 
 		virtual void set_sound(const sf::SoundBuffer& sound_buffer) = 0;
+
+		virtual void set_text(const std::string& new_text) = 0;
 	};
 
 	//====================================================================================================================================
@@ -75,6 +78,8 @@ namespace en {
 		void set_function(std::function<void()> _function) override {}
 
 		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
+
+		void set_text(const std::string& new_text) override {}
 	};
 
 	//====================================================================================================================================
@@ -100,6 +105,8 @@ namespace en {
 		void set_function(std::function<void()> _function) override {}
 
 		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
+
+		void set_text(const std::string& new_text) override;
 	};
 
 	//====================================================================================================================================
@@ -126,6 +133,8 @@ namespace en {
 		void set_function(std::function<void()> _function) override {}
 
 		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
+
+		void set_text(const std::string& new_text) override;
 	};
 
 	//====================================================================================================================================
@@ -154,6 +163,8 @@ namespace en {
 		void set_function(std::function<void()> _function) override;
 
 		void set_sound(const sf::SoundBuffer& sound_buffer) override;
+
+		void set_text(const std::string& new_text) override {}
 	};
 
 	//====================================================================================================================================
@@ -183,6 +194,8 @@ namespace en {
 		void set_function(std::function<void()> _function) override;
 
 		void set_sound(const sf::SoundBuffer& sound_buffer) override;
+
+		void set_text(const std::string& new_text) override;
 	};
 
 	//====================================================================================================================================
@@ -213,6 +226,8 @@ namespace en {
 		void set_function(std::function<void()> _function) override;
 
 		void set_sound(const sf::SoundBuffer& sound_buffer) override;
+
+		void set_text(const std::string& new_text) override {}
 	};
 
 	//====================================================================================================================================
