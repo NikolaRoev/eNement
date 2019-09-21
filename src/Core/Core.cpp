@@ -31,6 +31,14 @@ void en::Core::set_window() {
 	//icon.loadFromMemory(icon_data, sizeof(icon_data));
 	//window.setIcon(32, 32, icon.getPixelsPtr());
 
+	if (settings.style == 7u) {
+		sf::VideoMode current_video_mode_temp = sf::VideoMode::getDesktopMode();
+
+		sf::Vector2i new_position_temp = { static_cast<int>(current_video_mode_temp.width) / 2 - static_cast<int>(settings.width) / 2, static_cast<int>(current_video_mode_temp.height) / 2 - static_cast<int>(settings.height) / 2 };
+
+		window.setPosition(new_position_temp);
+	}
+
 	set_delta_values();
 }
 
