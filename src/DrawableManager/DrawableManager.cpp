@@ -42,6 +42,8 @@ std::vector<en::Drawable*>& en::DrawableManager::get_vector_of_drawables(const s
 	return vectors_of_drawables.find(vector_name)->second;
 }
 
+//====================================================================================================================================
+
 void en::DrawableManager::resize_all(const float d_x, const float d_y) {
 	for (const auto& each : drawables) {
 		each.second->resize(d_x, d_y);

@@ -29,7 +29,6 @@ namespace en {
 		std::vector<Drawable*>& get_vector_of_drawables(const std::string& vector_name);
 
 		void resize_all(const float d_x, const float d_y);
-
 		void change_volume_for_all();
 	};
 }
