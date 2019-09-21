@@ -62,7 +62,7 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event(const std::vector<std::shared_ptr<Drawable>>& in_frame);
+		void on_resize_event(const std::vector<Drawable*>& in_frame);
 	};
 }
 

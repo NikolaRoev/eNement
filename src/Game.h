@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Core.h"
 #include "Drawable/Drawable.h"
+#include "DrawableManager/DrawableManager.h"
 #include "ResourceManager/ResourceManager.h"
 
 #include <vector>
@@ -38,15 +39,19 @@ namespace en {
 
 		Core* core{ nullptr };
 
+		ResourceManager* resource_manager{ nullptr };
+
+		DrawableManager* drawable_manager{ nullptr };
+
 		//====================================================================================================================================
 
 		std::vector<sf::VideoMode> get_fullscreen_modes();
 
 		//====================================================================================================================================
 
-		std::vector<std::shared_ptr<en::Drawable>> main_menu_set_drawables(const std::unique_ptr<ResourceManager>& manager);
+		void set_resources();
 
-		std::vector<std::shared_ptr<en::Drawable>> options_menu_set_drawables(const std::unique_ptr<ResourceManager>& manager);
+		void set_drawables();
 
 		//====================================================================================================================================
 

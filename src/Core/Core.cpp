@@ -69,7 +69,7 @@ void en::Core::save_settings() {
 	os.close();
 }
 
-void en::Core::on_resize_event(const std::vector<std::shared_ptr<Drawable>>& in_frame) {
+void en::Core::on_resize_event(const std::vector<Drawable*>& in_frame) {
 	sf::Vector2u new_size = window.getSize();
 
 	sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
@@ -83,7 +83,7 @@ void en::Core::on_resize_event(const std::vector<std::shared_ptr<Drawable>>& in_
 
 	set_delta_values();
 
-	for (const auto each : in_frame) {
+	for (const auto& each : in_frame) {
 		each->resize(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
 	}
 }
