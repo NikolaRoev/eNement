@@ -156,6 +156,10 @@ void en::Button::set_sound(const sf::SoundBuffer& sound_buffer) {
 	sound.setVolume(VOLUME);
 }
 
+void en::Button::set_volume() {
+	sound.setVolume(VOLUME);
+}
+
 //====================================================================================================================================
 
 void en::TextButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
@@ -226,6 +230,10 @@ void en::TextButton::set_sound(const sf::SoundBuffer& sound_buffer) {
 
 void en::TextButton::set_text(const std::string& new_text) {
 	text.setString(new_text);
+}
+
+void en::TextButton::set_volume() {
+	sound.setVolume(VOLUME);
 }
 
 //====================================================================================================================================
@@ -301,6 +309,10 @@ void en::ToggleButton::set_function(std::function<void()> _function) {
 
 void en::ToggleButton::set_sound(const sf::SoundBuffer& sound_buffer) {
 	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
+}
+
+void en::ToggleButton::set_volume() {
 	sound.setVolume(VOLUME);
 }
 

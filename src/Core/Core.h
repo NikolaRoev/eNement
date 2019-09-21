@@ -1,5 +1,6 @@
 #pragma once
 #include "../Drawable/Drawable.h"
+#include "../DrawableManager/DrawableManager.h"
 
 #include <vector>
 #include <memory>
@@ -62,7 +63,9 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event(const std::vector<Drawable*>& in_frame);
+		void on_resize_event(DrawableManager* drawables);
+
+		void on_volume_change(DrawableManager* drawables);
 	};
 }
 

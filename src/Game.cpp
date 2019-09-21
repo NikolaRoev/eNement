@@ -156,13 +156,16 @@ void en::Game::set_drawables() {
 
 	Drawable* volume_arrow_left = new Button;
 	volume_arrow_left->setup(resource_manager->get_texture("Volume Arrow Left"), resource_manager->get_texture("Volume Arrow Left HL"), 900, 700);
-	volume_arrow_left->set_function([&, volume_label]()
+	volume_arrow_left->set_function([&]()
 		{
 			if (VOLUME > 0) {
 				VOLUME -= 5;
 				core->settings.volume -= 5;
+
+				auto temp_volume_label = drawable_manager->get_drawable("Volume Label");
+				temp_volume_label->set_text(std::to_string(core->settings.volume));
+				core->on_volume_change(drawable_manager);
 			}
-			volume_label->set_text(std::to_string(core->settings.volume));
 		});
 	volume_arrow_left->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*volume_arrow_left, "Volume Arrow Left");
@@ -170,13 +173,16 @@ void en::Game::set_drawables() {
 
 	Drawable* volume_arrow_right = new Button;
 	volume_arrow_right->setup(resource_manager->get_texture("Volume Arrow Right"), resource_manager->get_texture("Volume Arrow Right HL"), 1400, 700);
-	volume_arrow_right->set_function([&, volume_label]()
+	volume_arrow_right->set_function([&]()
 		{
 			if (VOLUME < 100) {
 				VOLUME += 5;
 				core->settings.volume += 5;
+
+				auto temp_volume_label = drawable_manager->get_drawable("Volume Label");
+				temp_volume_label->set_text(std::to_string(core->settings.volume));
+				core->on_volume_change(drawable_manager);
 			}
-			volume_label->set_text(std::to_string(core->settings.volume));
 		});
 	volume_arrow_right->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*volume_arrow_right, "Volume Arrow Right");
@@ -235,7 +241,7 @@ void en::Game::main_menu_loop() {
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(in_frame);
+			core->on_resize_event(drawable_manager);
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -276,7 +282,7 @@ void en::Game::options_menu_loop() {
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(in_frame);
+			core->on_resize_event(drawable_manager);
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -296,6 +302,13 @@ void en::Game::main_loop() {
 	core = new Core;
 	core->load_settings();
 	core->set_window();
+
+	resource_manager = new ResourceManager;
+	set_resources();
+
+	drawable_manager = new DrawableManager;
+	set_drawables();
+
 
 	while (application_state != EXIT) {
 		switch (application_state) {

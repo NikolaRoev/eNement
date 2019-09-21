@@ -53,6 +53,8 @@ namespace en {
 		virtual void set_sound(const sf::SoundBuffer& sound_buffer) = 0;
 
 		virtual void set_text(const std::string& new_text) = 0;
+
+		virtual void set_volume() = 0;
 	};
 
 	//====================================================================================================================================
@@ -80,6 +82,8 @@ namespace en {
 		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override {}
+
+		void set_volume() override {}
 	};
 
 	//====================================================================================================================================
@@ -107,6 +111,8 @@ namespace en {
 		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override;
+
+		void set_volume() override {}
 	};
 
 	//====================================================================================================================================
@@ -135,6 +141,8 @@ namespace en {
 		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override;
+
+		void set_volume() override {}
 	};
 
 	//====================================================================================================================================
@@ -165,6 +173,8 @@ namespace en {
 		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override {}
+
+		void set_volume() override;
 	};
 
 	//====================================================================================================================================
@@ -196,6 +206,8 @@ namespace en {
 		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override;
+
+		void set_volume() override;
 	};
 
 	//====================================================================================================================================
@@ -228,6 +240,8 @@ namespace en {
 		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override {}
+
+		void set_volume() override;
 	};
 
 	//====================================================================================================================================

@@ -91,7 +91,6 @@
     <None Include=".gitignore" />
     <None Include="openal32.dll" />
     <None Include="README.md" />
-    <None Include="settings.bin" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Core.cpp" />
@@ -100,7 +99,6 @@
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
-    <ClCompile Include="src\SpriteManager\DrawableManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Core.h" />
@@ -108,7 +106,6 @@
     <ClInclude Include="src\Drawable\Drawable.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\ResourceManager\ResourceManager.h" />
-    <ClInclude Include="src\SpriteManager\DrawableManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
