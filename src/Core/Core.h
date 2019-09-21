@@ -45,8 +45,6 @@ namespace en {
 		const float native_width{ 1920 };
 		const float native_height{ 1080 };
 
-		Settings settings;
-
 
 		void set_delta_values();
 
@@ -54,6 +52,8 @@ namespace en {
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };;
 		sf::Mouse mouse;
+
+		Settings settings;
 
 
 		void set_window();

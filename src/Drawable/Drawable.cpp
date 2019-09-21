@@ -217,7 +217,7 @@ void en::TextButton::set_sound(const sf::SoundBuffer& sound_buffer) {
 
 //====================================================================================================================================
 
-void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -230,12 +230,7 @@ void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_t
 	pressed_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	pressed_sprite.scale(DELTA_X, DELTA_Y);
 
-	text.setFont(font);
-	text.setCharacterSize(text_size);
-	text.setFillColor(text_color);
-	text.setPosition(text_x * DELTA_X, text_y * DELTA_Y);
-	text.setString(_text);
-	text.scale(DELTA_X, DELTA_Y);
+	if (press) pressed = true;
 }
 
 void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -250,10 +245,6 @@ void en::ToggleButton::resize(const float resize_delta_x, const float resize_del
 	temp = pressed_sprite.getGlobalBounds();
 	pressed_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	pressed_sprite.scale(resize_delta_x, resize_delta_y);
-
-	temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	text.scale(resize_delta_x, resize_delta_y);
 }
 
 void en::ToggleButton::draw(sf::RenderWindow& window) {
@@ -263,7 +254,6 @@ void en::ToggleButton::draw(sf::RenderWindow& window) {
 	else {
 		window.draw(pressed_sprite);
 	}
-	window.draw(text);
 }
 
 void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
@@ -274,7 +264,6 @@ void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mous
 	else {
 		window.draw(pressed_sprite);
 	}
-	window.draw(text);
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
 		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
