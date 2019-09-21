@@ -70,7 +70,7 @@ void en::Core::save_settings() {
 	os.close();
 }
 
-void en::Core::on_resize_event(DrawableManager* drawables) {
+void en::Core::on_resize_event(DrawableManager* drawable_manager) {
 	sf::Vector2u new_size = window.getSize();
 
 	sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
@@ -84,11 +84,7 @@ void en::Core::on_resize_event(DrawableManager* drawables) {
 
 	set_delta_values();
 
-	drawables->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
-}
-
-void en::Core::on_volume_change(DrawableManager* drawables) {
-	drawables->change_volume_for_all();
+	drawable_manager->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
 }
 
 //====================================================================================================================================

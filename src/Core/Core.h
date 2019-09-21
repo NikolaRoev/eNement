@@ -63,9 +63,7 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event(DrawableManager* drawables);
-
-		void on_volume_change(DrawableManager* drawables);
+		void on_resize_event(DrawableManager* drawable_manager);
 	};
 }
 

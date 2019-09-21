@@ -83,8 +83,9 @@ void en::Game::set_drawables() {
 
 	Drawable* main_menu_new_game = new Button();
 	main_menu_new_game->setup(resource_manager->get_texture("New Game Button"), resource_manager->get_texture("New Game Button HL"), 400, 350);
-	main_menu_new_game->set_function([]() {
-		std::cout << "new game\n";
+	main_menu_new_game->set_function([]()
+		{
+			std::cout << "new game\n";
 		});
 	main_menu_new_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*main_menu_new_game, "Main Menu New Game Button");
@@ -92,8 +93,9 @@ void en::Game::set_drawables() {
 
 	Drawable* main_menu_load_game = new Button();
 	main_menu_load_game->setup(resource_manager->get_texture("Load Game Button"), resource_manager->get_texture("Load Game Button HL"), 400, 550);
-	main_menu_load_game->set_function([]() {
-		std::cout << "load game\n";
+	main_menu_load_game->set_function([]()
+		{
+			std::cout << "load game\n";
 		});
 	main_menu_load_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
@@ -101,8 +103,9 @@ void en::Game::set_drawables() {
 
 	Drawable* main_menu_options = new Button();
 	main_menu_options->setup(resource_manager->get_texture("Options Button"), resource_manager->get_texture("Options Button HL"), 400, 750);
-	main_menu_options->set_function([&]() {
-		application_state = OPTIONS_MENU;
+	main_menu_options->set_function([&]()
+		{
+			application_state = OPTIONS_MENU;
 		});
 	main_menu_options->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*main_menu_options, "Main Menu Options Button");
@@ -110,10 +113,10 @@ void en::Game::set_drawables() {
 
 	Drawable* main_menu_quit = new Button();
 	main_menu_quit->setup(resource_manager->get_texture("Quit Button"), resource_manager->get_texture("Quit Button HL"), 400, 950);
-	main_menu_quit->set_function([&]() {
-		application_state = EXIT;
+	main_menu_quit->set_function([&]()
+		{
+			application_state = EXIT;
 		});
-	main_menu_quit->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*main_menu_quit, "Main Menu Quit Button");
 
 	//====================================================================================================================================
@@ -164,7 +167,7 @@ void en::Game::set_drawables() {
 
 				auto temp_volume_label = drawable_manager->get_drawable("Volume Label");
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
-				core->on_volume_change(drawable_manager);
+				drawable_manager->change_volume_for_all();
 			}
 		});
 	volume_arrow_left->set_sound(resource_manager->get_sound_buffer("Test Sound"));
@@ -181,7 +184,7 @@ void en::Game::set_drawables() {
 
 				auto temp_volume_label = drawable_manager->get_drawable("Volume Label");
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
-				core->on_volume_change(drawable_manager);
+				drawable_manager->change_volume_for_all();
 			}
 		});
 	volume_arrow_right->set_sound(resource_manager->get_sound_buffer("Test Sound"));
