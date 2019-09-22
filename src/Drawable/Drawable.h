@@ -19,6 +19,8 @@ namespace en {
 	//====================================================================================================================================
 
 	struct Drawable {
+		virtual ~Drawable() {}
+
 		//Image:
 		virtual void setup(const sf::Texture& texture, const float x, const float y) = 0;
 
