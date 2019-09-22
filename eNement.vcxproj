@@ -91,7 +91,6 @@
     <None Include=".gitignore" />
     <None Include="openal32.dll" />
     <None Include="README.md" />
-    <None Include="settings.bin" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Core.cpp" />

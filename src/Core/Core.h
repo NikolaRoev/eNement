@@ -20,7 +20,7 @@ namespace en {
 	inline float DELTA_X;
 	inline float DELTA_Y;
 
-	inline float VOLUME;
+	inline float VOLUME{ 50.0f };
 }
 
 //====================================================================================================================================
@@ -36,7 +36,7 @@ namespace en {
 		unsigned int height{ 576 };
 		uint32_t style{ 7 };
 		unsigned int frames{ 30 };
-		unsigned int volume{ 100 };
+		unsigned int volume{ 50 };
 	};
 
 	//====================================================================================================================================
