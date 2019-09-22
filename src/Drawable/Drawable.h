@@ -90,6 +90,8 @@ namespace en {
 
 	struct Label : public Drawable {
 		sf::Text text;
+		float text_x_original{ 0.0f };
+		float text_y_original{ 0.0f };
 
 		
 		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
@@ -120,6 +122,8 @@ namespace en {
 	struct ImageLabel : public Drawable {
 		sf::Sprite sprite;
 		sf::Text text;
+		float text_x_original{ 0.0f };
+		float text_y_original{ 0.0f };
 
 
 		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
@@ -183,6 +187,8 @@ namespace en {
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
 		sf::Text text;
+		float text_x_original{ 0.0f };
+		float text_y_original{ 0.0f };
 		std::function<void()> function;
 		sf::Sound sound;
 

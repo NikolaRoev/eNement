@@ -36,6 +36,8 @@ void en::Image::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mous
 //====================================================================================================================================
 
 void en::Label::setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+	text_x_original = text_x;
+	text_y_original = text_y;
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
@@ -45,8 +47,7 @@ void en::Label::setup(const sf::Font& font, const unsigned int text_size, const 
 }
 
 void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
@@ -69,6 +70,8 @@ void en::ImageLabel::setup(const sf::Texture& texture, const float x, const floa
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
 	
+	text_x_original = text_x;
+	text_y_original = text_y;
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
@@ -82,8 +85,7 @@ void en::ImageLabel::resize(const float resize_delta_x, const float resize_delta
 	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
@@ -171,6 +173,8 @@ void en::TextButton::setup(const sf::Texture& texture, const sf::Texture& hl_tex
 	hl_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	hl_sprite.scale(DELTA_X, DELTA_Y);
 
+	text_x_original = text_x;
+	text_y_original = text_y;
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
@@ -188,8 +192,7 @@ void en::TextButton::resize(const float resize_delta_x, const float resize_delta
 	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
