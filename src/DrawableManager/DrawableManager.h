@@ -20,7 +20,6 @@ namespace en {
 	class DrawableManager {
 	private:
 		std::unordered_map<std::string, Drawable*> drawables;
-		std::unordered_map<std::string, std::vector<Drawable*>> vectors_of_drawables;
 	public:
 		void add_drawable(Drawable& drawable, const std::string& drawable_name);
 		Drawable* get_drawable(const std::string& drawable_name);

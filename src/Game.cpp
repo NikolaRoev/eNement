@@ -5,7 +5,6 @@
 #include "ResourceManager/ResourceManager.h"
 
 #include <vector>
-#include <memory>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -105,8 +104,6 @@ void en::Game::set_drawables() {
 
 	//====================================================================================================================================
 	//Options Menu:
-
-	std::vector<sf::VideoMode> modes = { {1920, 1080, 32},  {1600, 900, 32}, {1366, 768, 32}, {1280, 720, 32}, {1024, 576, 32} };
 
 	Drawable* options_menu_background = new Image;
 	options_menu_background->setup(resource_manager->get_texture("Options Menu Background"), 0, 0);
