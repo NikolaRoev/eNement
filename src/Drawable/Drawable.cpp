@@ -14,14 +14,15 @@
 //====================================================================================================================================
 
 void en::Image::setup(const sf::Texture& texture, const float x, const float y) {
+	sprite_x_original = x;
+	sprite_y_original = y;
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
 }
 
 void en::Image::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 }
 
@@ -66,6 +67,8 @@ void en::Label::set_text(const std::string& new_text) {
 //====================================================================================================================================
 
 void en::ImageLabel::setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+	sprite_x_original = x;
+	sprite_y_original = y;
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -81,8 +84,7 @@ void en::ImageLabel::setup(const sf::Texture& texture, const float x, const floa
 }
 
 void en::ImageLabel::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
 	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
@@ -106,6 +108,8 @@ void en::ImageLabel::set_text(const std::string& new_text) {
 //====================================================================================================================================
 
 void en::Button::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) {
+	sprite_x_original = x;
+	sprite_y_original = y;
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -116,12 +120,10 @@ void en::Button::setup(const sf::Texture& texture, const sf::Texture& hl_texture
 }
 
 void en::Button::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = hl_sprite.getGlobalBounds();
-	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	hl_sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 }
 
@@ -165,6 +167,8 @@ void en::Button::set_volume() {
 //====================================================================================================================================
 
 void en::TextButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+	sprite_x_original = x;
+	sprite_y_original = y;
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -184,12 +188,10 @@ void en::TextButton::setup(const sf::Texture& texture, const sf::Texture& hl_tex
 }
 
 void en::TextButton::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = hl_sprite.getGlobalBounds();
-	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	hl_sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 
 	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
@@ -242,6 +244,8 @@ void en::TextButton::set_volume() {
 //====================================================================================================================================
 
 void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press) {
+	sprite_x_original = x;
+	sprite_y_original = y;
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -258,16 +262,13 @@ void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_t
 }
 
 void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = hl_sprite.getGlobalBounds();
-	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	hl_sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = pressed_sprite.getGlobalBounds();
-	pressed_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	pressed_sprite.setPosition(sprite_x_original * DELTA_X, sprite_y_original * DELTA_Y);
 	pressed_sprite.scale(resize_delta_x, resize_delta_y);
 }
 

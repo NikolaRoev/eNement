@@ -61,6 +61,8 @@ namespace en {
 
 	struct Image : public Drawable {
 		sf::Sprite sprite;
+		float sprite_x_original{ 0.0f };
+		float sprite_y_original{ 0.0f };
 
 
 		void setup(const sf::Texture& texture, const float x, const float y) override;
@@ -121,6 +123,8 @@ namespace en {
 
 	struct ImageLabel : public Drawable {
 		sf::Sprite sprite;
+		float sprite_x_original{ 0.0f };
+		float sprite_y_original{ 0.0f };
 		sf::Text text;
 		float text_x_original{ 0.0f };
 		float text_y_original{ 0.0f };
@@ -154,6 +158,8 @@ namespace en {
 	struct Button : public Drawable {
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
+		float sprite_x_original{ 0.0f };
+		float sprite_y_original{ 0.0f };
 		std::function<void()> function;
 		sf::Sound sound;
 
@@ -186,6 +192,8 @@ namespace en {
 	struct TextButton : public Drawable {
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
+		float sprite_x_original{ 0.0f };
+		float sprite_y_original{ 0.0f };
 		sf::Text text;
 		float text_x_original{ 0.0f };
 		float text_y_original{ 0.0f };
@@ -221,6 +229,8 @@ namespace en {
 	struct ToggleButton : public Drawable {
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
+		float sprite_x_original{ 0.0f };
+		float sprite_y_original{ 0.0f };
 		sf::Sprite pressed_sprite;
 		bool pressed{ false };
 		std::function<void()> function;

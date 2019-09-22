@@ -34,7 +34,6 @@ namespace en {
 	struct Settings {
 		unsigned int width{ 1024 };
 		unsigned int height{ 576 };
-		uint32_t style{ 7 };
 		unsigned int frames{ 30 };
 		unsigned int volume{ 50 };
 	};
