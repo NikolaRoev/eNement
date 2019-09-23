@@ -235,6 +235,8 @@ void en::Game::options_menu_loop() {
 void en::Game::game_loop() {
 	//TO DO: Add the pause menu over here, as a new loop maybe, should be easier.
 
+
+	//TO DO: Add the save game function here.
 }
 
 //====================================================================================================================================
@@ -272,11 +274,10 @@ void en::Game::main_loop() {
 	}
 
 	core->save_settings();
-	//TO DO: Add the save game function here.
 	core->window.close();
-	delete core;
 	delete resource_manager;
 	delete drawable_manager;
+	delete core;
 }
 
 //====================================================================================================================================
