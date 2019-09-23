@@ -19,7 +19,7 @@ void en::DrawableManager::add_drawable(Drawable& drawable, const std::string& dr
 	drawables.insert(std::make_pair(drawable_name, &drawable));
 }
 
-en::Drawable* en::DrawableManager::get_drawable(const std::string& drawable_name) {
+en::Drawable* en::DrawableManager::get_drawable(const std::string& drawable_name) const {
 	return drawables.find(drawable_name)->second;
 }
 

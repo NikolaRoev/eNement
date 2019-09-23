@@ -22,7 +22,7 @@ namespace en {
 		std::unordered_map<std::string, Drawable*> drawables;
 	public:
 		void add_drawable(Drawable& drawable, const std::string& drawable_name);
-		Drawable* get_drawable(const std::string& drawable_name);
+		Drawable* get_drawable(const std::string& drawable_name) const;
 
 		void resize_all(const float d_x, const float d_y);
 		void change_volume_for_all();
