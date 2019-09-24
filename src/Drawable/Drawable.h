@@ -19,7 +19,7 @@ namespace en {
 	//====================================================================================================================================
 
 	struct Drawable {
-		virtual ~Drawable() {}
+		virtual ~Drawable() = default;
 
 		//Image:
 		virtual void setup(const sf::Texture& texture, const float x, const float y) = 0;
@@ -46,7 +46,7 @@ namespace en {
 
 		virtual void draw(sf::RenderWindow& window) = 0;
 
-		virtual void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) = 0;
+		virtual void draw(sf::RenderWindow& window, sf::Event& event) = 0;
 
 		//TO DO: Add a custom draw function for projectiles and if needed other drawables, maybe the player will also have a custom draw with the arrow controls being in it.
 
@@ -79,7 +79,7 @@ namespace en {
 
 		void draw(sf::RenderWindow& window) override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 		void set_function(std::function<void()> _function) override {}
 
@@ -110,7 +110,7 @@ namespace en {
 
 		void draw(sf::RenderWindow& window) override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 		void set_function(std::function<void()> _function) override {}
 
@@ -144,7 +144,7 @@ namespace en {
 
 		void draw(sf::RenderWindow& window) override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 		void set_function(std::function<void()> _function) override {}
 
@@ -178,7 +178,7 @@ namespace en {
 
 		void draw(sf::RenderWindow& window) override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 		void set_function(std::function<void()> _function) override;
 
@@ -215,7 +215,7 @@ namespace en {
 
 		void draw(sf::RenderWindow& window) override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 		void set_function(std::function<void()> _function) override;
 
@@ -251,7 +251,7 @@ namespace en {
 
 		void draw(sf::RenderWindow& window) override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 		void set_function(std::function<void()> _function) override;
 

@@ -30,7 +30,7 @@ void en::Image::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
-void en::Image::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
 	window.draw(sprite);
 }
 
@@ -56,7 +56,7 @@ void en::Label::draw(sf::RenderWindow& window) {
 	window.draw(text);
 }
 
-void en::Label::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+void en::Label::draw(sf::RenderWindow& window, sf::Event& event) {
 	window.draw(text);
 }
 
@@ -96,7 +96,7 @@ void en::ImageLabel::draw(sf::RenderWindow& window) {
 	window.draw(text);
 }
 
-void en::ImageLabel::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+void en::ImageLabel::draw(sf::RenderWindow& window, sf::Event& event) {
 	window.draw(sprite);
 	window.draw(text);
 }
@@ -131,7 +131,7 @@ void en::Button::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
-void en::Button::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+void en::Button::draw(sf::RenderWindow& window, sf::Event& event) {
 	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
 	window.draw(sprite);
 
@@ -203,7 +203,7 @@ void en::TextButton::draw(sf::RenderWindow& window) {
 	window.draw(text);
 }
 
-void en::TextButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+void en::TextButton::draw(sf::RenderWindow& window, sf::Event& event) {
 	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
 	window.draw(sprite);
 	window.draw(text);
@@ -281,7 +281,7 @@ void en::ToggleButton::draw(sf::RenderWindow& window) {
 	}
 }
 
-void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event, sf::Mouse& mouse) {
+void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event) {
 	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
 	if (!pressed) {
 		window.draw(sprite);

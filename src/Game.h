@@ -28,6 +28,11 @@ namespace en {
 	constexpr int OPTIONS_MENU = 4;
 	constexpr int GAME = 5;
 
+	constexpr int MAP = 0;
+	constexpr int FIGHT = 1;
+	constexpr int WIN_SCREEN = 2;
+	constexpr int LOSS_SCREEN = 3;
+
 	//====================================================================================================================================
 
 	class Game {
@@ -35,6 +40,8 @@ namespace en {
 		
 
 		int application_state{ MAIN_MENU };
+
+		int game_state{ MAP };
 
 		Core* core{ nullptr };
 
@@ -57,6 +64,20 @@ namespace en {
 		void load_game_loop();
 
 		void options_menu_loop();
+
+		//====================================================================================================================================
+
+		void map_loop();
+
+		void fight_loop();
+
+		void win_screen_loop();
+
+		void loss_screen_loop();
+
+		void pause_loop();
+
+		//====================================================================================================================================
 
 		void game_loop();
 

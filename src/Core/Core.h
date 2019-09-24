@@ -50,7 +50,6 @@ namespace en {
 	public:
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };;
-		sf::Mouse mouse;
 
 		Settings settings;
 

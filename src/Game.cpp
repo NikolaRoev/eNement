@@ -178,7 +178,7 @@ void en::Game::main_menu_loop() {
 	while (application_state == MAIN_MENU) {
 
 		for (const auto& each : in_frame) {
-			each->draw(core->window, core->event, core->mouse);
+			each->draw(core->window, core->event);
 		}
 
 		core->window.display();
@@ -216,7 +216,7 @@ void en::Game::options_menu_loop() {
 	while (application_state == OPTIONS_MENU) {
 
 		for (const auto& each : in_frame) {
-			each->draw(core->window, core->event, core->mouse);
+			each->draw(core->window, core->event);
 		}
 
 		core->window.display();
@@ -232,9 +232,50 @@ void en::Game::options_menu_loop() {
 	}
 }
 
-void en::Game::game_loop() {
-	//TO DO: Add the pause menu over here, as a new loop maybe, should be easier.
+//====================================================================================================================================
 
+void en::Game::map_loop() {
+	//TO DO:
+}
+
+void en::Game::fight_loop() {
+	//TO DO:
+}
+
+void en::Game::win_screen_loop() {
+	//TO DO:
+}
+
+void en::Game::loss_screen_loop() {
+	//TO DO:
+}
+
+void en::Game::pause_loop() {
+	//TO DO:
+	//This loop can be called in every game sub-loop. With a vector of the current drawables passed to it.
+	//When this loops is over, we either exit, not saving data for fight loop, or we resume whatever loop we are in.
+}
+
+//====================================================================================================================================
+
+void en::Game::game_loop() {
+
+	while (application_state == GAME) {
+		switch (game_state) {
+			case MAP:
+				map_loop();
+				break;
+			case FIGHT:
+				fight_loop();
+				break;
+			case WIN_SCREEN:
+				win_screen_loop();
+				break;
+			case LOSS_SCREEN:
+				loss_screen_loop();
+				break;
+		}
+	}
 
 	//TO DO: Add the save game function here.
 }
