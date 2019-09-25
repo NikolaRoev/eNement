@@ -22,8 +22,7 @@ void en::ResourceManager::add_texture(const std::string& file_path, const std::s
 }
 
 void en::ResourceManager::add_texture_for_pixel_perfect(const std::string& file_path, const std::string& texture_name) {
-	sf::Texture temp;
-	textures.insert(std::make_pair(texture_name, temp));
+	textures.insert(std::make_pair(texture_name, sf::Texture()));
 	
 	Collision::CreateTextureAndBitmask(textures.find(texture_name)->second, file_path);
 }
