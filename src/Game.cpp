@@ -283,6 +283,7 @@ void en::Game::game_loop() {
 //====================================================================================================================================
 
 void en::Game::main_loop() {
+	delete core;
 	core = new Core;
 	core->load_settings();
 	core->set_window();
