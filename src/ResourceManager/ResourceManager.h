@@ -24,6 +24,8 @@ namespace en {
 
 	public:
 		void add_texture(const std::string& file_path, const std::string& texture_name);
+		void add_texture_for_pixel_perfect(const std::string& file_path, const std::string& texture_name);
+
 		void add_font(const std::string& file_path, const std::string& font_name);
 		void add_sound_buffer(const std::string& file_path, const std::string& sound_buffer_name);
 
