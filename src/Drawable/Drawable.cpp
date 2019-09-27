@@ -258,7 +258,9 @@ void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_t
 	pressed_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	pressed_sprite.scale(DELTA_X, DELTA_Y);
 
-	if (press) pressed = true;
+	if (press) {
+		pressed = true;
+	}
 }
 
 void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {

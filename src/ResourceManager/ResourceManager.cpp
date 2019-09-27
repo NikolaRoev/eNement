@@ -2,8 +2,8 @@
 #include "../Collision/Collision.h"
 
 #include <string>
-#include <utility>
 #include <unordered_map>
+#include <utility>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
