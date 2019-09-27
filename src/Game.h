@@ -41,7 +41,7 @@ namespace en {
 
 		int application_state{ MAIN_MENU };
 
-		int game_state{ MAP };
+		int game_state{ FIGHT }; //TO DO: Change this when ready.
 
 		Core* core{ nullptr };
 

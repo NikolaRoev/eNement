@@ -50,6 +50,23 @@ void en::Game::set_resources() {
 
 	//====================================================================================================================================
 
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+
+	//====================================================================================================================================
+	//Fight:
+
+	resource_manager->add_texture("assets/images/Game/Fight_Background.png", "Fight Background");
+	resource_manager->add_texture("assets/images/Game/Player.png", "Player");
+
+	resource_manager->add_texture("assets/images/Game/Enemy0.png", "Enemy0");
+	resource_manager->add_texture("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
+	resource_manager->add_texture("assets/images/Game/Spell0.png", "Spell0");
+	resource_manager->add_texture("assets/images/Game/Spell1.png", "Spell1");
+
+	//====================================================================================================================================
+
 }
 
 void en::Game::set_drawables() {
@@ -160,6 +177,25 @@ void en::Game::set_drawables() {
 
 	//====================================================================================================================================
 
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+
+	//====================================================================================================================================
+	//Fight:
+
+	resource_manager->add_texture("assets/images/Game/Player.png", "Player");
+
+	resource_manager->add_texture("assets/images/Game/Enemy0.png", "Enemy0");
+
+
+	Drawable* fight_background = new Image;
+	fight_background->setup(resource_manager->get_texture("Fight Background"), 0, 0);
+	drawable_manager->add_drawable(*fight_background, "Fight Background");
+
+
+	//====================================================================================================================================
+
 
 }
 
@@ -197,6 +233,7 @@ void en::Game::main_menu_loop() {
 
 void en::Game::new_game_loop() {
 	//TO DO:
+	game_loop();
 }
 
 void en::Game::load_game_loop() {
@@ -239,7 +276,9 @@ void en::Game::map_loop() {
 }
 
 void en::Game::fight_loop() {
-	//TO DO:
+	//resource_manager->add_texture("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
+	//resource_manager->add_texture("assets/images/Game/Spell0.png", "Spell0");
+	//resource_manager->add_texture("assets/images/Game/Spell1.png", "Spell1");
 }
 
 void en::Game::win_screen_loop() {
