@@ -18,7 +18,8 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct Drawable {
+	class Drawable {
+	public:
 		virtual ~Drawable() = default;
 
 		//Image:
@@ -61,12 +62,13 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct Image : public Drawable {
+	class Image : public Drawable {
+	private:
 		sf::Sprite sprite;
 		float sprite_x_original{ 0.0f };
 		float sprite_y_original{ 0.0f };
 
-
+	public:
 		void setup(const sf::Texture& texture, const float x, const float y) override;
 
 		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
@@ -92,12 +94,13 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct Label : public Drawable {
+	class Label : public Drawable {
+	private:
 		sf::Text text;
 		float text_x_original{ 0.0f };
 		float text_y_original{ 0.0f };
 
-		
+	public:
 		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
 
 		void setup(const sf::Texture& texture, const float x, const float y) override {}
@@ -123,7 +126,8 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct ImageLabel : public Drawable {
+	class ImageLabel : public Drawable {
+	private:
 		sf::Sprite sprite;
 		float sprite_x_original{ 0.0f };
 		float sprite_y_original{ 0.0f };
@@ -131,7 +135,7 @@ namespace en {
 		float text_x_original{ 0.0f };
 		float text_y_original{ 0.0f };
 
-
+	public:
 		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
 
 		void setup(const sf::Texture& texture, const float x, const float y) override {}
@@ -157,7 +161,8 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct Button : public Drawable {
+	class Button : public Drawable {
+	private:
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
 		float sprite_x_original{ 0.0f };
@@ -165,7 +170,7 @@ namespace en {
 		std::function<void()> function;
 		sf::Sound sound;
 
-
+	public:
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override;
 
 		void setup(const sf::Texture& texture, const float x, const float y) override {}
@@ -191,7 +196,8 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct TextButton : public Drawable {
+	class TextButton : public Drawable {
+	private:
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
 		float sprite_x_original{ 0.0f };
@@ -202,7 +208,7 @@ namespace en {
 		std::function<void()> function;
 		sf::Sound sound;
 
-
+	public:
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
 
 		void setup(const sf::Texture& texture, const float x, const float y) override {}
@@ -228,7 +234,8 @@ namespace en {
 
 	//====================================================================================================================================
 
-	struct ToggleButton : public Drawable {
+	class ToggleButton : public Drawable {
+	private:
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
 		float sprite_x_original{ 0.0f };
@@ -238,7 +245,7 @@ namespace en {
 		std::function<void()> function;
 		sf::Sound sound;
 
-
+	public:
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override;
 
 		void setup(const sf::Texture& texture, const float x, const float y) override {}
