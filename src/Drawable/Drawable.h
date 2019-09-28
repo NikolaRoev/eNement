@@ -40,16 +40,12 @@ namespace en {
 		//Toggle button.
 		virtual void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) = 0;
 
-		//TO DO: Add the other drawables setup functions here.
-
 		//Utility functions.
 		virtual void resize(const float resize_delta_x, const float resize_delta_y) = 0;
 
 		virtual void draw(sf::RenderWindow& window) = 0;
 
 		virtual void draw(sf::RenderWindow& window, sf::Event& event) = 0;
-
-		//TO DO: Add a custom draw function for projectiles and if needed other drawables, maybe the player will also have a custom draw with the arrow controls being in it.
 
 		virtual void set_function(std::function<void()> _function) = 0;
 
@@ -58,6 +54,10 @@ namespace en {
 		virtual void set_text(const std::string& new_text) = 0;
 
 		virtual void set_volume() = 0;
+
+		//Game drawables specific functions.
+
+		//TO DO:
 	};
 
 	//====================================================================================================================================
