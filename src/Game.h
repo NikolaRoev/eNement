@@ -2,6 +2,7 @@
 #include "Core/Core.h"
 #include "Drawable/Drawable.h"
 #include "DrawableManager/DrawableManager.h"
+#include "GameStructures.h"
 #include "ResourceManager/ResourceManager.h"
 
 #include <vector>
@@ -37,8 +38,9 @@ namespace en {
 
 	class Game {
 	private:
-		
 
+		//====================================================================================================================================
+	
 		int application_state{ MAIN_MENU };
 
 		int game_state{ FIGHT }; //TO DO: Change this when ready.
@@ -51,9 +53,19 @@ namespace en {
 
 		//====================================================================================================================================
 
+		PlayerEntity* player{ nullptr };
+
+		EnemyEntity* current_enemy{ nullptr };
+
+		//====================================================================================================================================
+
 		void set_resources();
 
 		void set_drawables();
+
+		void load_save_file();
+
+		void save_save_file();
 
 		//====================================================================================================================================
 

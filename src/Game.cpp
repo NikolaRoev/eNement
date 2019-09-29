@@ -2,6 +2,7 @@
 #include "Core/Core.h"
 #include "Drawable/Drawable.h"
 #include "DrawableManager/DrawableManager.h"
+#include "GameStructures.h"
 #include "ResourceManager/ResourceManager.h"
 
 #include <vector>
@@ -197,6 +198,14 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 
 
+}
+
+void en::Game::load_save_file() {
+	//TO DO: Set the PlayerEntity here. As well as the player drawable.
+}
+
+void en::Game::save_save_file() {
+	//TO DO:
 }
 
 //====================================================================================================================================

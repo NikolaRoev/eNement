@@ -56,7 +56,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Projects\C++ Libraries\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\C++ Libraries\SFML-2.5.1\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -74,7 +74,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Projects\C++ Libraries\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Projects\C++ Libraries\SFML-2.5.1\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -100,6 +100,7 @@
     <ClCompile Include="src\Drawable\Drawable.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameStructures.cpp" />
     <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +109,7 @@
     <ClInclude Include="src\DrawableManager\DrawableManager.h" />
     <ClInclude Include="src\Drawable\Drawable.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameStructures.h" />
     <ClInclude Include="src\ResourceManager\ResourceManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
