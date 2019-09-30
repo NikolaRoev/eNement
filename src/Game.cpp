@@ -59,12 +59,14 @@ void en::Game::set_resources() {
 	//Fight:
 
 	resource_manager->add_texture("assets/images/Game/Fight_Background.png", "Fight Background");
-	resource_manager->add_texture("assets/images/Game/Player.png", "Player");
 
-	resource_manager->add_texture("assets/images/Game/Enemy0.png", "Enemy0");
-	resource_manager->add_texture("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
-	resource_manager->add_texture("assets/images/Game/Spell0.png", "Spell0");
-	resource_manager->add_texture("assets/images/Game/Spell1.png", "Spell1");
+	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Player.png", "Player");
+	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Spell0.png", "Spell0");
+	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Spell1.png", "Spell1");
+
+	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0.png", "Enemy0");
+	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
+
 
 	//====================================================================================================================================
 
