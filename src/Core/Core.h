@@ -16,11 +16,14 @@
 //====================================================================================================================================
 
 namespace en {
-	inline float DELTA_X;
-	inline float DELTA_Y;
+	inline float DELTA_X{ 1.0f };
+	inline float DELTA_Y{ 1.0f };
 
 	inline float VOLUME{ 50.0f };
 	inline sf::Time TIME;
+
+	inline unsigned int WIDTH{ 1024 };
+	inline unsigned int HEIGHT{ 576 };
 }
 
 //====================================================================================================================================

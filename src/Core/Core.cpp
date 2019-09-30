@@ -45,7 +45,9 @@ void en::Core::load_settings() {
 
 	if (is.is_open()) {
 		is.read((char*)& settings.width, sizeof(unsigned int));
+		WIDTH = settings.width;
 		is.read((char*)& settings.height, sizeof(unsigned int));
+		HEIGHT = settings.height;
 		is.read((char*)& settings.frames, sizeof(unsigned int));
 		is.read((char*)& settings.volume, sizeof(unsigned int));
 		VOLUME = static_cast<float>(settings.volume);
@@ -68,18 +70,22 @@ void en::Core::save_settings() {
 void en::Core::on_resize_event(DrawableManager* drawable_manager) {
 	sf::Vector2u new_size = window.getSize();
 
-	sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
-	window.setView(sf::View(visibleArea));
+	if ((new_size.x != WIDTH) || (new_size.y != HEIGHT)) {
+		sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
+		window.setView(sf::View(visibleArea));
 
-	settings.width = new_size.x;
-	settings.height = new_size.y;
+		settings.width = new_size.x;
+		settings.height = new_size.y;
+		WIDTH = settings.width;
+		HEIGHT = settings.height;
 
-	float old_delta_x = 1 / DELTA_X;
-	float old_delta_y = 1 / DELTA_Y;
+		float old_delta_x = 1 / DELTA_X;
+		float old_delta_y = 1 / DELTA_Y;
 
-	set_delta_values();
+		set_delta_values();
 
-	drawable_manager->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
+		drawable_manager->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
+	}
 }
 
 //====================================================================================================================================

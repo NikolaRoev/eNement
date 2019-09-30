@@ -22,7 +22,7 @@ namespace en {
 	public:
 		virtual ~Drawable() = default;
 
-		//Image:
+		//Image. //Player.
 		virtual void setup(const sf::Texture& texture, const float x, const float y) = 0;
 
 		//Label.
@@ -65,8 +65,6 @@ namespace en {
 	class Image : public Drawable {
 	private:
 		sf::Sprite sprite;
-		float sprite_x_original{ 0.0f };
-		float sprite_y_original{ 0.0f };
 
 	public:
 		void setup(const sf::Texture& texture, const float x, const float y) override;
@@ -97,8 +95,6 @@ namespace en {
 	class Label : public Drawable {
 	private:
 		sf::Text text;
-		float text_x_original{ 0.0f };
-		float text_y_original{ 0.0f };
 
 	public:
 		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
@@ -129,11 +125,7 @@ namespace en {
 	class ImageLabel : public Drawable {
 	private:
 		sf::Sprite sprite;
-		float sprite_x_original{ 0.0f };
-		float sprite_y_original{ 0.0f };
 		sf::Text text;
-		float text_x_original{ 0.0f };
-		float text_y_original{ 0.0f };
 
 	public:
 		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
@@ -165,8 +157,6 @@ namespace en {
 	private:
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
-		float sprite_x_original{ 0.0f };
-		float sprite_y_original{ 0.0f };
 		std::function<void()> function;
 		sf::Sound sound;
 
@@ -200,11 +190,7 @@ namespace en {
 	private:
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
-		float sprite_x_original{ 0.0f };
-		float sprite_y_original{ 0.0f };
 		sf::Text text;
-		float text_x_original{ 0.0f };
-		float text_y_original{ 0.0f };
 		std::function<void()> function;
 		sf::Sound sound;
 
@@ -238,8 +224,6 @@ namespace en {
 	private:
 		sf::Sprite sprite;
 		sf::Sprite hl_sprite;
-		float sprite_x_original{ 0.0f };
-		float sprite_y_original{ 0.0f };
 		sf::Sprite pressed_sprite;
 		bool pressed{ false };
 		std::function<void()> function;
@@ -275,16 +259,38 @@ namespace en {
 	
 	class Player : public Drawable {
 	private:
-		//TO DO: All of these.
+		sf::Sprite sprite;
+
 	public:
 
+		void setup(const sf::Texture& texture, const float x, const float y) override;
+
+		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
+		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+
+		void resize(const float resize_delta_x, const float resize_delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+		void set_function(std::function<void()> _function) override {}
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume() override {}
 	};
 
 	//====================================================================================================================================
 
 	class PlayerSpell : public Drawable {
 	private:
-
+		//TO DO: All of these.
 	public:
 
 	};

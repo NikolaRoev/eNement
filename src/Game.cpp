@@ -185,14 +185,13 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 	//Fight:
 
-	resource_manager->add_texture("assets/images/Game/Player.png", "Player");
-
-	resource_manager->add_texture("assets/images/Game/Enemy0.png", "Enemy0");
-
-
 	Drawable* fight_background = new Image;
 	fight_background->setup(resource_manager->get_texture("Fight Background"), 0, 0);
 	drawable_manager->add_drawable(*fight_background, "Fight Background");
+
+	Drawable* player_drawable = new Player;
+	player_drawable->setup(resource_manager->get_texture("Player"), 0, 0);
+	drawable_manager->add_drawable(*player_drawable, "Player");
 
 
 	//====================================================================================================================================
@@ -201,7 +200,7 @@ void en::Game::set_drawables() {
 }
 
 void en::Game::load_save_file() {
-	//TO DO: Set the PlayerEntity here. As well as the player drawable.
+	//TO DO: Set the PlayerEntity here.
 }
 
 void en::Game::save_save_file() {
@@ -279,26 +278,47 @@ void en::Game::options_menu_loop() {
 }
 
 //====================================================================================================================================
+//====================================================================================================================================
 
 void en::Game::map_loop() {
 	//TO DO:
 }
 
 void en::Game::fight_loop() {
-	//resource_manager->add_texture("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
-	//resource_manager->add_texture("assets/images/Game/Spell0.png", "Spell0");
-	//resource_manager->add_texture("assets/images/Game/Spell1.png", "Spell1");
+	std::vector<Drawable*> in_frame_static = {
+		drawable_manager->get_drawable("Fight Background"),
+
+	};
+	Drawable* temp_player_drawable = drawable_manager->get_drawable("Player");
 
 
 	while (game_state == FIGHT) {
 		TIME = core->clock.restart();
-
-
-
-		std::cout << TIME.asMicroseconds() << '\n';
-
-
+		//std::cout << TIME.asMicroseconds() << '\n';
 		
+		for (const auto& each : in_frame_static) {
+			each->draw(core->window, core->event);
+		}
+
+		temp_player_drawable->draw(core->window, core->event);
+
+
+
+
+
+
+
+
+
+		core->window.display();
+		core->window.pollEvent(core->event);
+
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event(drawable_manager);
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
 	}
 
 }
@@ -317,6 +337,7 @@ void en::Game::pause_loop() {
 	//When this loops is over, we either exit, not saving data for fight loop, or we resume whatever loop we are in.
 }
 
+//====================================================================================================================================
 //====================================================================================================================================
 
 void en::Game::game_loop() {
@@ -338,7 +359,7 @@ void en::Game::game_loop() {
 		}
 	}
 
-	//TO DO: Add the save game function here.
+	save_save_file();
 }
 
 //====================================================================================================================================
@@ -354,7 +375,6 @@ void en::Game::main_loop() {
 
 	drawable_manager = new DrawableManager;
 	set_drawables();
-
 
 	while (application_state != EXIT) {
 		switch (application_state) {
