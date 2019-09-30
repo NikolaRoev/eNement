@@ -20,6 +20,7 @@ namespace en {
 	inline float DELTA_Y;
 
 	inline float VOLUME{ 50.0f };
+	inline int FRAMES{ 60 };
 }
 
 //====================================================================================================================================
@@ -33,7 +34,7 @@ namespace en {
 	struct Settings {
 		unsigned int width{ 1024 };
 		unsigned int height{ 576 };
-		unsigned int frames{ 30 };
+		unsigned int frames{ 60 };
 		unsigned int volume{ 50 };
 	};
 

@@ -47,6 +47,7 @@ void en::Core::load_settings() {
 		is.read((char*)& settings.width, sizeof(unsigned int));
 		is.read((char*)& settings.height, sizeof(unsigned int));
 		is.read((char*)& settings.frames, sizeof(unsigned int));
+		FRAMES = settings.frames;
 		is.read((char*)& settings.volume, sizeof(unsigned int));
 		VOLUME = static_cast<float>(settings.volume);
 	}
