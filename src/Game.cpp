@@ -82,9 +82,9 @@ void en::Game::set_drawables() {
 
 	Drawable* main_menu_new_game = new Button();
 	main_menu_new_game->setup(resource_manager->get_texture("New Game Button"), resource_manager->get_texture("New Game Button HL"), 400, 350);
-	main_menu_new_game->set_function([]()
+	main_menu_new_game->set_function([&]()
 		{
-			std::cout << "new game\n";
+			application_state = NEW_GAME;
 		});
 	main_menu_new_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	drawable_manager->add_drawable(*main_menu_new_game, "Main Menu New Game Button");
@@ -242,7 +242,7 @@ void en::Game::main_menu_loop() {
 
 void en::Game::new_game_loop() {
 	//TO DO:
-	game_loop();
+	application_state = GAME;
 }
 
 void en::Game::load_game_loop() {
@@ -288,6 +288,19 @@ void en::Game::fight_loop() {
 	//resource_manager->add_texture("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
 	//resource_manager->add_texture("assets/images/Game/Spell0.png", "Spell0");
 	//resource_manager->add_texture("assets/images/Game/Spell1.png", "Spell1");
+
+
+	while (game_state == FIGHT) {
+		TIME = core->clock.restart();
+
+
+
+		std::cout << TIME.asMicroseconds() << '\n';
+
+
+		
+	}
+
 }
 
 void en::Game::win_screen_loop() {

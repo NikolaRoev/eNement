@@ -20,7 +20,7 @@ namespace en {
 	inline float DELTA_Y;
 
 	inline float VOLUME{ 50.0f };
-	inline int FRAMES{ 60 };
+	inline sf::Time TIME;
 }
 
 //====================================================================================================================================
@@ -51,6 +51,7 @@ namespace en {
 	public:
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };;
+		sf::Clock clock;
 
 		Settings settings;
 
