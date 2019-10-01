@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "AI/AI.h"
 #include "Core/Core.h"
 #include "Drawable/Drawable.h"
 #include "DrawableManager/DrawableManager.h"

@@ -94,6 +94,7 @@
     <None Include="settings.bin" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AI\AI.cpp" />
     <ClCompile Include="src\Collision\Collision.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\DrawableManager\DrawableManager.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="src\ResourceManager\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\AI\AI.h" />
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\DrawableManager\DrawableManager.h" />
