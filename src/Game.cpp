@@ -311,9 +311,17 @@ void en::Game::fight_loop() {
 		//std::cout << TIME.asMicroseconds() << '\n';
 		
 
-		//Generate spells.
+		//Handle events. Generate player spells. Generate enemy spells.
+		core->window.pollEvent(core->event);
 
-		//TO DO:
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event(drawable_manager);
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+
+		//TO DO: Add the player spells generation from key press here and the current enemy generate spells function also.
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -372,18 +380,6 @@ void en::Game::fight_loop() {
 
 		current_enemy->enemy_drawable->move();
 
-		//------------------------------------------------------------------------------------------------------------------------------------
-
-
-		//SFML stuff.
-		core->window.pollEvent(core->event);
-
-		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(drawable_manager);
-		}
-		else if (core->event.type == sf::Event::Closed) {
-			application_state = EXIT;
-		}
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
