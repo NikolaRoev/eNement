@@ -1,4 +1,5 @@
 #pragma once
+#include "../GameStructures.h"
 
 #include <functional>
 #include <string>
@@ -59,8 +60,13 @@ namespace en {
 
 		virtual bool out_of_bounds_check() = 0;
 
-		//TO DO:
-		//Add a set animation function.
+		virtual bool hit_check(const sf::Sprite& target) = 0;
+
+		virtual void hit_check(EnemyEntity* current_enemy) = 0;
+
+		virtual void move() = 0; //TO DO: Add the move logic here.
+
+		virtual const sf::Sprite& get_sprite() = 0;
 	};
 
 	struct DrawableDeleter {
@@ -103,6 +109,14 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================
@@ -136,6 +150,14 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================
@@ -170,6 +192,14 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================
@@ -206,6 +236,14 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================
@@ -243,6 +281,14 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================
@@ -281,6 +327,14 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================
@@ -317,18 +371,39 @@ namespace en {
 
 
 		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override {}
+
+		const sf::Sprite& get_sprite() override;
 	};
 
 	//====================================================================================================================================
-
+	//TO DO: All of these.
 	class PlayerSpell : public Drawable {
 	private:
-		//TO DO: All of these.
+		SpellEntity* type{ nullptr };
+
+		bool hit{ false };
+
 	public:
 
 
 
 		bool out_of_bounds_check() override;
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override;
+
+		void move() override;
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+
+		~PlayerSpell() override;
 	};
 
 	//====================================================================================================================================
@@ -338,6 +413,17 @@ namespace en {
 
 	public:
 
+
+
+		bool out_of_bounds_check() override { return false; }
+
+		bool hit_check(const sf::Sprite& target) override { return false; }
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override;
+
+		const sf::Sprite& get_sprite() override;
 	};
 
 	//====================================================================================================================================
@@ -345,11 +431,21 @@ namespace en {
 	class EnemySpell : public Drawable {
 	private:
 
+		bool hit{ false };
+
 	public:
 
 
 
 		bool out_of_bounds_check() override;
+
+		bool hit_check(const sf::Sprite& target) override;
+
+		void hit_check(EnemyEntity* current_enemy) override {}
+
+		void move() override;
+
+		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
 	};
 
 	//====================================================================================================================================

@@ -299,6 +299,8 @@ void en::Game::fight_loop() {
 
 	Drawable* temp_player_drawable = drawable_manager->get_drawable("Player");
 
+	//TO DO: Set the current enemy and his drawable pointer here.
+
 	std::vector<Drawable*> player_spells;
 
 	std::vector<Drawable*> enemy_spells;
@@ -311,6 +313,7 @@ void en::Game::fight_loop() {
 
 		//Generate spells.
 
+		//TO DO:
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -322,24 +325,57 @@ void en::Game::fight_loop() {
 
 		temp_player_drawable->draw(core->window, core->event);
 
+		current_enemy->enemy_drawable->draw(core->window);
 
+		for (const auto& each : enemy_spells) {
+			each->draw(core->window);
+		}
+
+		for (const auto& each : player_spells) {
+			each->draw(core->window);
+		}
+
+
+		core->window.display();
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 		
 		//Hit checks.
+		for (const auto& each : enemy_spells) {
+			if (each->hit_check(temp_player_drawable->get_sprite())) {
+				//Call a do damage function from current enemy.
+			}
+		}
 
-		//If hit do some stuff with the spell that hit, like move it from its spell vector to an animation vector.
+		for (const auto& each : player_spells) {
+			each->hit_check(current_enemy);
+		}
+
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Health check, for player and enemy.
+
+		//TO DO:
+
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
 		//Move spells and enemy.
+		for (const auto& each : enemy_spells) {
+			each->move();
+		}
 
+		for (const auto& each : player_spells) {
+			each->move();
+		}
+
+		current_enemy->enemy_drawable->move();
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
 		//SFML stuff.
-		core->window.display();
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
