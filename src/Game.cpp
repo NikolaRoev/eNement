@@ -306,7 +306,7 @@ void en::Game::fight_loop() {
 	std::vector<Drawable*> enemy_spells;
 
 
-	while (game_state == FIGHT && application_state != EXIT) {
+	while (game_state == FIGHT && application_state == GAME) {
 		TIME = core->clock.restart();
 		//std::cout << TIME.asMicroseconds() << '\n';
 		
