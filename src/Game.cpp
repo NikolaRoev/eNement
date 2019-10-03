@@ -6,7 +6,11 @@
 #include "GameStructures.h"
 #include "ResourceManager/ResourceManager.h"
 
+
+#include <algorithm>
+#include <functional>
 #include <vector>
+
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -292,13 +296,26 @@ void en::Game::fight_loop() {
 		drawable_manager->get_drawable("Fight Background"),
 
 	};
+
 	Drawable* temp_player_drawable = drawable_manager->get_drawable("Player");
 
+	std::vector<Drawable*> player_spells;
 
-	while (game_state == FIGHT) {
+	std::vector<Drawable*> enemy_spells;
+
+
+	while (game_state == FIGHT && application_state != EXIT) {
 		TIME = core->clock.restart();
 		//std::cout << TIME.asMicroseconds() << '\n';
 		
+
+		//Generate spells.
+
+
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Draws.
 		for (const auto& each : in_frame_static) {
 			each->draw(core->window, core->event);
 		}
@@ -306,13 +323,22 @@ void en::Game::fight_loop() {
 		temp_player_drawable->draw(core->window, core->event);
 
 
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+		
+		//Hit checks.
+
+		//If hit do some stuff with the spell that hit, like move it from its spell vector to an animation vector.
+		//------------------------------------------------------------------------------------------------------------------------------------
 
 
+		//Move spells and enemy.
 
 
+		//------------------------------------------------------------------------------------------------------------------------------------
 
 
-
+		//SFML stuff.
 		core->window.display();
 		core->window.pollEvent(core->event);
 
@@ -322,6 +348,18 @@ void en::Game::fight_loop() {
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
 		}
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Clear out of bounds spells.
+		std::for_each(std::begin(enemy_spells), std::end(enemy_spells), DrawableDeleter());
+		std::vector<Drawable*>::iterator new_end = std::remove(std::begin(enemy_spells), std::end(enemy_spells), static_cast<Drawable*>(nullptr));
+		enemy_spells.erase(new_end, std::end(enemy_spells));
+
+		std::for_each(std::begin(player_spells), std::end(player_spells), DrawableDeleter());
+		new_end = std::remove(std::begin(player_spells), std::end(player_spells), static_cast<Drawable*>(nullptr));
+		player_spells.erase(new_end, std::end(player_spells));
+		//------------------------------------------------------------------------------------------------------------------------------------
 	}
 
 }
@@ -368,7 +406,6 @@ void en::Game::game_loop() {
 //====================================================================================================================================
 
 void en::Game::main_loop() {
-	delete core;
 	core = new Core;
 	core->load_settings();
 	core->set_window();
@@ -401,8 +438,8 @@ void en::Game::main_loop() {
 
 	core->save_settings();
 	core->window.close();
-	delete resource_manager;
 	delete drawable_manager;
+	delete resource_manager;
 	delete core;
 }
 

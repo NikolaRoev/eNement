@@ -57,8 +57,19 @@ namespace en {
 
 		//Game drawables specific functions.
 
+		virtual bool out_of_bounds_check() = 0;
+
 		//TO DO:
 		//Add a set animation function.
+	};
+
+	struct DrawableDeleter {
+		void operator()(Drawable*& drawable) {
+			if (drawable->out_of_bounds_check()) {
+				delete drawable;
+				drawable = nullptr;
+			}
+		}
 	};
 
 	//====================================================================================================================================
@@ -89,6 +100,9 @@ namespace en {
 		void set_text(const std::string& new_text) override {}
 
 		void set_volume() override {}
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -119,6 +133,9 @@ namespace en {
 		void set_text(const std::string& new_text) override;
 
 		void set_volume() override {}
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -150,6 +167,9 @@ namespace en {
 		void set_text(const std::string& new_text) override;
 
 		void set_volume() override {}
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -183,6 +203,9 @@ namespace en {
 		void set_text(const std::string& new_text) override {}
 
 		void set_volume() override;
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -217,6 +240,9 @@ namespace en {
 		void set_text(const std::string& new_text) override;
 
 		void set_volume() override;
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -252,6 +278,9 @@ namespace en {
 		void set_text(const std::string& new_text) override {}
 
 		void set_volume() override;
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -285,6 +314,9 @@ namespace en {
 		void set_text(const std::string& new_text) override {}
 
 		void set_volume() override {}
+
+
+		bool out_of_bounds_check() override { return false; }
 	};
 
 	//====================================================================================================================================
@@ -294,6 +326,9 @@ namespace en {
 		//TO DO: All of these.
 	public:
 
+
+
+		bool out_of_bounds_check() override;
 	};
 
 	//====================================================================================================================================
@@ -312,6 +347,9 @@ namespace en {
 
 	public:
 
+
+
+		bool out_of_bounds_check() override;
 	};
 
 	//====================================================================================================================================
