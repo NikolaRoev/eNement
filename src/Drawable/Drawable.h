@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <string>
+#include <vector>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -40,6 +41,9 @@ namespace en {
 
 		//Toggle button.
 		virtual void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) = 0;
+
+		//Player Spell.
+		virtual void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) = 0;
 
 		//Utility functions.
 		virtual void resize(const float resize_delta_x, const float resize_delta_y) = 0;
@@ -92,6 +96,8 @@ namespace en {
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
+
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -133,6 +139,7 @@ namespace en {
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -175,6 +182,7 @@ namespace en {
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -219,6 +227,7 @@ namespace en {
 		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -264,6 +273,7 @@ namespace en {
 		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -310,6 +320,7 @@ namespace en {
 		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -354,6 +365,7 @@ namespace en {
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
 		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -385,13 +397,41 @@ namespace en {
 	//TO DO: All of these.
 	class PlayerSpell : public Drawable {
 	private:
-		SpellEntity* type{ nullptr };
+		sf::Sprite current_sprite;
+
+		std::vector<sf::Sprite> move_vector;
+		std::vector<sf::Sprite> cast_vector;
+		std::vector<sf::Sprite> hit_vector;
+
+		sf::Sound sound;
 
 		bool hit{ false };
 
 	public:
+		SpellEntity* type{ nullptr };
 
+		void setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y) override;
 
+		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
+		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
+		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
+		void setup(const sf::Texture& texture, const float x, const float y) override {}
+
+		void resize(const float resize_delta_x, const float resize_delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+		void set_function(std::function<void()> _function) override {}
+
+		void set_sound(const sf::SoundBuffer& sound_buffer) override;
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume() override;
 
 		bool out_of_bounds_check() override;
 
