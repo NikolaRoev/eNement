@@ -10,11 +10,30 @@ namespace en {
 
 	//====================================================================================================================================
 
+	enum class SpellType {
+		Empty,
+		Fire,
+		Water,
+		Wind,
+		Earth,
+		Ice,
+		Lightning,
+		Light,
+		Dark,
+		Healing,
+		Dimension,
+		Explosion,
+		Glass
+	};
+
+	//====================================================================================================================================
+
 	class PlayerEntity {
 	private:
 		//TO DO: All of these.
 	public:
-
+		SpellType first_spell{ SpellType::Empty };
+		SpellType second_spell{ SpellType::Empty };
 	};
 
 	//====================================================================================================================================
@@ -34,7 +53,7 @@ namespace en {
 	private:
 
 	public:
-
+		static SpellEntity* make_spell(const SpellType type, const PlayerEntity* player);
 	};
 
 	//====================================================================================================================================
