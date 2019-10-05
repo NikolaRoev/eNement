@@ -1,7 +1,6 @@
 #pragma once
 #include "Core/Core.h"
 #include "Drawable/Drawable.h"
-#include "DrawableManager/DrawableManager.h"
 #include "GameStructures.h"
 #include "ResourceManager/ResourceManager.h"
 
@@ -48,8 +47,6 @@ namespace en {
 		Core* core{ nullptr };
 
 		ResourceManager* resource_manager{ nullptr };
-
-		DrawableManager* drawable_manager{ nullptr };
 
 		//====================================================================================================================================
 

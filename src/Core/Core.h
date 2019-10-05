@@ -1,6 +1,6 @@
 #pragma once
 #include "../Drawable/Drawable.h"
-#include "../DrawableManager/DrawableManager.h"
+#include "../ResourceManager/ResourceManager.h"
 
 #include <vector>
 
@@ -65,7 +65,7 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event(DrawableManager* drawable_manager);
+		void on_resize_event(ResourceManager* resource_manager);
 	};
 }
 

@@ -38,18 +38,6 @@ en::SpellEntity* en::SpellEntity::make_spell(const SpellType type, const PlayerE
 		case SpellType::Dark:
 			return new FireSpell(player);
 			break;
-		case SpellType::Healing:
-			return new FireSpell(player);
-			break;
-		case SpellType::Dimension:
-			return new FireSpell(player);
-			break;
-		case SpellType::Explosion:
-			return new FireSpell(player);
-			break;
-		case SpellType::Glass:
-			return new FireSpell(player);
-			break;
 	}
 }
 

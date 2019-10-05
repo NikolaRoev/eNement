@@ -39,9 +39,6 @@
     <ClCompile Include="src\ResourceManager\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DrawableManager\DrawableManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Collision\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,9 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManager\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DrawableManager\DrawableManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Collision\Collision.h">

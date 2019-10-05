@@ -97,7 +97,6 @@
     <ClCompile Include="src\AI\AI.cpp" />
     <ClCompile Include="src\Collision\Collision.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
-    <ClCompile Include="src\DrawableManager\DrawableManager.cpp" />
     <ClCompile Include="src\Drawable\Drawable.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -108,7 +107,6 @@
     <ClInclude Include="src\AI\AI.h" />
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Core\Core.h" />
-    <ClInclude Include="src\DrawableManager\DrawableManager.h" />
     <ClInclude Include="src\Drawable\Drawable.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameStructures.h" />

@@ -1,6 +1,6 @@
 #include "Core.h"
 #include "../Drawable/Drawable.h"
-#include "../DrawableManager/DrawableManager.h"
+#include "../ResourceManager/ResourceManager.h"
 
 #include <fstream>
 #include <ios>
@@ -67,7 +67,7 @@ void en::Core::save_settings() {
 	os.close();
 }
 
-void en::Core::on_resize_event(DrawableManager* drawable_manager) {
+void en::Core::on_resize_event(ResourceManager* resource_manager) {
 	sf::Vector2u new_size = window.getSize();
 
 	if ((new_size.x != WIDTH) || (new_size.y != HEIGHT)) {
@@ -84,7 +84,7 @@ void en::Core::on_resize_event(DrawableManager* drawable_manager) {
 
 		set_delta_values();
 
-		drawable_manager->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
+		resource_manager->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
 	}
 }
 

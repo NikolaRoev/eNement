@@ -1,9 +1,11 @@
 #include "ResourceManager.h"
 #include "../Collision/Collision.h"
+#include "../Drawable/Drawable.h"
 
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -25,6 +27,27 @@ void en::ResourceManager::add_texture_for_pixel_perfect(const std::string& file_
 	textures.insert(std::make_pair(texture_name, sf::Texture()));
 	
 	Collision::CreateTextureAndBitmask(textures.find(texture_name)->second, file_path);
+}
+
+void en::ResourceManager::add_animation(const std::vector<const std::string&>& file_paths, const std::string& animation_name) {
+	auto[it, inserted] = animation_textures.insert(std::make_pair(animation_name, std::vector<sf::Texture>()));
+	if (inserted) {
+		for (const auto& each : file_paths) {
+			sf::Texture temp;
+			temp.loadFromFile(each);
+			it->second.push_back(temp);
+		}
+	}
+}
+
+void en::ResourceManager::add_animation_for_pixel_perfect(const std::vector<const std::string&>& file_paths, const std::string& animation_name) {
+	auto [it, inserted] = animation_textures.insert(std::make_pair(animation_name, std::vector<sf::Texture>()));
+	if (inserted) {
+		for (const auto& each : file_paths) {
+			it->second.push_back(sf::Texture());
+			Collision::CreateTextureAndBitmask(it->second.back(), each);
+		}
+	}
 }
 
 void en::ResourceManager::add_font(const std::string& file_path, const std::string& font_name) {
@@ -54,6 +77,30 @@ const sf::Font& en::ResourceManager::get_font(const std::string& font_name) cons
 
 const sf::SoundBuffer& en::ResourceManager::get_sound_buffer(const std::string& sound_buffer_name) const {
 	return sound_buffers.find(sound_buffer_name)->second;
+}
+
+//====================================================================================================================================
+
+void en::ResourceManager::add_drawable(Drawable& drawable, const std::string& drawable_name) {
+	drawables.insert(std::make_pair(drawable_name, &drawable));
+}
+
+en::Drawable* en::ResourceManager::get_drawable(const std::string& drawable_name) const {
+	return drawables.find(drawable_name)->second;
+}
+
+//====================================================================================================================================
+
+void en::ResourceManager::resize_all(const float d_x, const float d_y) {
+	for (const auto& each : drawables) {
+		each.second->resize(d_x, d_y);
+	}
+}
+
+void en::ResourceManager::change_volume_for_all() {
+	for (const auto& each : drawables) {
+		each.second->set_volume();
+	}
 }
 
 //====================================================================================================================================

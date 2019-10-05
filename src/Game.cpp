@@ -2,7 +2,6 @@
 #include "AI/AI.h"
 #include "Core/Core.h"
 #include "Drawable/Drawable.h"
-#include "DrawableManager/DrawableManager.h"
 #include "GameStructures.h"
 #include "ResourceManager/ResourceManager.h"
 
@@ -84,7 +83,7 @@ void en::Game::set_drawables() {
 
 	Drawable* main_menu_background = new Image;
 	main_menu_background->setup(resource_manager->get_texture("Main Menu Background"), 0, 0);
-	drawable_manager->add_drawable(*main_menu_background, "Main Menu Background");
+	resource_manager->add_drawable(*main_menu_background, "Main Menu Background");
 
 
 	Drawable* main_menu_new_game = new Button();
@@ -94,7 +93,7 @@ void en::Game::set_drawables() {
 			application_state = NEW_GAME;
 		});
 	main_menu_new_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	drawable_manager->add_drawable(*main_menu_new_game, "Main Menu New Game Button");
+	resource_manager->add_drawable(*main_menu_new_game, "Main Menu New Game Button");
 
 
 	Drawable* main_menu_load_game = new Button();
@@ -104,7 +103,7 @@ void en::Game::set_drawables() {
 			std::cout << "load game\n";
 		});
 	main_menu_load_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	drawable_manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
+	resource_manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
 
 
 	Drawable* main_menu_options = new Button();
@@ -114,7 +113,7 @@ void en::Game::set_drawables() {
 			application_state = OPTIONS_MENU;
 		});
 	main_menu_options->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	drawable_manager->add_drawable(*main_menu_options, "Main Menu Options Button");
+	resource_manager->add_drawable(*main_menu_options, "Main Menu Options Button");
 
 
 	Drawable* main_menu_quit = new Button();
@@ -123,7 +122,7 @@ void en::Game::set_drawables() {
 		{
 			application_state = EXIT;
 		});
-	drawable_manager->add_drawable(*main_menu_quit, "Main Menu Quit Button");
+	resource_manager->add_drawable(*main_menu_quit, "Main Menu Quit Button");
 
 	//====================================================================================================================================
 
@@ -132,12 +131,12 @@ void en::Game::set_drawables() {
 
 	Drawable* options_menu_background = new Image;
 	options_menu_background->setup(resource_manager->get_texture("Options Menu Background"), 0, 0);
-	drawable_manager->add_drawable(*options_menu_background, "Options Menu Background");
+	resource_manager->add_drawable(*options_menu_background, "Options Menu Background");
 
 
 	Drawable* volume_label = new Label;
 	volume_label->setup(resource_manager->get_font("Test Font"), 30, sf::Color::White, 1200, 700, std::to_string(core->settings.volume));
-	drawable_manager->add_drawable(*volume_label, "Volume Label");
+	resource_manager->add_drawable(*volume_label, "Volume Label");
 
 
 	Drawable* volume_arrow_left = new Button;
@@ -148,13 +147,13 @@ void en::Game::set_drawables() {
 				VOLUME -= 5;
 				core->settings.volume -= 5;
 
-				auto temp_volume_label = drawable_manager->get_drawable("Volume Label");
+				auto temp_volume_label = resource_manager->get_drawable("Volume Label");
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
-				drawable_manager->change_volume_for_all();
+				resource_manager->change_volume_for_all();
 			}
 		});
 	volume_arrow_left->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	drawable_manager->add_drawable(*volume_arrow_left, "Volume Arrow Left");
+	resource_manager->add_drawable(*volume_arrow_left, "Volume Arrow Left");
 
 
 	Drawable* volume_arrow_right = new Button;
@@ -165,13 +164,13 @@ void en::Game::set_drawables() {
 				VOLUME += 5;
 				core->settings.volume += 5;
 
-				auto temp_volume_label = drawable_manager->get_drawable("Volume Label");
+				auto temp_volume_label = resource_manager->get_drawable("Volume Label");
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
-				drawable_manager->change_volume_for_all();
+				resource_manager->change_volume_for_all();
 			}
 		});
 	volume_arrow_right->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	drawable_manager->add_drawable(*volume_arrow_right, "Volume Arrow Right");
+	resource_manager->add_drawable(*volume_arrow_right, "Volume Arrow Right");
 
 
 	Drawable* back_button = new Button;
@@ -181,7 +180,7 @@ void en::Game::set_drawables() {
 			application_state = MAIN_MENU;
 		});
 	back_button->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	drawable_manager->add_drawable(*back_button, "Back Button");
+	resource_manager->add_drawable(*back_button, "Back Button");
 
 	//====================================================================================================================================
 
@@ -194,11 +193,11 @@ void en::Game::set_drawables() {
 
 	Drawable* fight_background = new Image;
 	fight_background->setup(resource_manager->get_texture("Fight Background"), 0, 0);
-	drawable_manager->add_drawable(*fight_background, "Fight Background");
+	resource_manager->add_drawable(*fight_background, "Fight Background");
 
 	Drawable* player_drawable = new Player;
 	player_drawable->setup(resource_manager->get_texture("Player"), 0, 0);
-	drawable_manager->add_drawable(*player_drawable, "Player");
+	resource_manager->add_drawable(*player_drawable, "Player");
 
 
 	//====================================================================================================================================
@@ -218,11 +217,11 @@ void en::Game::save_save_file() {
 
 void en::Game::main_menu_loop() {
 	std::vector<Drawable*> in_frame = {
-		drawable_manager->get_drawable("Main Menu Background"),
-		drawable_manager->get_drawable("Main Menu New Game Button"),
-		drawable_manager->get_drawable("Main Menu Load Game Button"),
-		drawable_manager->get_drawable("Main Menu Options Button"),
-		drawable_manager->get_drawable("Main Menu Quit Button")
+		resource_manager->get_drawable("Main Menu Background"),
+		resource_manager->get_drawable("Main Menu New Game Button"),
+		resource_manager->get_drawable("Main Menu Load Game Button"),
+		resource_manager->get_drawable("Main Menu Options Button"),
+		resource_manager->get_drawable("Main Menu Quit Button")
 	};
 
 	
@@ -236,7 +235,7 @@ void en::Game::main_menu_loop() {
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(drawable_manager);
+			core->on_resize_event(resource_manager);
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -257,11 +256,11 @@ void en::Game::load_game_loop() {
 
 void en::Game::options_menu_loop() {
 	std::vector<Drawable*> in_frame = {
-		drawable_manager->get_drawable("Options Menu Background"),
-		drawable_manager->get_drawable("Volume Arrow Left"),
-		drawable_manager->get_drawable("Volume Label"),
-		drawable_manager->get_drawable("Volume Arrow Right"),
-		drawable_manager->get_drawable("Back Button"),
+		resource_manager->get_drawable("Options Menu Background"),
+		resource_manager->get_drawable("Volume Arrow Left"),
+		resource_manager->get_drawable("Volume Label"),
+		resource_manager->get_drawable("Volume Arrow Right"),
+		resource_manager->get_drawable("Back Button"),
 	};
 
 
@@ -275,7 +274,7 @@ void en::Game::options_menu_loop() {
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(drawable_manager);
+			core->on_resize_event(resource_manager);
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -293,11 +292,11 @@ void en::Game::map_loop() {
 
 void en::Game::fight_loop() {
 	std::vector<Drawable*> in_frame_static = {
-		drawable_manager->get_drawable("Fight Background"),
+		resource_manager->get_drawable("Fight Background"),
 
 	};
 
-	Drawable* temp_player_drawable = drawable_manager->get_drawable("Player");
+	Drawable* temp_player_drawable = resource_manager->get_drawable("Player");
 
 	//TO DO: Set the current enemy and his drawable pointer here.
 
@@ -315,7 +314,7 @@ void en::Game::fight_loop() {
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(drawable_manager);
+			core->on_resize_event(resource_manager);
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -444,8 +443,6 @@ void en::Game::main_loop() {
 
 	resource_manager = new ResourceManager;
 	set_resources();
-
-	drawable_manager = new DrawableManager;
 	set_drawables();
 
 	while (application_state != EXIT) {
@@ -470,7 +467,6 @@ void en::Game::main_loop() {
 
 	core->save_settings();
 	core->window.close();
-	delete drawable_manager;
 	delete resource_manager;
 	delete core;
 }
