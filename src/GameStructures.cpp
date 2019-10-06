@@ -1,5 +1,4 @@
 #include "GameStructures.h"
-#include "Drawable/Drawable.h"
 #include "ResourceManager/ResourceManager.h"
 
 
@@ -11,7 +10,7 @@
 //====================================================================================================================================
 
 en::SpellEntity::~SpellEntity() {
-	delete spell_drawable;
+	delete drawable;
 }
 
 en::SpellEntity* en::SpellEntity::make_spell(const SpellType type, PlayerEntity* player, ResourceManager* resource_manager) {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Drawable/Drawable.h"
+#include "ResourceManager/ResourceManager.h"
 
 
 //====================================================================================================================================
@@ -7,6 +7,8 @@
 //====================================================================================================================================
 
 namespace en {
+
+	class Drawable;
 
 	//====================================================================================================================================
 
@@ -28,6 +30,8 @@ namespace en {
 	private:
 		//TO DO: All of these.
 	public:
+		Drawable* drawable{ nullptr };
+
 		SpellType first_spell{ SpellType::Empty };
 		SpellType second_spell{ SpellType::Empty };
 	};
@@ -38,7 +42,7 @@ namespace en {
 	private:
 
 	public:
-		Drawable* enemy_drawable{ nullptr };
+		Drawable* drawable{ nullptr };
 	};
 
 	//====================================================================================================================================
@@ -49,7 +53,7 @@ namespace en {
 	private:
 
 	public:
-		Drawable* spell_drawable{ nullptr };
+		Drawable* drawable{ nullptr };
 
 
 		virtual ~SpellEntity();
@@ -64,7 +68,7 @@ namespace en {
 	private:
 
 	public:
-		FireSpell();
+		FireSpell(PlayerEntity* player, ResourceManager* resource_manager);
 
 	};
 

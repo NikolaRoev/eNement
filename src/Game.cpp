@@ -26,8 +26,6 @@ void en::Game::set_resources() {
 	//Main Menu:
 
 	resource_manager->add_texture("assets/images/Main Menu/Main_Menu_Background.png", "Main Menu Background");
-	resource_manager->add_texture("assets/images/Main Menu/New_Game_Button.png", "New Game Button");
-	resource_manager->add_texture("assets/images/Main Menu/New_Game_Button_HL.png", "New Game Button HL");
 	resource_manager->add_texture("assets/images/Main Menu/Load_Game_Button.png", "Load Game Button");
 	resource_manager->add_texture("assets/images/Main Menu/Load_Game_Button_HL.png", "Load Game Button HL");
 	resource_manager->add_texture("assets/images/Main Menu/Options_Button.png", "Options Button");
@@ -86,21 +84,12 @@ void en::Game::set_drawables() {
 	resource_manager->add_drawable(*main_menu_background, "Main Menu Background");
 
 
-	Drawable* main_menu_new_game = new Button();
-	main_menu_new_game->setup(resource_manager->get_texture("New Game Button"), resource_manager->get_texture("New Game Button HL"), 400, 350);
-	main_menu_new_game->set_function([&]()
-		{
-			application_state = NEW_GAME;
-		});
-	main_menu_new_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
-	resource_manager->add_drawable(*main_menu_new_game, "Main Menu New Game Button");
-
 
 	Drawable* main_menu_load_game = new Button();
 	main_menu_load_game->setup(resource_manager->get_texture("Load Game Button"), resource_manager->get_texture("Load Game Button HL"), 400, 550);
-	main_menu_load_game->set_function([]()
+	main_menu_load_game->set_function([&]()
 		{
-			std::cout << "load game\n";
+			application_state = START_MENU;
 		});
 	main_menu_load_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
 	resource_manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
@@ -245,13 +234,16 @@ void en::Game::main_menu_loop() {
 
 }
 
-void en::Game::new_game_loop() {
+void en::Game::start_menu_loop() {
 	//TO DO:
-	application_state = GAME;
-}
 
-void en::Game::load_game_loop() {
-	//TO DO:
+	delete player->drawable;
+	delete player;
+
+	
+	application_state = GAME;
+	player = new PlayerEntity;
+	player->drawable = resource_manager->get_drawable("Player");
 }
 
 void en::Game::options_menu_loop() {
@@ -296,8 +288,8 @@ void en::Game::fight_loop() {
 
 	};
 
-	Drawable* temp_player_drawable = resource_manager->get_drawable("Player");
-
+	delete current_enemy->drawable;
+	delete current_enemy;
 	//TO DO: Set the current enemy and his drawable pointer here.
 
 	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell, player, resource_manager), SpellEntity::make_spell(player->second_spell, player, resource_manager) };
@@ -330,16 +322,16 @@ void en::Game::fight_loop() {
 			each->draw(core->window, core->event);
 		}
 
-		temp_player_drawable->draw(core->window, core->event);
+		player->drawable->draw(core->window, core->event);
 
-		current_enemy->enemy_drawable->draw(core->window);
+		current_enemy->drawable->draw(core->window);
 
 		for (const auto& each : enemy_spells) {
 			each->draw(core->window);
 		}
 
 		for (const auto& each : player_spells) {
-			each->spell_drawable->draw(core->window);
+			each->drawable->draw(core->window);
 		}
 
 
@@ -349,13 +341,13 @@ void en::Game::fight_loop() {
 		
 		//Hit checks.
 		for (const auto& each : enemy_spells) {
-			if (each->hit_check(temp_player_drawable->get_sprite())) {
+			if (each->hit_check(player->drawable->get_sprite())) {
 				//Call a do damage function from current enemy.
 			}
 		}
 
 		for (const auto& each : player_spells) {
-			each->spell_drawable->hit_check(current_enemy);
+			each->drawable->hit_check(current_enemy);
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------------------
@@ -374,10 +366,10 @@ void en::Game::fight_loop() {
 		}
 
 		for (const auto& each : player_spells) {
-			each->spell_drawable->move();
+			each->drawable->move();
 		}
 
-		current_enemy->enemy_drawable->move();
+		current_enemy->drawable->move();
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -446,11 +438,8 @@ void en::Game::main_loop() {
 			case MAIN_MENU:
 				main_menu_loop();
 				break;
-			case NEW_GAME:
-				new_game_loop();
-				break;
-			case LOAD_GAME:
-				load_game_loop();
+			case START_MENU:
+				start_menu_loop();
 				break;
 			case OPTIONS_MENU:
 				options_menu_loop();

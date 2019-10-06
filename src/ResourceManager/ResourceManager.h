@@ -1,5 +1,4 @@
 #pragma once
-#include "../Drawable/Drawable.h"
 
 #include <string>
 #include <unordered_map>
@@ -17,6 +16,8 @@
 //====================================================================================================================================
 
 namespace en {
+
+	class Drawable;
 
 	class ResourceManager {
 	private:

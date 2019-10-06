@@ -23,10 +23,9 @@ namespace en {
 
 	constexpr int EXIT = 0;
 	constexpr int MAIN_MENU = 1;
-	constexpr int NEW_GAME = 2;
-	constexpr int LOAD_GAME = 3;
-	constexpr int OPTIONS_MENU = 4;
-	constexpr int GAME = 5;
+	constexpr int START_MENU = 2;
+	constexpr int OPTIONS_MENU = 3;
+	constexpr int GAME = 4;
 
 	constexpr int MAP = 0;
 	constexpr int FIGHT = 1;
@@ -68,9 +67,7 @@ namespace en {
 
 		void main_menu_loop();
 
-		void new_game_loop();
-
-		void load_game_loop();
+		void start_menu_loop();
 
 		void options_menu_loop();
 
