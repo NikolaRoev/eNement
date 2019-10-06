@@ -29,7 +29,7 @@ void en::ResourceManager::add_texture_for_pixel_perfect(const std::string& file_
 	Collision::CreateTextureAndBitmask(textures.find(texture_name)->second, file_path);
 }
 
-void en::ResourceManager::add_animation(const std::vector<const std::string&>& file_paths, const std::string& animation_name) {
+void en::ResourceManager::add_animation(const std::vector<std::string>& file_paths, const std::string& animation_name) {
 	auto[it, inserted] = animation_textures.insert(std::make_pair(animation_name, std::vector<sf::Texture>()));
 	if (inserted) {
 		for (const auto& each : file_paths) {
@@ -40,7 +40,7 @@ void en::ResourceManager::add_animation(const std::vector<const std::string&>& f
 	}
 }
 
-void en::ResourceManager::add_animation_for_pixel_perfect(const std::vector<const std::string&>& file_paths, const std::string& animation_name) {
+void en::ResourceManager::add_animation_for_pixel_perfect(const std::vector<std::string>& file_paths, const std::string& animation_name) {
 	auto [it, inserted] = animation_textures.insert(std::make_pair(animation_name, std::vector<sf::Texture>()));
 	if (inserted) {
 		for (const auto& each : file_paths) {

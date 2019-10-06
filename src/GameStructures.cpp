@@ -1,4 +1,5 @@
 #include "GameStructures.h"
+#include "Drawable/Drawable.h"
 #include "ResourceManager/ResourceManager.h"
 
 
@@ -43,7 +44,14 @@ en::SpellEntity* en::SpellEntity::make_spell(const SpellType type, PlayerEntity*
 			return new FireSpell(player, resource_manager);
 			break;
 	}
+	return nullptr;
 }
 
 //====================================================================================================================================
+//====================================================================================================================================
 
+en::FireSpell::FireSpell(PlayerEntity* player, ResourceManager* resource_manager) {
+
+}
+
+//====================================================================================================================================

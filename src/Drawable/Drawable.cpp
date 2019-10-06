@@ -1,7 +1,6 @@
 #include "Drawable.h"
 #include "../Core/Core.h"
 #include "../Collision/Collision.h"
-#include "../GameStructures.h"
 
 #include <functional>
 #include <string>
@@ -375,7 +374,7 @@ const sf::Sprite& en::Player::get_sprite() {
 
 //====================================================================================================================================
 
-void en::PlayerSpell::setup(const std::vector<const sf::Texture>& move_animation, const std::vector<const sf::Texture>& cast_animation, const std::vector<const sf::Texture>& hit_animation, const float x, const float y, const SpellType _type) {
+void en::PlayerSpell::setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) {
 	for (const auto& each : move_animation) {
 		move_vector.push_back(sf::Sprite());
 		move_vector.back().setTexture(each);
@@ -394,8 +393,6 @@ void en::PlayerSpell::setup(const std::vector<const sf::Texture>& move_animation
 		hit_vector.back().setTexture(each);
 		hit_vector.back().scale(DELTA_X, DELTA_Y);
 	}
-
-	type = _type;
 }
 
 void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -440,11 +437,8 @@ bool en::PlayerSpell::out_of_bounds_check() {
 	return false;
 }
 
-void en::PlayerSpell::hit_check(EnemyEntity* current_enemy) {
-	if (Collision::PixelPerfectTest(current_enemy->drawable->get_sprite(), current_sprite)) {
-		hit = true;
-		//TO DO: Add a hit function from the spell type here.
-	}
+bool en::PlayerSpell::hit_check(const sf::Sprite& target) {
+	return Collision::PixelPerfectTest(target, current_sprite);
 }
 
 void en::PlayerSpell::move() {

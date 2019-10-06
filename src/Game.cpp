@@ -207,7 +207,6 @@ void en::Game::save_save_file() {
 void en::Game::main_menu_loop() {
 	std::vector<Drawable*> in_frame = {
 		resource_manager->get_drawable("Main Menu Background"),
-		resource_manager->get_drawable("Main Menu New Game Button"),
 		resource_manager->get_drawable("Main Menu Load Game Button"),
 		resource_manager->get_drawable("Main Menu Options Button"),
 		resource_manager->get_drawable("Main Menu Quit Button")
@@ -236,9 +235,10 @@ void en::Game::main_menu_loop() {
 
 void en::Game::start_menu_loop() {
 	//TO DO:
-
-	delete player->drawable;
-	delete player;
+	if (player) {
+		delete player->drawable;
+		delete player;
+	}
 
 	
 	application_state = GAME;
@@ -288,8 +288,11 @@ void en::Game::fight_loop() {
 
 	};
 
-	delete current_enemy->drawable;
-	delete current_enemy;
+	if (current_enemy) {
+		delete current_enemy->drawable;
+		delete current_enemy;
+	}
+
 	//TO DO: Set the current enemy and his drawable pointer here.
 
 	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell, player, resource_manager), SpellEntity::make_spell(player->second_spell, player, resource_manager) };
@@ -347,7 +350,9 @@ void en::Game::fight_loop() {
 		}
 
 		for (const auto& each : player_spells) {
-			each->drawable->hit_check(current_enemy);
+			if (each->drawable->hit_check(current_enemy->drawable->get_sprite())) {
+				//TO DO: Add a player spell entity do dmg function here.
+			}
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------------------

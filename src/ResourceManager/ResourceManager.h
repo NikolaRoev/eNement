@@ -1,4 +1,5 @@
 #pragma once
+#include "../Drawable/Drawable.h"
 
 #include <string>
 #include <unordered_map>
@@ -17,8 +18,6 @@
 
 namespace en {
 
-	class Drawable;
-
 	class ResourceManager {
 	private:
 		std::unordered_map<std::string, sf::Texture> textures;
@@ -33,8 +32,8 @@ namespace en {
 		void add_texture(const std::string& file_path, const std::string& texture_name);
 		void add_texture_for_pixel_perfect(const std::string& file_path, const std::string& texture_name);
 		
-		void add_animation(const std::vector<const std::string&>&file_paths, const std::string& animation_name);
-		void add_animation_for_pixel_perfect(const std::vector<const std::string&>& file_paths, const std::string& animation_name);
+		void add_animation(const std::vector<std::string>&file_paths, const std::string& animation_name);
+		void add_animation_for_pixel_perfect(const std::vector<std::string>& file_paths, const std::string& animation_name);
 
 		void add_font(const std::string& file_path, const std::string& font_name);
 		void add_sound_buffer(const std::string& file_path, const std::string& sound_buffer_name);
@@ -42,6 +41,7 @@ namespace en {
 		const sf::Texture& get_texture(const std::string& texture_name) const;
 		const sf::Font& get_font(const std::string& font_name) const;
 		const sf::SoundBuffer& get_sound_buffer(const std::string& sound_buffer_name) const;
+		//TO DO: Add get animation function.
 
 		//====================================================================================================================================
 
