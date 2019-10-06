@@ -49,7 +49,12 @@ namespace en {
 	private:
 
 	public:
-		static SpellEntity* make_spell(const SpellType type, const PlayerEntity* player);
+		Drawable* spell_drawable{ nullptr };
+
+
+		virtual ~SpellEntity();
+
+		static SpellEntity* make_spell(const SpellType type, PlayerEntity* player, ResourceManager* resource_manager);
 	};
 
 	//====================================================================================================================================
@@ -59,6 +64,7 @@ namespace en {
 	private:
 
 	public:
+		FireSpell();
 
 	};
 

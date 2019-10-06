@@ -374,7 +374,7 @@ const sf::Sprite& en::Player::get_sprite() {
 
 //====================================================================================================================================
 
-void en::PlayerSpell::setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y, const SpellType _type, const PlayerEntity* player) {
+void en::PlayerSpell::setup(const std::vector<const sf::Texture&>& move_animation, const std::vector<const sf::Texture&>& cast_animation, const std::vector<const sf::Texture&>& hit_animation, const float x, const float y, const SpellType _type) {
 	for (const auto& each : move_animation) {
 		move_vector.push_back(sf::Sprite());
 		move_vector.back().setTexture(each);
@@ -394,7 +394,7 @@ void en::PlayerSpell::setup(const std::vector<const sf::Texture&>& move_animatio
 		hit_vector.back().scale(DELTA_X, DELTA_Y);
 	}
 
-	type = SpellEntity::make_spell(_type, player);
+	type = _type;
 }
 
 void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -448,10 +448,6 @@ void en::PlayerSpell::hit_check(EnemyEntity* current_enemy) {
 
 void en::PlayerSpell::move() {
 	//TO DO:
-}
-
-en::PlayerSpell::~PlayerSpell(){
-	delete type;
 }
 
 //====================================================================================================================================

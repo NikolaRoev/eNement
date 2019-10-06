@@ -300,8 +300,8 @@ void en::Game::fight_loop() {
 
 	//TO DO: Set the current enemy and his drawable pointer here.
 
-	std::vector<Drawable*> player_spells;
-
+	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell, player, resource_manager), SpellEntity::make_spell(player->second_spell, player, resource_manager) };
+	
 	std::vector<Drawable*> enemy_spells;
 
 
@@ -339,7 +339,7 @@ void en::Game::fight_loop() {
 		}
 
 		for (const auto& each : player_spells) {
-			each->draw(core->window);
+			each->spell_drawable->draw(core->window);
 		}
 
 
@@ -355,7 +355,7 @@ void en::Game::fight_loop() {
 		}
 
 		for (const auto& each : player_spells) {
-			each->hit_check(current_enemy);
+			each->spell_drawable->hit_check(current_enemy);
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------------------
@@ -374,7 +374,7 @@ void en::Game::fight_loop() {
 		}
 
 		for (const auto& each : player_spells) {
-			each->move();
+			each->spell_drawable->move();
 		}
 
 		current_enemy->enemy_drawable->move();
@@ -382,14 +382,10 @@ void en::Game::fight_loop() {
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
-		//Clear out of bounds spells.
+		//Clear out of bounds enemy spells.
 		std::for_each(std::begin(enemy_spells), std::end(enemy_spells), DrawableDeleter());
 		std::vector<Drawable*>::iterator new_end = std::remove(std::begin(enemy_spells), std::end(enemy_spells), static_cast<Drawable*>(nullptr));
 		enemy_spells.erase(new_end, std::end(enemy_spells));
-
-		std::for_each(std::begin(player_spells), std::end(player_spells), DrawableDeleter());
-		new_end = std::remove(std::begin(player_spells), std::end(player_spells), static_cast<Drawable*>(nullptr));
-		player_spells.erase(new_end, std::end(player_spells));
 		//------------------------------------------------------------------------------------------------------------------------------------
 	}
 
