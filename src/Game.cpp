@@ -294,6 +294,7 @@ void en::Game::fight_loop() {
 	}
 
 	//TO DO: Set the current enemy and his drawable pointer here.
+	current_enemy = new EnemyEntity;
 
 	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell, player, resource_manager), SpellEntity::make_spell(player->second_spell, player, resource_manager) };
 	

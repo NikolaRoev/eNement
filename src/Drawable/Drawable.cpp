@@ -368,8 +368,8 @@ void en::Player::draw(sf::RenderWindow& window, sf::Event& event) {
 	window.draw(sprite);
 }
 
-const sf::Sprite& en::Player::get_sprite() {
-	return sprite;
+const sf::Sprite* en::Player::get_sprite() {
+	return &sprite;
 }
 
 //====================================================================================================================================
@@ -437,8 +437,8 @@ bool en::PlayerSpell::out_of_bounds_check() {
 	return false;
 }
 
-bool en::PlayerSpell::hit_check(const sf::Sprite& target) {
-	return Collision::PixelPerfectTest(target, current_sprite);
+bool en::PlayerSpell::hit_check(const sf::Sprite* target) {
+	return Collision::PixelPerfectTest(*target, current_sprite);
 }
 
 void en::PlayerSpell::move() {

@@ -21,6 +21,8 @@ namespace en {
 
 	class Drawable {
 	public:
+		virtual ~Drawable() = default;
+
 		//Image. //Player.
 		virtual void setup(const sf::Texture& texture, const float x, const float y) = 0;
 
@@ -61,11 +63,11 @@ namespace en {
 
 		virtual bool out_of_bounds_check() = 0;
 
-		virtual bool hit_check(const sf::Sprite& target) = 0;
+		virtual bool hit_check(const sf::Sprite* target) = 0;
 
 		virtual void move() = 0; //TO DO: Add the move logic here.
 
-		virtual const sf::Sprite& get_sprite() = 0;
+		virtual const sf::Sprite* get_sprite() = 0;
 	};
 
 	struct DrawableDeleter {
@@ -111,11 +113,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -151,11 +153,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -192,11 +194,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -235,11 +237,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -279,11 +281,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -324,11 +326,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -366,11 +368,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override {}
 
-		const sf::Sprite& get_sprite() override;
+		const sf::Sprite* get_sprite() override;
 	};
 
 	//====================================================================================================================================
@@ -413,12 +415,11 @@ namespace en {
 
 		bool out_of_bounds_check() override;
 
-		bool hit_check(const sf::Sprite& target) override;
+		bool hit_check(const sf::Sprite* target) override;
 
 		void move() override;
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
-
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -432,11 +433,11 @@ namespace en {
 
 		bool out_of_bounds_check() override { return false; }
 
-		bool hit_check(const sf::Sprite& target) override { return false; }
+		bool hit_check(const sf::Sprite* target) override { return false; }
 
 		void move() override;
 
-		const sf::Sprite& get_sprite() override;
+		const sf::Sprite* get_sprite() override;
 	};
 
 	//====================================================================================================================================
@@ -452,11 +453,11 @@ namespace en {
 
 		bool out_of_bounds_check() override;
 
-		bool hit_check(const sf::Sprite& target) override;
+		bool hit_check(const sf::Sprite* target) override;
 
 		void move() override;
 
-		const sf::Sprite& get_sprite() override { return sf::Sprite(); }
+		const sf::Sprite* get_sprite() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
