@@ -23,27 +23,6 @@ namespace en {
 	public:
 		virtual ~Drawable() = default;
 
-		//Image. //Player.
-		virtual void setup(const sf::Texture& texture, const float x, const float y) = 0;
-
-		//Label.
-		virtual void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) = 0;
-
-		//ImageLabel.
-		virtual void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) = 0;
-
-		//Button.
-		virtual void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) = 0;
-
-		//Text button.
-		virtual void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) = 0;
-
-		//Toggle button.
-		virtual void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) = 0;
-
-		//Player Spell.
-		virtual void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) = 0;
-
 		//Utility functions.
 		virtual void resize(const float resize_delta_x, const float resize_delta_y) = 0;
 
@@ -51,9 +30,6 @@ namespace en {
 
 		virtual void draw(sf::RenderWindow& window, sf::Event& event) = 0;
 
-		virtual void set_function(std::function<void()> _function) = 0;
-
-		virtual void set_sound(const sf::SoundBuffer& sound_buffer) = 0;
 
 		virtual void set_text(const std::string& new_text) = 0;
 
@@ -86,14 +62,7 @@ namespace en {
 		sf::Sprite sprite;
 
 	public:
-		void setup(const sf::Texture& texture, const float x, const float y) override;
-
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
+		Image(const float x, const float y, const sf::Texture& texture);
 
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
@@ -102,9 +71,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override {}
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override {}
 
@@ -127,14 +93,8 @@ namespace en {
 		sf::Text text;
 
 	public:
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
+		Label(const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
 
-		void setup(const sf::Texture& texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -142,9 +102,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override {}
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override;
 
@@ -168,14 +125,8 @@ namespace en {
 		sf::Text text;
 
 	public:
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
+		ImageLabel(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
 
-		void setup(const sf::Texture& texture, const float x, const float y) override {}
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -183,9 +134,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override {}
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override;
 
@@ -211,14 +159,8 @@ namespace en {
 		sf::Sound sound;
 
 	public:
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override;
+		Button(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);
 
-		void setup(const sf::Texture& texture, const float x, const float y) override {}
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -226,9 +168,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override;
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override {}
 
@@ -255,14 +194,8 @@ namespace en {
 		sf::Sound sound;
 
 	public:
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override;
+		TextButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);
 
-		void setup(const sf::Texture& texture, const float x, const float y) override {}
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -270,9 +203,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override;
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override;
 
@@ -300,14 +230,8 @@ namespace en {
 		sf::Sound sound;
 
 	public:
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override;
+		ToggleButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const bool _pressed, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);
 
-		void setup(const sf::Texture& texture, const float x, const float y) override {}
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -315,9 +239,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override;
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override {}
 
@@ -342,14 +263,8 @@ namespace en {
 		sf::Sprite sprite;
 
 	public:
-		void setup(const sf::Texture& texture, const float x, const float y) override;
+		Player(const float x, const float y, const sf::Texture& texture);
 
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -357,9 +272,6 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override {}
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override {}
 
 		void set_text(const std::string& new_text) override {}
 
@@ -390,14 +302,8 @@ namespace en {
 		bool hit{ false };
 
 	public:
-		void setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) override;
+		PlayerSpell(const float x, const float y, const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const sf::SoundBuffer& sound_buffer);
 
-		void setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) override {}
-		void setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press = false) override {}
-		void setup(const sf::Texture& texture, const float x, const float y) override {}
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
@@ -405,13 +311,11 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
-		void set_function(std::function<void()> _function) override {}
-
-		void set_sound(const sf::SoundBuffer& sound_buffer) override;
 
 		void set_text(const std::string& new_text) override {}
 
 		void set_volume() override;
+
 
 		bool out_of_bounds_check() override;
 

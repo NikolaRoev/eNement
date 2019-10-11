@@ -79,38 +79,38 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 	//Main Menu:
 
-	Drawable* main_menu_background = new Image;
-	main_menu_background->setup(resource_manager->get_texture("Main Menu Background"), 0, 0);
+	Drawable* main_menu_background = new Image(0, 0, resource_manager->get_texture("Main Menu Background"));
 	resource_manager->add_drawable(*main_menu_background, "Main Menu Background");
 
 
 
-	Drawable* main_menu_load_game = new Button();
-	main_menu_load_game->setup(resource_manager->get_texture("Load Game Button"), resource_manager->get_texture("Load Game Button HL"), 400, 550);
-	main_menu_load_game->set_function([&]()
+	Drawable* main_menu_load_game = new Button(400, 550, resource_manager->get_texture("Load Game Button"), resource_manager->get_texture("Load Game Button HL"),
+		[&]()
 		{
 			application_state = START_MENU;
-		});
-	main_menu_load_game->set_sound(resource_manager->get_sound_buffer("Test Sound"));
+		},
+		resource_manager->get_sound_buffer("Test Sound"));
+
 	resource_manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
 
 
-	Drawable* main_menu_options = new Button();
-	main_menu_options->setup(resource_manager->get_texture("Options Button"), resource_manager->get_texture("Options Button HL"), 400, 750);
-	main_menu_options->set_function([&]()
+	Drawable* main_menu_options = new Button(400, 750, resource_manager->get_texture("Options Button"), resource_manager->get_texture("Options Button HL"),
+		[&]()
 		{
 			application_state = OPTIONS_MENU;
-		});
-	main_menu_options->set_sound(resource_manager->get_sound_buffer("Test Sound"));
+		},
+		resource_manager->get_sound_buffer("Test Sound"));
+
 	resource_manager->add_drawable(*main_menu_options, "Main Menu Options Button");
 
 
-	Drawable* main_menu_quit = new Button();
-	main_menu_quit->setup(resource_manager->get_texture("Quit Button"), resource_manager->get_texture("Quit Button HL"), 400, 950);
-	main_menu_quit->set_function([&]()
+	Drawable* main_menu_quit = new Button(400, 950, resource_manager->get_texture("Quit Button"), resource_manager->get_texture("Quit Button HL"),
+		[&]()
 		{
 			application_state = EXIT;
-		});
+		},
+		resource_manager->get_sound_buffer("Test Sound"));
+
 	resource_manager->add_drawable(*main_menu_quit, "Main Menu Quit Button");
 
 	//====================================================================================================================================
@@ -118,19 +118,16 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 	//Options Menu:
 
-	Drawable* options_menu_background = new Image;
-	options_menu_background->setup(resource_manager->get_texture("Options Menu Background"), 0, 0);
+	Drawable* options_menu_background = new Image(0, 0, resource_manager->get_texture("Options Menu Background"));
 	resource_manager->add_drawable(*options_menu_background, "Options Menu Background");
 
 
-	Drawable* volume_label = new Label;
-	volume_label->setup(resource_manager->get_font("Test Font"), 30, sf::Color::White, 1200, 700, std::to_string(core->settings.volume));
+	Drawable* volume_label = new Label(1200, 700, resource_manager->get_font("Test Font"), 30, sf::Color::White, std::to_string(core->settings.volume));
 	resource_manager->add_drawable(*volume_label, "Volume Label");
 
 
-	Drawable* volume_arrow_left = new Button;
-	volume_arrow_left->setup(resource_manager->get_texture("Volume Arrow Left"), resource_manager->get_texture("Volume Arrow Left HL"), 900, 700);
-	volume_arrow_left->set_function([&]()
+	Drawable* volume_arrow_left = new Button(900, 700, resource_manager->get_texture("Volume Arrow Left"), resource_manager->get_texture("Volume Arrow Left HL"),
+		[&]()
 		{
 			if (VOLUME > 0) {
 				VOLUME -= 5;
@@ -140,14 +137,14 @@ void en::Game::set_drawables() {
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
 				resource_manager->change_volume_for_all();
 			}
-		});
-	volume_arrow_left->set_sound(resource_manager->get_sound_buffer("Test Sound"));
+		},
+		resource_manager->get_sound_buffer("Test Sound"));
+
 	resource_manager->add_drawable(*volume_arrow_left, "Volume Arrow Left");
 
 
-	Drawable* volume_arrow_right = new Button;
-	volume_arrow_right->setup(resource_manager->get_texture("Volume Arrow Right"), resource_manager->get_texture("Volume Arrow Right HL"), 1400, 700);
-	volume_arrow_right->set_function([&]()
+	Drawable* volume_arrow_right = new Button(1400, 700, resource_manager->get_texture("Volume Arrow Right"), resource_manager->get_texture("Volume Arrow Right HL"),
+		[&]()
 		{
 			if (VOLUME < 100) {
 				VOLUME += 5;
@@ -157,18 +154,19 @@ void en::Game::set_drawables() {
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
 				resource_manager->change_volume_for_all();
 			}
-		});
-	volume_arrow_right->set_sound(resource_manager->get_sound_buffer("Test Sound"));
+		},
+		resource_manager->get_sound_buffer("Test Sound"));
+
 	resource_manager->add_drawable(*volume_arrow_right, "Volume Arrow Right");
 
 
-	Drawable* back_button = new Button;
-	back_button->setup(resource_manager->get_texture("Back Button"), resource_manager->get_texture("Back Button HL"), 1400, 900);
-	back_button->set_function([&]()
+	Drawable* back_button = new Button(1400, 900, resource_manager->get_texture("Back Button"), resource_manager->get_texture("Back Button HL"),
+		[&]()
 		{
 			application_state = MAIN_MENU;
-		});
-	back_button->set_sound(resource_manager->get_sound_buffer("Test Sound"));
+		},
+		resource_manager->get_sound_buffer("Test Sound"));
+
 	resource_manager->add_drawable(*back_button, "Back Button");
 
 	//====================================================================================================================================
@@ -180,12 +178,10 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 	//Fight:
 
-	Drawable* fight_background = new Image;
-	fight_background->setup(resource_manager->get_texture("Fight Background"), 0, 0);
+	Drawable* fight_background = new Image(0, 0, resource_manager->get_texture("Fight Background"));
 	resource_manager->add_drawable(*fight_background, "Fight Background");
 
-	Drawable* player_drawable = new Player;
-	player_drawable->setup(resource_manager->get_texture("Player"), 0, 0);
+	Drawable* player_drawable = new Player(0, 0, resource_manager->get_texture("Player"));
 	resource_manager->add_drawable(*player_drawable, "Player");
 
 
@@ -328,14 +324,14 @@ void en::Game::fight_loop() {
 
 		player->drawable->draw(core->window, core->event);
 
-		current_enemy->drawable->draw(core->window);
+		//current_enemy->drawable->draw(core->window);
 
 		for (const auto& each : enemy_spells) {
-			each->draw(core->window);
+			//each->draw(core->window);
 		}
 
 		for (const auto& each : player_spells) {
-			each->drawable->draw(core->window);
+			//each->drawable->draw(core->window);
 		}
 
 
@@ -345,15 +341,15 @@ void en::Game::fight_loop() {
 		
 		//Hit checks.
 		for (const auto& each : enemy_spells) {
-			if (each->hit_check(player->drawable->get_sprite())) {
+			//if (each->hit_check(player->drawable->get_sprite())) {
 				//Call a do damage function from current enemy.
-			}
+			//}
 		}
 
 		for (const auto& each : player_spells) {
-			if (each->drawable->hit_check(current_enemy->drawable->get_sprite())) {
+			//if (each->drawable->hit_check(current_enemy->drawable->get_sprite())) {
 				//TO DO: Add a player spell entity do dmg function here.
-			}
+			//}
 		}
 
 		//------------------------------------------------------------------------------------------------------------------------------------
@@ -368,14 +364,14 @@ void en::Game::fight_loop() {
 
 		//Move spells and enemy.
 		for (const auto& each : enemy_spells) {
-			each->move();
+			//each->move();
 		}
 
 		for (const auto& each : player_spells) {
-			each->drawable->move();
+			//each->drawable->move();
 		}
 
-		current_enemy->drawable->move();
+		//current_enemy->drawable->move();
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 

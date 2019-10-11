@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <string>
+#include <vector>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -14,7 +15,7 @@
 
 //====================================================================================================================================
 
-void en::Image::setup(const sf::Texture& texture, const float x, const float y) {
+en::Image::Image(const float x, const float y, const sf::Texture& texture) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -36,7 +37,7 @@ void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
 
 //====================================================================================================================================
 
-void en::Label::setup(const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+en::Label::Label(const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
@@ -65,11 +66,11 @@ void en::Label::set_text(const std::string& new_text) {
 
 //====================================================================================================================================
 
-void en::ImageLabel::setup(const sf::Texture& texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+en::ImageLabel::ImageLabel(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
-	
+
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
@@ -104,7 +105,7 @@ void en::ImageLabel::set_text(const std::string& new_text) {
 
 //====================================================================================================================================
 
-void en::Button::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y) {
+en::Button::Button(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -112,6 +113,11 @@ void en::Button::setup(const sf::Texture& texture, const sf::Texture& hl_texture
 	hl_sprite.setTexture(hl_texture);
 	hl_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	hl_sprite.scale(DELTA_X, DELTA_Y);
+
+	function = _function;
+
+	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 void en::Button::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -148,22 +154,13 @@ void en::Button::draw(sf::RenderWindow& window, sf::Event& event) {
 	}
 }
 
-void en::Button::set_function(std::function<void()> _function) {
-	function = _function;
-}
-
-void en::Button::set_sound(const sf::SoundBuffer& sound_buffer) {
-	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
-}
-
 void en::Button::set_volume() {
 	sound.setVolume(VOLUME);
 }
 
 //====================================================================================================================================
 
-void en::TextButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const float x, const float y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const float text_x, const float text_y, const std::string& _text) {
+en::TextButton::TextButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -178,6 +175,11 @@ void en::TextButton::setup(const sf::Texture& texture, const sf::Texture& hl_tex
 	text.setPosition(text_x * DELTA_X, text_y * DELTA_Y);
 	text.setString(_text);
 	text.scale(DELTA_X, DELTA_Y);
+
+	function = _function;
+
+	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 void en::TextButton::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -220,15 +222,6 @@ void en::TextButton::draw(sf::RenderWindow& window, sf::Event& event) {
 	}
 }
 
-void en::TextButton::set_function(std::function<void()> _function) {
-	function = _function;
-}
-
-void en::TextButton::set_sound(const sf::SoundBuffer& sound_buffer) {
-	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
-}
-
 void en::TextButton::set_text(const std::string& new_text) {
 	text.setString(new_text);
 }
@@ -239,7 +232,7 @@ void en::TextButton::set_volume() {
 
 //====================================================================================================================================
 
-void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const float x, const float y, const bool press) {
+en::ToggleButton::ToggleButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const bool _pressed, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -252,9 +245,12 @@ void en::ToggleButton::setup(const sf::Texture& texture, const sf::Texture& hl_t
 	pressed_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	pressed_sprite.scale(DELTA_X, DELTA_Y);
 
-	if (press) {
-		pressed = true;
-	}
+	pressed = _pressed;
+
+	function = _function;
+
+	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -306,15 +302,6 @@ void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event) {
 	}
 }
 
-void en::ToggleButton::set_function(std::function<void()> _function) {
-	function = _function;
-}
-
-void en::ToggleButton::set_sound(const sf::SoundBuffer& sound_buffer) {
-	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
-}
-
 void en::ToggleButton::set_volume() {
 	sound.setVolume(VOLUME);
 }
@@ -323,7 +310,7 @@ void en::ToggleButton::set_volume() {
 //====================================================================================================================================
 //====================================================================================================================================
 
-void en::Player::setup(const sf::Texture& texture, const float x, const float y) {
+en::Player::Player(const float x, const float y, const sf::Texture& texture) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -374,7 +361,7 @@ const sf::Sprite* en::Player::get_sprite() {
 
 //====================================================================================================================================
 
-void en::PlayerSpell::setup(const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const float x, const float y) {
+en::PlayerSpell::PlayerSpell(const float x, const float y, const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const sf::SoundBuffer& sound_buffer) {
 	for (const auto& each : move_animation) {
 		move_vector.push_back(sf::Sprite());
 		move_vector.back().setTexture(each);
@@ -393,6 +380,9 @@ void en::PlayerSpell::setup(const std::vector<sf::Texture>& move_animation, cons
 		hit_vector.back().setTexture(each);
 		hit_vector.back().scale(DELTA_X, DELTA_Y);
 	}
+
+	sound.setBuffer(sound_buffer);
+	sound.setVolume(VOLUME);
 }
 
 void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -421,11 +411,6 @@ void en::PlayerSpell::draw(sf::RenderWindow& window) {
 
 void en::PlayerSpell::draw(sf::RenderWindow& window, sf::Event& event) {
 	//TO DO:
-}
-
-void en::PlayerSpell::set_sound(const sf::SoundBuffer& sound_buffer) {
-	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
 }
 
 void en::PlayerSpell::set_volume() {
