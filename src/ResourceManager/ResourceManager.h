@@ -22,7 +22,6 @@ namespace en {
 	private:
 		std::unordered_map<std::string, sf::Texture> textures;
 		std::unordered_map<std::string, std::vector<sf::Texture>> animation_textures;
-
 		std::unordered_map<std::string, sf::Font> fonts;
 		std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
 
@@ -39,9 +38,10 @@ namespace en {
 		void add_sound_buffer(const std::string& file_path, const std::string& sound_buffer_name);
 
 		const sf::Texture& get_texture(const std::string& texture_name) const;
+		const std::vector<sf::Texture>& get_animation(const std::string& animation_name) const;
 		const sf::Font& get_font(const std::string& font_name) const;
 		const sf::SoundBuffer& get_sound_buffer(const std::string& sound_buffer_name) const;
-		//TO DO: Add get animation function.
+
 
 		//====================================================================================================================================
 

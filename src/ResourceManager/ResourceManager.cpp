@@ -71,6 +71,10 @@ const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_n
 	return textures.find(texture_name)->second;
 }
 
+const std::vector<sf::Texture>& en::ResourceManager::get_animation(const std::string& animation_name) const {
+	return animation_textures.find(animation_name)->second;
+}
+
 const sf::Font& en::ResourceManager::get_font(const std::string& font_name) const {
 	return fonts.find(font_name)->second;
 }
