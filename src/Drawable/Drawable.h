@@ -93,6 +93,9 @@ namespace en {
 		sf::Sprite sprite;
 		sf::Text text;
 
+		float text_x_original{ 0.0f };
+		float text_y_original{ 0.0f };
+
 	public:
 		Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
 
@@ -161,6 +164,9 @@ namespace en {
 		sf::Text text;
 		std::function<void()> function;
 		sf::Sound sound;
+
+		float text_x_original{ 0.0f };
+		float text_y_original{ 0.0f };
 
 	public:
 		TextButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);

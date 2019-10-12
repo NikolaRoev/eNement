@@ -38,6 +38,9 @@ void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
 //====================================================================================================================================
 
 en::Label::Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
+	text_x_original = text_x;
+	text_y_original = text_y;
+	
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -55,8 +58,7 @@ void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
 	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
@@ -132,6 +134,9 @@ void en::Button::set_volume() {
 //====================================================================================================================================
 
 en::TextButton::TextButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
+	text_x_original = text_x;
+	text_y_original = text_y;
+	
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -162,8 +167,7 @@ void en::TextButton::resize(const float resize_delta_x, const float resize_delta
 	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 
-	temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
