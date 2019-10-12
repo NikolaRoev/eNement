@@ -37,36 +37,7 @@ void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
 
 //====================================================================================================================================
 
-en::Label::Label(const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
-	text.setFont(font);
-	text.setCharacterSize(text_size);
-	text.setFillColor(text_color);
-	text.setPosition(text_x * DELTA_X, text_y * DELTA_Y);
-	text.setString(_text);
-	text.scale(DELTA_X, DELTA_Y);
-}
-
-void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = text.getGlobalBounds();
-	text.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	text.scale(resize_delta_x, resize_delta_y);
-}
-
-void en::Label::draw(sf::RenderWindow& window) {
-	window.draw(text);
-}
-
-void en::Label::draw(sf::RenderWindow& window, sf::Event& event) {
-	window.draw(text);
-}
-
-void en::Label::set_text(const std::string& new_text) {
-	text.setString(new_text);
-}
-
-//====================================================================================================================================
-
-en::ImageLabel::ImageLabel(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
+en::Label::Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
 	sprite.scale(DELTA_X, DELTA_Y);
@@ -79,7 +50,7 @@ en::ImageLabel::ImageLabel(const float x, const float y, const sf::Texture& text
 	text.scale(DELTA_X, DELTA_Y);
 }
 
-void en::ImageLabel::resize(const float resize_delta_x, const float resize_delta_y) {
+void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
 	sf::FloatRect temp = sprite.getGlobalBounds();
 	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	sprite.scale(resize_delta_x, resize_delta_y);
@@ -89,17 +60,17 @@ void en::ImageLabel::resize(const float resize_delta_x, const float resize_delta
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::ImageLabel::draw(sf::RenderWindow& window) {
+void en::Label::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 	window.draw(text);
 }
 
-void en::ImageLabel::draw(sf::RenderWindow& window, sf::Event& event) {
+void en::Label::draw(sf::RenderWindow& window, sf::Event& event) {
 	window.draw(sprite);
 	window.draw(text);
 }
 
-void en::ImageLabel::set_text(const std::string& new_text) {
+void en::Label::set_text(const std::string& new_text) {
 	text.setString(new_text);
 }
 

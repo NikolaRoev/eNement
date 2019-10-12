@@ -90,42 +90,11 @@ namespace en {
 
 	class Label : public Drawable {
 	private:
-		sf::Text text;
-
-	public:
-		Label(const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
-
-
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
-
-		void draw(sf::RenderWindow& window) override;
-
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
-
-
-		void set_text(const std::string& new_text) override;
-
-		void set_volume() override {}
-
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override {}
-
-		const sf::Sprite* get_sprite() override { return nullptr; }
-	};
-
-	//====================================================================================================================================
-
-	class ImageLabel : public Drawable {
-	private:
 		sf::Sprite sprite;
 		sf::Text text;
 
 	public:
-		ImageLabel(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
+		Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
 
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;

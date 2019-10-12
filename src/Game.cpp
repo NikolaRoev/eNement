@@ -122,7 +122,7 @@ void en::Game::set_drawables() {
 	resource_manager->add_drawable(*options_menu_background, "Options Menu Background");
 
 
-	Drawable* volume_label = new Label(1200, 700, resource_manager->get_font("Test Font"), 30, sf::Color::White, std::to_string(core->settings.volume));
+	Drawable* volume_label = new Label(0, 0, sf::Texture(), 1200, 700, resource_manager->get_font("Test Font"), 30, sf::Color::White, std::to_string(core->settings.volume));
 	resource_manager->add_drawable(*volume_label, "Volume Label");
 
 
