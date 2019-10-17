@@ -29,27 +29,6 @@ void en::ResourceManager::add_texture_for_pixel_perfect(const std::string& file_
 	Collision::CreateTextureAndBitmask(textures.find(texture_name)->second, file_path);
 }
 
-void en::ResourceManager::add_animation(const std::vector<std::string>& file_paths, const std::string& animation_name) {
-	auto[it, inserted] = animation_textures.insert(std::make_pair(animation_name, std::vector<sf::Texture>()));
-	if (inserted) {
-		for (const auto& each : file_paths) {
-			sf::Texture temp;
-			temp.loadFromFile(each);
-			it->second.push_back(temp);
-		}
-	}
-}
-
-void en::ResourceManager::add_animation_for_pixel_perfect(const std::vector<std::string>& file_paths, const std::string& animation_name) {
-	auto [it, inserted] = animation_textures.insert(std::make_pair(animation_name, std::vector<sf::Texture>()));
-	if (inserted) {
-		for (const auto& each : file_paths) {
-			it->second.push_back(sf::Texture());
-			Collision::CreateTextureAndBitmask(it->second.back(), each);
-		}
-	}
-}
-
 void en::ResourceManager::add_font(const std::string& file_path, const std::string& font_name) {
 	sf::Font temp;
 	temp.loadFromFile(file_path);
@@ -69,10 +48,6 @@ void en::ResourceManager::add_sound_buffer(const std::string& file_path, const s
 
 const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_name) const {
 	return textures.find(texture_name)->second;
-}
-
-const std::vector<sf::Texture>& en::ResourceManager::get_animation(const std::string& animation_name) const {
-	return animation_textures.find(animation_name)->second;
 }
 
 const sf::Font& en::ResourceManager::get_font(const std::string& font_name) const {

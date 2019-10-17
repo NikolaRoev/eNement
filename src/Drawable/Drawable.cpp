@@ -336,56 +336,27 @@ const sf::Sprite* en::Player::get_sprite() {
 
 //====================================================================================================================================
 
-en::PlayerSpell::PlayerSpell(const float x, const float y, const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const sf::SoundBuffer& sound_buffer) {
-	for (const auto& each : move_animation) {
-		move_vector.push_back(sf::Sprite());
-		move_vector.back().setTexture(each);
-		move_vector.back().scale(DELTA_X, DELTA_Y);
-	}
-
-	for (const auto& each : cast_animation) {
-		cast_vector.push_back(sf::Sprite());
-		cast_vector.back().setTexture(each);
-		cast_vector.back().setPosition(x, y);
-		cast_vector.back().scale(DELTA_X, DELTA_Y);
-	}
-
-	for (const auto& each : hit_animation) {
-		hit_vector.push_back(sf::Sprite());
-		hit_vector.back().setTexture(each);
-		hit_vector.back().scale(DELTA_X, DELTA_Y);
-	}
+en::PlayerSpell::PlayerSpell(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
+	sprite.setTexture(texture);
+	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
+	sprite.scale(DELTA_X, DELTA_Y);
 
 	sound.setBuffer(sound_buffer);
 	sound.setVolume(VOLUME);
 }
 
 void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = current_sprite.getGlobalBounds();
-	current_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	current_sprite.scale(resize_delta_x, resize_delta_y);
-
-	for (auto& each : move_vector) {
-		each.scale(resize_delta_x, resize_delta_y);
-	}
-
-	for (auto& each : cast_vector) {
-		temp = each.getGlobalBounds();
-		each.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-		each.scale(resize_delta_x, resize_delta_y);
-	}
-
-	for (auto& each : hit_vector) {
-		each.scale(resize_delta_x, resize_delta_y);
-	}
+	sf::FloatRect temp = sprite.getGlobalBounds();
+	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
+	sprite.scale(resize_delta_x, resize_delta_y);
 }
 
 void en::PlayerSpell::draw(sf::RenderWindow& window) {
-	window.draw(current_sprite);
+	window.draw(sprite);
 }
 
 void en::PlayerSpell::draw(sf::RenderWindow& window, sf::Event& event) {
-	//TO DO:
+	window.draw(sprite);
 }
 
 void en::PlayerSpell::set_volume() {
@@ -398,7 +369,7 @@ bool en::PlayerSpell::out_of_bounds_check() {
 }
 
 bool en::PlayerSpell::hit_check(const sf::Sprite* target) {
-	return Collision::PixelPerfectTest(*target, current_sprite);
+	return Collision::PixelPerfectTest(*target, sprite);
 }
 
 void en::PlayerSpell::move() {

@@ -266,18 +266,14 @@ namespace en {
 	//TO DO: All of these.
 	class PlayerSpell : public Drawable {
 	private:
-		sf::Sprite current_sprite;
-
-		std::vector<sf::Sprite> move_vector;
-		std::vector<sf::Sprite> cast_vector;
-		std::vector<sf::Sprite> hit_vector;
+		sf::Sprite sprite;
 
 		sf::Sound sound;
 
 		bool hit{ false };
 
 	public:
-		PlayerSpell(const float x, const float y, const std::vector<sf::Texture>& move_animation, const std::vector<sf::Texture>& cast_animation, const std::vector<sf::Texture>& hit_animation, const sf::SoundBuffer& sound_buffer);
+		PlayerSpell(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer);
 
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
