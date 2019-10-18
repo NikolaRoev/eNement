@@ -1,4 +1,5 @@
 #pragma once
+#include "Core/Core.h"
 #include "Drawable/Drawable.h"
 #include "ResourceManager/ResourceManager.h"
 
@@ -57,7 +58,7 @@ namespace en {
 
 		virtual ~SpellEntity();
 
-		static SpellEntity* make_spell(const SpellType type, PlayerEntity* player, ResourceManager* resource_manager);
+		static SpellEntity* make_spell(const SpellType type);
 	};
 
 	//====================================================================================================================================
@@ -67,7 +68,7 @@ namespace en {
 	private:
 
 	public:
-		FireSpell(PlayerEntity* player, ResourceManager* resource_manager);
+		FireSpell();
 
 	};
 

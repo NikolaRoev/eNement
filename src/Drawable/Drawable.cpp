@@ -1,6 +1,6 @@
 #include "Drawable.h"
-#include "../Core/Core.h"
 #include "../Collision/Collision.h"
+#include "../Core/Core.h"
 
 #include <functional>
 #include <string>
@@ -17,8 +17,8 @@
 
 en::Image::Image(const float x, const float y, const sf::Texture& texture) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 }
 
 void en::Image::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -27,12 +27,12 @@ void en::Image::resize(const float resize_delta_x, const float resize_delta_y) {
 	sprite.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::Image::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
+void en::Image::static_draw() {
+	core->window.draw(sprite);
 }
 
-void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
-	window.draw(sprite);
+void en::Image::draw() {
+	core->window.draw(sprite);
 }
 
 //====================================================================================================================================
@@ -42,15 +42,15 @@ en::Label::Label(const float x, const float y, const sf::Texture& texture, const
 	text_y_original = text_y;
 	
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
-	text.setPosition(text_x * DELTA_X, text_y * DELTA_Y);
+	text.setPosition(text_x * core->delta_x, text_y * core->delta_y);
 	text.setString(_text);
-	text.scale(DELTA_X, DELTA_Y);
+	text.scale(core->delta_x, core->delta_y);
 }
 
 void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -58,18 +58,18 @@ void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
 	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	sprite.scale(resize_delta_x, resize_delta_y);
 
-	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
+	text.setPosition(text_x_original * core->delta_x, text_y_original * core->delta_y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::Label::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
-	window.draw(text);
+void en::Label::static_draw() {
+	core->window.draw(sprite);
+	core->window.draw(text);
 }
 
-void en::Label::draw(sf::RenderWindow& window, sf::Event& event) {
-	window.draw(sprite);
-	window.draw(text);
+void en::Label::draw() {
+	core->window.draw(sprite);
+	core->window.draw(text);
 }
 
 void en::Label::set_text(const std::string& new_text) {
@@ -80,17 +80,17 @@ void en::Label::set_text(const std::string& new_text) {
 
 en::Button::Button(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 
 	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	hl_sprite.scale(DELTA_X, DELTA_Y);
+	hl_sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	hl_sprite.scale(core->delta_x, core->delta_y);
 
 	function = _function;
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 void en::Button::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -103,32 +103,32 @@ void en::Button::resize(const float resize_delta_x, const float resize_delta_y) 
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::Button::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
+void en::Button::static_draw() {
+	core->window.draw(sprite);
 }
 
-void en::Button::draw(sf::RenderWindow& window, sf::Event& event) {
-	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
-	window.draw(sprite);
+void en::Button::draw() {
+	sf::Vector2i mouse_position = sf::Mouse::getPosition(core->window);
+	core->window.draw(sprite);
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+		if (core->event.type == sf::Event::MouseButtonPressed && core->event.mouseButton.button == sf::Mouse::Left) {
 			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-				window.waitEvent(event);
-				if (event.type == sf::Event::MouseButtonReleased) {
+				core->window.waitEvent(core->event);
+				if (core->event.type == sf::Event::MouseButtonReleased) {
 					sound.play();
 					function();
 					break;
 				}
-				mouse_position = sf::Mouse::getPosition(window);
+				mouse_position = sf::Mouse::getPosition(core->window);
 			}
 		}
-		window.draw(hl_sprite);
+		core->window.draw(hl_sprite);
 	}
 }
 
 void en::Button::set_volume() {
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 //====================================================================================================================================
@@ -138,24 +138,24 @@ en::TextButton::TextButton(const float x, const float y, const sf::Texture& text
 	text_y_original = text_y;
 	
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 
 	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	hl_sprite.scale(DELTA_X, DELTA_Y);
+	hl_sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	hl_sprite.scale(core->delta_x, core->delta_y);
 
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
-	text.setPosition(text_x * DELTA_X, text_y * DELTA_Y);
+	text.setPosition(text_x * core->delta_x, text_y * core->delta_y);
 	text.setString(_text);
-	text.scale(DELTA_X, DELTA_Y);
+	text.scale(core->delta_x, core->delta_y);
 
 	function = _function;
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 void en::TextButton::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -167,33 +167,33 @@ void en::TextButton::resize(const float resize_delta_x, const float resize_delta
 	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
 	hl_sprite.scale(resize_delta_x, resize_delta_y);
 
-	text.setPosition(text_x_original * DELTA_X, text_y_original * DELTA_Y);
+	text.setPosition(text_x_original * core->delta_x, text_y_original * core->delta_y);
 	text.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::TextButton::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
-	window.draw(text);
+void en::TextButton::static_draw() {
+	core->window.draw(sprite);
+	core->window.draw(text);
 }
 
-void en::TextButton::draw(sf::RenderWindow& window, sf::Event& event) {
-	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
-	window.draw(sprite);
-	window.draw(text);
+void en::TextButton::draw() {
+	sf::Vector2i mouse_position = sf::Mouse::getPosition(core->window);
+	core->window.draw(sprite);
+	core->window.draw(text);
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+		if (core->event.type == sf::Event::MouseButtonPressed && core->event.mouseButton.button == sf::Mouse::Left) {
 			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-				window.waitEvent(event);
-				if (event.type == sf::Event::MouseButtonReleased) {
+				core->window.waitEvent(core->event);
+				if (core->event.type == sf::Event::MouseButtonReleased) {
 					sound.play();
 					function();
 					break;
 				}
-				mouse_position = sf::Mouse::getPosition(window);
+				mouse_position = sf::Mouse::getPosition(core->window);
 			}
 		}
-		window.draw(hl_sprite);
+		core->window.draw(hl_sprite);
 	}
 }
 
@@ -202,30 +202,30 @@ void en::TextButton::set_text(const std::string& new_text) {
 }
 
 void en::TextButton::set_volume() {
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 //====================================================================================================================================
 
 en::ToggleButton::ToggleButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const bool _pressed, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 
 	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	hl_sprite.scale(DELTA_X, DELTA_Y);
+	hl_sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	hl_sprite.scale(core->delta_x, core->delta_y);
 
 	pressed_sprite.setTexture(pressed_texture);
-	pressed_sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	pressed_sprite.scale(DELTA_X, DELTA_Y);
+	pressed_sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	pressed_sprite.scale(core->delta_x, core->delta_y);
 
 	pressed = _pressed;
 
 	function = _function;
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -242,43 +242,43 @@ void en::ToggleButton::resize(const float resize_delta_x, const float resize_del
 	pressed_sprite.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::ToggleButton::draw(sf::RenderWindow& window) {
+void en::ToggleButton::static_draw() {
 	if (!pressed) {
-		window.draw(sprite);
+		core->window.draw(sprite);
 	}
 	else {
-		window.draw(pressed_sprite);
+		core->window.draw(pressed_sprite);
 	}
 }
 
-void en::ToggleButton::draw(sf::RenderWindow& window, sf::Event& event) {
-	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+void en::ToggleButton::draw() {
+	sf::Vector2i mouse_position = sf::Mouse::getPosition(core->window);
 	if (!pressed) {
-		window.draw(sprite);
+		core->window.draw(sprite);
 	}
 	else {
-		window.draw(pressed_sprite);
+		core->window.draw(pressed_sprite);
 	}
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+		if (core->event.type == sf::Event::MouseButtonPressed && core->event.mouseButton.button == sf::Mouse::Left) {
 			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-				window.waitEvent(event);
-				if (event.type == sf::Event::MouseButtonReleased) {
+				core->window.waitEvent(core->event);
+				if (core->event.type == sf::Event::MouseButtonReleased) {
 					pressed = !pressed;
 					sound.play();
 					function();
 					break;
 				}
-				mouse_position = sf::Mouse::getPosition(window);
+				mouse_position = sf::Mouse::getPosition(core->window);
 			}
 		}
-		window.draw(hl_sprite);
+		core->window.draw(hl_sprite);
 	}
 }
 
 void en::ToggleButton::set_volume() {
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 //====================================================================================================================================
@@ -287,8 +287,8 @@ void en::ToggleButton::set_volume() {
 
 en::Player::Player(const float x, const float y, const sf::Texture& texture) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 }
 
 void en::Player::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -297,11 +297,11 @@ void en::Player::resize(const float resize_delta_x, const float resize_delta_y) 
 	sprite.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::Player::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
+void en::Player::static_draw() {
+	core->window.draw(sprite);
 }
 
-void en::Player::draw(sf::RenderWindow& window, sf::Event& event) {
+void en::Player::draw() {
 	sf::FloatRect temp = sprite.getGlobalBounds();
 
 	//TO DO: Increment this many times with a check everytime if you want it to be smooth.
@@ -312,7 +312,7 @@ void en::Player::draw(sf::RenderWindow& window, sf::Event& event) {
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		if (temp.left < (WIDTH - temp.width)) {
+		if (temp.left < (core->settings.width - temp.width)) {
 			sprite.move(10, 0);
 		}
 	}
@@ -322,12 +322,12 @@ void en::Player::draw(sf::RenderWindow& window, sf::Event& event) {
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		if (temp.top < (HEIGHT - temp.height)) {
+		if (temp.top < (core->settings.height - temp.height)) {
 			sprite.move(0, 10);
 		}
 	}
 
-	window.draw(sprite);
+	core->window.draw(sprite);
 }
 
 const sf::Sprite* en::Player::get_sprite() {
@@ -338,11 +338,11 @@ const sf::Sprite* en::Player::get_sprite() {
 
 en::PlayerSpell::PlayerSpell(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * DELTA_X, y * DELTA_Y);
-	sprite.scale(DELTA_X, DELTA_Y);
+	sprite.setPosition(x * core->delta_x, y * core->delta_y);
+	sprite.scale(core->delta_x, core->delta_y);
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delta_y) {
@@ -351,16 +351,16 @@ void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delt
 	sprite.scale(resize_delta_x, resize_delta_y);
 }
 
-void en::PlayerSpell::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
+void en::PlayerSpell::static_draw() {
+	core->window.draw(sprite);
 }
 
-void en::PlayerSpell::draw(sf::RenderWindow& window, sf::Event& event) {
-	window.draw(sprite);
+void en::PlayerSpell::draw() {
+	core->window.draw(sprite);
 }
 
 void en::PlayerSpell::set_volume() {
-	sound.setVolume(VOLUME);
+	sound.setVolume(static_cast<float>(core->settings.volume));
 }
 
 bool en::PlayerSpell::out_of_bounds_check() {

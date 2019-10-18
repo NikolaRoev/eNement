@@ -26,9 +26,9 @@ namespace en {
 		//Utility functions.
 		virtual void resize(const float resize_delta_x, const float resize_delta_y) = 0;
 
-		virtual void draw(sf::RenderWindow& window) = 0;
+		virtual void static_draw() = 0;
 
-		virtual void draw(sf::RenderWindow& window, sf::Event& event) = 0;
+		virtual void draw() = 0;
 
 
 		virtual void set_text(const std::string& new_text) = 0;
@@ -67,9 +67,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override {}
@@ -102,9 +102,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override;
@@ -136,9 +136,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override {}
@@ -174,9 +174,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override;
@@ -210,9 +210,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override {}
@@ -243,9 +243,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override {}
@@ -278,9 +278,9 @@ namespace en {
 
 		void resize(const float resize_delta_x, const float resize_delta_y) override;
 
-		void draw(sf::RenderWindow& window) override;
+		void static_draw() override;
 
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
+		void draw() override;
 
 
 		void set_text(const std::string& new_text) override {}

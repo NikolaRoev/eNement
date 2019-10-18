@@ -25,31 +25,32 @@ void en::Game::set_resources() {
 	//====================================================================================================================================
 	//Main Menu:
 
-	resource_manager->add_texture("assets/images/Main Menu/Main_Menu_Background.png", "Main Menu Background");
-	resource_manager->add_texture("assets/images/Main Menu/Load_Game_Button.png", "Load Game Button");
-	resource_manager->add_texture("assets/images/Main Menu/Load_Game_Button_HL.png", "Load Game Button HL");
-	resource_manager->add_texture("assets/images/Main Menu/Options_Button.png", "Options Button");
-	resource_manager->add_texture("assets/images/Main Menu/Options_Button_HL.png", "Options Button HL");
-	resource_manager->add_texture("assets/images/Main Menu/Quit_Button.png", "Quit Button");
-	resource_manager->add_texture("assets/images/Main Menu/Quit_Button_HL.png", "Quit Button HL");
+	manager->add_texture("assets/images/Main Menu/Main_Menu_Background.png", "Main Menu Background");
+	manager->add_texture("assets/images/Main Menu/Load_Game_Button.png", "Load Game Button");
+	manager->add_texture("assets/images/Main Menu/Load_Game_Button_HL.png", "Load Game Button HL");
+	manager->add_texture("assets/images/Main Menu/Options_Button.png", "Options Button");
+	manager->add_texture("assets/images/Main Menu/Options_Button_HL.png", "Options Button HL");
+	manager->add_texture("assets/images/Main Menu/Quit_Button.png", "Quit Button");
+	manager->add_texture("assets/images/Main Menu/Quit_Button_HL.png", "Quit Button HL");
 
-	resource_manager->add_sound_buffer("assets/sounds/TEST_CLICK.wav", "Test Sound");
+	manager->add_sound_buffer("assets/sounds/TEST_CLICK.wav", "Test Sound");
 
 	//====================================================================================================================================
 
 	//====================================================================================================================================
 	//Options Menu:
 
-	resource_manager->add_texture("assets/images/Options Menu/Options_Menu_Background.png", "Options Menu Background");
-	resource_manager->add_texture("assets/images/Options Menu/Volume_Arrow_Left.png", "Volume Arrow Left");
-	resource_manager->add_texture("assets/images/Options Menu/Volume_Arrow_Left_HL.png", "Volume Arrow Left HL");
-	resource_manager->add_texture("assets/images/Options Menu/Volume_Arrow_Right.png", "Volume Arrow Right");
-	resource_manager->add_texture("assets/images/Options Menu/Volume_Arrow_Right_HL.png", "Volume Arrow Right HL");
-	resource_manager->add_texture("assets/images/Options Menu/Back_Button.png", "Back Button");
-	resource_manager->add_texture("assets/images/Options Menu/Back_Button_HL.png", "Back Button HL");
+	manager->add_texture("assets/images/Options Menu/Options_Menu_Background.png", "Options Menu Background");
+	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Left.png", "Volume Arrow Left");
+	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Left_HL.png", "Volume Arrow Left HL");
+	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Right.png", "Volume Arrow Right");
+	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Right_HL.png", "Volume Arrow Right HL");
+	manager->add_texture("assets/images/Options Menu/Back_Button.png", "Back Button");
+	manager->add_texture("assets/images/Options Menu/Back_Button_HL.png", "Back Button HL");
 
-	resource_manager->add_sound_buffer("assets/sounds/TEST_CLICK.wav", "Test Sound");
-	resource_manager->add_font("assets/fonts/TNR.ttf", "Test Font");
+	manager->add_sound_buffer("assets/sounds/TEST_CLICK.wav", "Test Sound");
+
+	manager->add_font("assets/fonts/TNR.ttf", "Test Font");
 
 	//====================================================================================================================================
 
@@ -60,14 +61,14 @@ void en::Game::set_resources() {
 	//====================================================================================================================================
 	//Fight:
 
-	resource_manager->add_texture("assets/images/Game/Fight_Background.png", "Fight Background");
+	manager->add_texture("assets/images/Game/Fight_Background.png", "Fight Background");
 
-	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Player.png", "Player");
-	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Spell0.png", "Spell0");
-	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Spell1.png", "Spell1");
+	manager->add_texture_for_pixel_perfect("assets/images/Game/Player.png", "Player");
+	manager->add_texture_for_pixel_perfect("assets/images/Game/Spell0.png", "Spell0");
+	manager->add_texture_for_pixel_perfect("assets/images/Game/Spell1.png", "Spell1");
 
-	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0.png", "Enemy0");
-	resource_manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
+	manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0.png", "Enemy0");
+	manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
 
 
 	//====================================================================================================================================
@@ -79,95 +80,101 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 	//Main Menu:
 
-	Drawable* main_menu_background = new Image(0, 0, resource_manager->get_texture("Main Menu Background"));
-	resource_manager->add_drawable(*main_menu_background, "Main Menu Background");
+	Drawable* main_menu_background = new Image(0, 0, manager->get_texture("Main Menu Background"));
+	manager->add_drawable(*main_menu_background, "Main Menu Background");
 
 
 
-	Drawable* main_menu_load_game = new Button(400, 550, resource_manager->get_texture("Load Game Button"), resource_manager->get_texture("Load Game Button HL"),
+	Drawable* main_menu_load_game = new Button(400, 550, manager->get_texture("Load Game Button"), manager->get_texture("Load Game Button HL"),
 		[&]()
 		{
 			application_state = START_MENU;
 		},
-		resource_manager->get_sound_buffer("Test Sound"));
+		manager->get_sound_buffer("Test Sound"));
 
-	resource_manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
+	manager->add_drawable(*main_menu_load_game, "Main Menu Load Game Button");
 
 
-	Drawable* main_menu_options = new Button(400, 750, resource_manager->get_texture("Options Button"), resource_manager->get_texture("Options Button HL"),
+	Drawable* main_menu_options = new Button(400, 750, manager->get_texture("Options Button"), manager->get_texture("Options Button HL"),
 		[&]()
 		{
 			application_state = OPTIONS_MENU;
 		},
-		resource_manager->get_sound_buffer("Test Sound"));
+		manager->get_sound_buffer("Test Sound"));
 
-	resource_manager->add_drawable(*main_menu_options, "Main Menu Options Button");
+	manager->add_drawable(*main_menu_options, "Main Menu Options Button");
 
 
-	Drawable* main_menu_quit = new Button(400, 950, resource_manager->get_texture("Quit Button"), resource_manager->get_texture("Quit Button HL"),
+	Drawable* main_menu_quit = new Button(400, 950, manager->get_texture("Quit Button"), manager->get_texture("Quit Button HL"),
 		[&]()
 		{
 			application_state = EXIT;
 		},
-		resource_manager->get_sound_buffer("Test Sound"));
+		manager->get_sound_buffer("Test Sound"));
 
-	resource_manager->add_drawable(*main_menu_quit, "Main Menu Quit Button");
+	manager->add_drawable(*main_menu_quit, "Main Menu Quit Button");
 
 	//====================================================================================================================================
 
 	//====================================================================================================================================
 	//Options Menu:
 
-	Drawable* options_menu_background = new Image(0, 0, resource_manager->get_texture("Options Menu Background"));
-	resource_manager->add_drawable(*options_menu_background, "Options Menu Background");
+	Drawable* options_menu_background = new Image(0, 0, manager->get_texture("Options Menu Background"));
+	manager->add_drawable(*options_menu_background, "Options Menu Background");
 
 
-	Drawable* volume_label = new Label(0, 0, sf::Texture(), 1200, 700, resource_manager->get_font("Test Font"), 30, sf::Color::White, std::to_string(core->settings.volume));
-	resource_manager->add_drawable(*volume_label, "Volume Label");
+	Drawable* volume_label = new Label(0, 0, sf::Texture(), 1200, 700, manager->get_font("Test Font"), 30, sf::Color::White, std::to_string(core->settings.volume));
+	manager->add_drawable(*volume_label, "Volume Label");
 
 
-	Drawable* volume_arrow_left = new Button(900, 700, resource_manager->get_texture("Volume Arrow Left"), resource_manager->get_texture("Volume Arrow Left HL"),
+	Drawable* volume_arrow_left = new Button(900, 700, manager->get_texture("Volume Arrow Left"), manager->get_texture("Volume Arrow Left HL"),
 		[&]()
 		{
-			if (VOLUME > 0) {
-				VOLUME -= 5;
+			if (core->settings.volume > 0) {
 				core->settings.volume -= 5;
 
-				auto temp_volume_label = resource_manager->get_drawable("Volume Label");
+				auto temp_volume_label = manager->get_drawable("Volume Label");
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
-				resource_manager->change_volume_for_all();
+
+				auto temp_drawables = manager->get_all_drawables();
+				for (const auto& each : temp_drawables) {
+					each.second->set_volume();
+				}
 			}
 		},
-		resource_manager->get_sound_buffer("Test Sound"));
+		manager->get_sound_buffer("Test Sound"));
 
-	resource_manager->add_drawable(*volume_arrow_left, "Volume Arrow Left");
+	manager->add_drawable(*volume_arrow_left, "Volume Arrow Left");
 
 
-	Drawable* volume_arrow_right = new Button(1400, 700, resource_manager->get_texture("Volume Arrow Right"), resource_manager->get_texture("Volume Arrow Right HL"),
+	Drawable* volume_arrow_right = new Button(1400, 700, manager->get_texture("Volume Arrow Right"), manager->get_texture("Volume Arrow Right HL"),
 		[&]()
 		{
-			if (VOLUME < 100) {
-				VOLUME += 5;
+			if (core->settings.volume < 100) {
 				core->settings.volume += 5;
 
-				auto temp_volume_label = resource_manager->get_drawable("Volume Label");
+				auto temp_volume_label = manager->get_drawable("Volume Label");
 				temp_volume_label->set_text(std::to_string(core->settings.volume));
-				resource_manager->change_volume_for_all();
+				
+				auto temp_drawables = manager->get_all_drawables();
+				for (const auto& each : temp_drawables) {
+					each.second->set_volume();
+				}
 			}
 		},
-		resource_manager->get_sound_buffer("Test Sound"));
+		manager->get_sound_buffer("Test Sound"));
 
-	resource_manager->add_drawable(*volume_arrow_right, "Volume Arrow Right");
+	manager->add_drawable(*volume_arrow_right, "Volume Arrow Right");
 
 
-	Drawable* back_button = new Button(1400, 900, resource_manager->get_texture("Back Button"), resource_manager->get_texture("Back Button HL"),
+	Drawable* back_button = new Button(1400, 900, manager->get_texture("Back Button"), manager->get_texture("Back Button HL"),
 		[&]()
 		{
 			application_state = MAIN_MENU;
 		},
-		resource_manager->get_sound_buffer("Test Sound"));
+		manager->get_sound_buffer("Test Sound"));
 
-	resource_manager->add_drawable(*back_button, "Back Button");
+	manager->add_drawable(*back_button, "Back Button");
 
 	//====================================================================================================================================
 
@@ -178,11 +185,11 @@ void en::Game::set_drawables() {
 	//====================================================================================================================================
 	//Fight:
 
-	Drawable* fight_background = new Image(0, 0, resource_manager->get_texture("Fight Background"));
-	resource_manager->add_drawable(*fight_background, "Fight Background");
+	Drawable* fight_background = new Image(0, 0, manager->get_texture("Fight Background"));
+	manager->add_drawable(*fight_background, "Fight Background");
 
-	Drawable* player_drawable = new Player(0, 0, resource_manager->get_texture("Player"));
-	resource_manager->add_drawable(*player_drawable, "Player");
+	Drawable* player_drawable = new Player(0, 0, manager->get_texture("Player"));
+	manager->add_drawable(*player_drawable, "Player");
 
 
 	//====================================================================================================================================
@@ -202,24 +209,29 @@ void en::Game::save_save_file() {
 
 void en::Game::main_menu_loop() {
 	std::vector<Drawable*> in_frame = {
-		resource_manager->get_drawable("Main Menu Background"),
-		resource_manager->get_drawable("Main Menu Load Game Button"),
-		resource_manager->get_drawable("Main Menu Options Button"),
-		resource_manager->get_drawable("Main Menu Quit Button")
+		manager->get_drawable("Main Menu Background"),
+		manager->get_drawable("Main Menu Load Game Button"),
+		manager->get_drawable("Main Menu Options Button"),
+		manager->get_drawable("Main Menu Quit Button")
 	};
 
 	
 	while (application_state == MAIN_MENU) {
 
 		for (const auto& each : in_frame) {
-			each->draw(core->window, core->event);
+			each->draw();
 		}
 
 		core->window.display();
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(resource_manager);
+			auto[resize_d_x, resize_d_y] = core->on_resize_event();
+			
+			auto temp_drawables = manager->get_all_drawables();
+			for (const auto& each : temp_drawables) {
+				each.second->resize(resize_d_x, resize_d_y);
+			}
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -239,30 +251,35 @@ void en::Game::start_menu_loop() {
 	
 	application_state = GAME;
 	player = new PlayerEntity;
-	player->drawable = resource_manager->get_drawable("Player");
+	player->drawable = manager->get_drawable("Player");
 }
 
 void en::Game::options_menu_loop() {
 	std::vector<Drawable*> in_frame = {
-		resource_manager->get_drawable("Options Menu Background"),
-		resource_manager->get_drawable("Volume Arrow Left"),
-		resource_manager->get_drawable("Volume Label"),
-		resource_manager->get_drawable("Volume Arrow Right"),
-		resource_manager->get_drawable("Back Button"),
+		manager->get_drawable("Options Menu Background"),
+		manager->get_drawable("Volume Arrow Left"),
+		manager->get_drawable("Volume Label"),
+		manager->get_drawable("Volume Arrow Right"),
+		manager->get_drawable("Back Button"),
 	};
 
 
 	while (application_state == OPTIONS_MENU) {
 
 		for (const auto& each : in_frame) {
-			each->draw(core->window, core->event);
+			each->draw();
 		}
 
 		core->window.display();
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(resource_manager);
+			auto [resize_d_x, resize_d_y] = core->on_resize_event();
+
+			auto temp_drawables = manager->get_all_drawables();
+			for (const auto& each : temp_drawables) {
+				each.second->resize(resize_d_x, resize_d_y);
+			}
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -280,7 +297,7 @@ void en::Game::map_loop() {
 
 void en::Game::fight_loop() {
 	std::vector<Drawable*> in_frame_static = {
-		resource_manager->get_drawable("Fight Background"),
+		manager->get_drawable("Fight Background"),
 
 	};
 
@@ -292,13 +309,13 @@ void en::Game::fight_loop() {
 	//TO DO: Set the current enemy and his drawable pointer here.
 	current_enemy = new EnemyEntity;
 
-	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell, player, resource_manager), SpellEntity::make_spell(player->second_spell, player, resource_manager) };
+	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell), SpellEntity::make_spell(player->second_spell) };
 	
 	std::vector<Drawable*> enemy_spells;
 
 
 	while (game_state == FIGHT && application_state == GAME) {
-		TIME = core->clock.restart();
+		core->time = core->clock.restart();
 		//std::cout << TIME.asMicroseconds() << '\n';
 		
 
@@ -306,7 +323,12 @@ void en::Game::fight_loop() {
 		core->window.pollEvent(core->event);
 
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(resource_manager);
+			auto [resize_d_x, resize_d_y] = core->on_resize_event();
+
+			auto temp_drawables = manager->get_all_drawables();
+			for (const auto& each : temp_drawables) {
+				each.second->resize(resize_d_x, resize_d_y);
+			}
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -319,20 +341,20 @@ void en::Game::fight_loop() {
 
 		//Draws.
 		for (const auto& each : in_frame_static) {
-			each->draw(core->window, core->event);
+			each->draw();
 		}
 
-		player->drawable->draw(core->window, core->event);
+		player->drawable->draw();
 
 		//current_enemy->drawable->draw(core->window);
 
-		for (const auto& each : enemy_spells) {
+		//for (const auto& each : enemy_spells) {
 			//each->draw(core->window);
-		}
+		//}
 
-		for (const auto& each : player_spells) {
+		//for (const auto& each : player_spells) {
 			//each->drawable->draw(core->window);
-		}
+		//}
 
 
 		core->window.display();
@@ -340,17 +362,17 @@ void en::Game::fight_loop() {
 
 		
 		//Hit checks.
-		for (const auto& each : enemy_spells) {
+		//for (const auto& each : enemy_spells) {
 			//if (each->hit_check(player->drawable->get_sprite())) {
 				//Call a do damage function from current enemy.
 			//}
-		}
+		//}
 
-		for (const auto& each : player_spells) {
+		//for (const auto& each : player_spells) {
 			//if (each->drawable->hit_check(current_enemy->drawable->get_sprite())) {
 				//TO DO: Add a player spell entity do dmg function here.
 			//}
-		}
+		//}
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -363,13 +385,13 @@ void en::Game::fight_loop() {
 
 
 		//Move spells and enemy.
-		for (const auto& each : enemy_spells) {
+		//for (const auto& each : enemy_spells) {
 			//each->move();
-		}
+		//}
 
-		for (const auto& each : player_spells) {
+		//for (const auto& each : player_spells) {
 			//each->drawable->move();
-		}
+		//}
 
 		//current_enemy->drawable->move();
 
@@ -431,7 +453,8 @@ void en::Game::main_loop() {
 	core->load_settings();
 	core->set_window();
 
-	resource_manager = new ResourceManager;
+	manager = new ResourceManager;
+
 	set_resources();
 	set_drawables();
 
@@ -452,10 +475,12 @@ void en::Game::main_loop() {
 		}
 	}
 
+
+
 	core->save_settings();
 	core->window.close();
-	delete resource_manager;
 	delete core;
+	delete manager;
 }
 
 //====================================================================================================================================

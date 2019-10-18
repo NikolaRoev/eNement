@@ -1,9 +1,8 @@
 #include "Core.h"
-#include "../Drawable/Drawable.h"
-#include "../ResourceManager/ResourceManager.h"
 
 #include <fstream>
 #include <ios>
+#include <tuple>
 #include <vector>
 
 #include <SFML/Audio.hpp>
@@ -16,8 +15,8 @@
 //====================================================================================================================================
 
 void en::Core::set_delta_values() {
-	en::DELTA_X = 1 - (((native_width - static_cast<float>(settings.width)) / (native_width / 100.0f)) / 100.0f);
-	en::DELTA_Y = 1 - (((native_height - static_cast<float>(settings.height)) / (native_height / 100.0f)) / 100.0f);
+	delta_x = 1 - (((native_width - static_cast<float>(settings.width)) / (native_width / 100.0f)) / 100.0f);
+	delta_y = 1 - (((native_height - static_cast<float>(settings.height)) / (native_height / 100.0f)) / 100.0f);
 }
 
 //====================================================================================================================================
@@ -45,12 +44,9 @@ void en::Core::load_settings() {
 
 	if (is.is_open()) {
 		is.read((char*)& settings.width, sizeof(unsigned int));
-		WIDTH = settings.width;
 		is.read((char*)& settings.height, sizeof(unsigned int));
-		HEIGHT = settings.height;
 		is.read((char*)& settings.frames, sizeof(unsigned int));
 		is.read((char*)& settings.volume, sizeof(unsigned int));
-		VOLUME = static_cast<float>(settings.volume);
 	}
 
 	is.close();
@@ -67,24 +63,26 @@ void en::Core::save_settings() {
 	os.close();
 }
 
-void en::Core::on_resize_event(ResourceManager* resource_manager) {
+const std::tuple<float, float> en::Core::on_resize_event() {
 	sf::Vector2u new_size = window.getSize();
 
-	if ((new_size.x != WIDTH) || (new_size.y != HEIGHT)) {
+	if ((new_size.x != settings.width) || (new_size.y != settings.height)) {
 		sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
 		window.setView(sf::View(visibleArea));
 
 		settings.width = new_size.x;
 		settings.height = new_size.y;
-		WIDTH = settings.width;
-		HEIGHT = settings.height;
 
-		float old_delta_x = 1 / DELTA_X;
-		float old_delta_y = 1 / DELTA_Y;
+
+		float old_delta_x = 1 / delta_x;
+		float old_delta_y = 1 / delta_y;
 
 		set_delta_values();
 
-		resource_manager->resize_all(old_delta_x * DELTA_X, old_delta_y * DELTA_Y);
+		return { old_delta_x * delta_x, old_delta_y * delta_y };
+	}
+	else {
+		return { 1.0f, 1.0f };
 	}
 }
 

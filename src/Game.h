@@ -1,8 +1,5 @@
 #pragma once
-#include "Core/Core.h"
-#include "Drawable/Drawable.h"
 #include "GameStructures.h"
-#include "ResourceManager/ResourceManager.h"
 
 
 
@@ -42,10 +39,6 @@ namespace en {
 		int application_state{ MAIN_MENU };
 
 		int game_state{ FIGHT }; //TO DO: Change this when ready.
-
-		Core* core{ nullptr };
-
-		ResourceManager* resource_manager{ nullptr };
 
 		//====================================================================================================================================
 

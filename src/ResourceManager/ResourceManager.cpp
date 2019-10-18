@@ -1,6 +1,5 @@
 #include "ResourceManager.h"
 #include "../Collision/Collision.h"
-#include "../Drawable/Drawable.h"
 
 #include <string>
 #include <unordered_map>
@@ -46,15 +45,15 @@ void en::ResourceManager::add_sound_buffer(const std::string& file_path, const s
 //====================================================================================================================================
 
 
-const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_name) const {
+const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_name) {
 	return textures.find(texture_name)->second;
 }
 
-const sf::Font& en::ResourceManager::get_font(const std::string& font_name) const {
+const sf::Font& en::ResourceManager::get_font(const std::string& font_name) {
 	return fonts.find(font_name)->second;
 }
 
-const sf::SoundBuffer& en::ResourceManager::get_sound_buffer(const std::string& sound_buffer_name) const {
+const sf::SoundBuffer& en::ResourceManager::get_sound_buffer(const std::string& sound_buffer_name) {
 	return sound_buffers.find(sound_buffer_name)->second;
 }
 
@@ -64,22 +63,12 @@ void en::ResourceManager::add_drawable(Drawable& drawable, const std::string& dr
 	drawables.insert(std::make_pair(drawable_name, &drawable));
 }
 
-en::Drawable* en::ResourceManager::get_drawable(const std::string& drawable_name) const {
+en::Drawable* en::ResourceManager::get_drawable(const std::string& drawable_name) {
 	return drawables.find(drawable_name)->second;
 }
 
-//====================================================================================================================================
-
-void en::ResourceManager::resize_all(const float d_x, const float d_y) {
-	for (const auto& each : drawables) {
-		each.second->resize(d_x, d_y);
-	}
-}
-
-void en::ResourceManager::change_volume_for_all() {
-	for (const auto& each : drawables) {
-		each.second->set_volume();
-	}
+std::unordered_map<std::string, en::Drawable*>& en::ResourceManager::get_all_drawables() {
+	return drawables;
 }
 
 //====================================================================================================================================

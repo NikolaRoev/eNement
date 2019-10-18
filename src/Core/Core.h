@@ -1,7 +1,6 @@
 #pragma once
-#include "../Drawable/Drawable.h"
-#include "../ResourceManager/ResourceManager.h"
 
+#include <tuple>
 #include <vector>
 
 #include <SFML/Audio.hpp>
@@ -10,21 +9,6 @@
 #include <SFML/Window.hpp>
 
 
-
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-
-namespace en {
-	inline float DELTA_X{ 1.0f };
-	inline float DELTA_Y{ 1.0f };
-
-	inline float VOLUME{ 50.0f };
-	inline sf::Time TIME;
-
-	inline unsigned int WIDTH{ 1024 };
-	inline unsigned int HEIGHT{ 576 };
-}
 
 //====================================================================================================================================
 //====================================================================================================================================
@@ -53,10 +37,14 @@ namespace en {
 
 	public:
 		sf::RenderWindow window;
-		sf::Event event{ sf::Event::MouseMoved };;
+		sf::Event event{ sf::Event::MouseMoved };
 		sf::Clock clock;
+		sf::Time time;
 
 		Settings settings;
+
+		float delta_x{ 1.0f };
+		float delta_y{ 1.0f };
 
 
 		void set_window();
@@ -65,9 +53,11 @@ namespace en {
 
 		void save_settings();
 
-		void on_resize_event(ResourceManager* resource_manager);
+		const std::tuple<float, float> on_resize_event();
 	};
-}
+
+	inline Core* core{ nullptr };
+} 
 
 
 //====================================================================================================================================
