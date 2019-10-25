@@ -69,6 +69,8 @@ namespace en {
 
 		void map_loop();
 
+		void spells_loop();
+
 		void fight_loop();
 
 		void win_screen_loop();

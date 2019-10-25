@@ -295,6 +295,10 @@ void en::Game::map_loop() {
 	//TO DO:
 }
 
+void en::Game::spells_loop() {
+	//TO DO:
+}
+
 void en::Game::fight_loop() {
 	std::vector<Drawable*> in_frame_static = {
 		manager->get_drawable("Fight Background"),
