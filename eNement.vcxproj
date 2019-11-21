@@ -102,6 +102,7 @@
     <ClCompile Include="src\Collision\Collision.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Drawable\Drawable.cpp" />
+    <ClCompile Include="src\eNgine\eNgine.cpp" />
     <ClCompile Include="src\EntryPoint.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameStructures.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="src\Collision\Collision.h" />
     <ClInclude Include="src\Core\Core.h" />
     <ClInclude Include="src\Drawable\Drawable.h" />
+    <ClInclude Include="src\eNgine\eNgine.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameStructures.h" />
     <ClInclude Include="src\ResourceManager\ResourceManager.h" />
