@@ -174,6 +174,8 @@ namespace en {
 		void on_resize_event(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame);
 
 		void on_resize_event(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame);
+
+		void on_sound_change();
 	};
 
 //====================================================================================================================================
