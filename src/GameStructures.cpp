@@ -1,8 +1,6 @@
 #include "GameStructures.h"
 
-#include "Core/Core.h"
 #include "Drawable/Drawable.h"
-#include "ResourceManager/ResourceManager.h"
 
 
 

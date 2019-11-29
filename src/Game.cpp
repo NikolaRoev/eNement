@@ -1,9 +1,6 @@
 #include "Game.h"
-#include "AI/AI.h"
-#include "Core/Core.h"
-#include "Drawable/Drawable.h"
+#include "Drawable\\Drawable.h"
 #include "GameStructures.h"
-#include "ResourceManager/ResourceManager.h"
 
 
 #include <algorithm>

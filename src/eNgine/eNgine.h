@@ -1,4 +1,6 @@
 #pragma once
+#include "..\\Drawable\Drawable.h"
+
 #include <map>
 #include <string>
 #include <unordered_map>
@@ -9,7 +11,6 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include <iostream>
 
 namespace en {
 	class Drawable1 {
@@ -28,10 +29,17 @@ namespace en {
 	private:
 
 	public:
-		Button1() {}
+		Button1() {
 
+		}
 		Button1(const Button1&) {
 			std::cout << "YUP";
+		}
+		Button1(Button1&&) = delete;
+		Button1& operator=(const Button1&) = delete;
+		Button1& operator=(Button1&&) = delete;
+		~Button1() {
+
 		}
 
 		Button1* clone() override {
@@ -39,12 +47,12 @@ namespace en {
 			return new Button1(*this);
 		}
 	};
-} //Include drawable here.
+}
 
 
 
 //====================================================================================================================================
-/*
+
 namespace en {
 
 //====================================================================================================================================
@@ -65,6 +73,7 @@ namespace en {
 		~ResourceManager();
 
 		void add_texture(const std::string& file_path, const std::string& texture_name);
+		void add_texture_for_pixel_perfect(const std::string& file_path, const std::string& texture_name);
 		void add_font(const std::string& file_path, const std::string& font_name);
 		void add_sound_buffer(const std::string& file_path, const std::string& sound_buffer_name);
 
@@ -79,6 +88,12 @@ namespace en {
 
 
 		std::unordered_map<std::string, Drawable*>& get_all_drawables();
+
+
+		//Collision.
+		bool PixelPerfectTest(const sf::Sprite& Object1, const sf::Sprite& Object2, sf::Uint8 AlphaLimit = 0);
+
+		bool CreateTextureAndBitmask(sf::Texture& LoadInto, const std::string& Filename);
 	};
 
 //====================================================================================================================================
@@ -87,26 +102,15 @@ namespace en {
 //====================================================================================================================================
 //====================================================================================================================================
 
-	struct Layer {
-		std::vector<Drawable*> static_drawables{};
-
+	struct DynamicFrame {
 		std::unordered_map<std::string, Drawable*> dynamic_drawables{};
 
 
-		~Layer();
-	};
-
-	struct Frame {
-		std::map<int, Layer> layers{};
-
-		std::vector<Drawable*> pop_up_drawables{};
+		~DynamicFrame();
 
 
-		void add_static_drawable(Drawable* drawable, const int layer);
-		void add_dynamic_drawable(const std::string& name, Drawable* drawable, const int layer);
+		void add_dynamic_drawable(const std::string& name, Drawable* drawable);
 		void delete_dynamic_drawable(const std::string& name);
-
-		void add_pop_up_drawable(Drawable* drawable);
 	};
 
 //====================================================================================================================================
@@ -153,18 +157,23 @@ namespace en {
 		~Core();
 
 
-		void set_window(const unsigned int _width,
-						const unsigned int _height,
-						const sf::Uint32 style,
-						const unsigned int _frames,
-						const unsigned int _volume,
-						const std::string& name);
+		void set_window();
 
-		void draw(const Frame& frame);
+		void load_settings();
 
-		void pop_up_draw(const Frame& frame);
+		void save_settings();
 
-		void on_resize_event(Frame& frame);
+		void draw(const std::vector<Drawable*>& static_frame);
+
+		void draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame);
+
+		void draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame);
+
+		void on_resize_event(const std::vector<Drawable*>& static_frame);
+
+		void on_resize_event(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame);
+
+		void on_resize_event(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame);
 	};
 
 //====================================================================================================================================
@@ -174,5 +183,5 @@ namespace en {
 //====================================================================================================================================
 
 } //"en" namespace END.
-*/
+
 //====================================================================================================================================

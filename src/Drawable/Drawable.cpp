@@ -1,6 +1,4 @@
 #include "Drawable.h"
-#include "../Collision/Collision.h"
-#include "../Core/Core.h"
 
 #include <functional>
 #include <string>
