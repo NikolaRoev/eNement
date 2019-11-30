@@ -14,6 +14,30 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+
+en::DynamicFrame::~DynamicFrame() {
+	for (auto& each : dynamic_drawables) {
+		delete each.second;
+	}
+}
+
+void en::DynamicFrame::add_dynamic_drawable(const std::string& name, en::Drawable* drawable) {
+	dynamic_drawables.insert(std::make_pair(name, drawable->clone()));
+}
+
+void en::DynamicFrame::delete_dynamic_drawable(const std::string& name) {
+	std::unordered_map<std::string, en::Drawable*>::iterator it = dynamic_drawables.find(name);
+
+	if (it != dynamic_drawables.end()) {
+		delete it->second;
+		dynamic_drawables.erase(it);
+	}
+}
 
 //====================================================================================================================================
 //====================================================================================================================================
@@ -54,6 +78,10 @@ void en::ResourceManager::add_sound_buffer(const std::string& file_path, const s
 	sound_buffers.insert(std::make_pair(sound_buffer_name, temp));
 }
 
+void en::ResourceManager::add_drawable(Drawable* drawable, const std::string& drawable_name) {
+	drawables.insert(std::make_pair(drawable_name, drawable));
+}
+
 //====================================================================================================================================
 
 const sf::Texture& en::ResourceManager::get_texture(const std::string& texture_name) const {
@@ -66,12 +94,6 @@ const sf::Font& en::ResourceManager::get_font(const std::string& font_name) cons
 
 const sf::SoundBuffer& en::ResourceManager::get_sound_buffer(const std::string& sound_buffer_name) const {
 	return sound_buffers.find(sound_buffer_name)->second;
-}
-
-//====================================================================================================================================
-
-void en::ResourceManager::add_drawable(Drawable* drawable, const std::string& drawable_name) {
-	drawables.insert(std::make_pair(drawable_name, drawable));
 }
 
 en::Drawable* en::ResourceManager::get_drawable(const std::string& drawable_name) const {
@@ -182,29 +204,16 @@ bool en::ResourceManager::CreateTextureAndBitmask(sf::Texture& LoadInto, const s
 	return true;
 }
 
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
+void en::ResourceManager::scale_drawables(const float delta_x, const float delta_y) {
 
-en::DynamicFrame::~DynamicFrame() {
-	for (auto& each : dynamic_drawables) {
-		delete each.second;
-	}
 }
 
-void en::DynamicFrame::add_dynamic_drawable(const std::string& name, en::Drawable* drawable) {
-	dynamic_drawables.insert(std::make_pair(name, drawable->clone()));
+void en::ResourceManager::scale_drawables(const float delta_x, const float delta_y, en::DynamicFrame& dynamic_frame) {
+
 }
 
-void en::DynamicFrame::delete_dynamic_drawable(const std::string& name) {
-	std::unordered_map<std::string, en::Drawable*>::iterator it = dynamic_drawables.find(name);
+void en::ResourceManager::change_volume(const unsigned int volume) {
 
-	if (it != dynamic_drawables.end()) {
-		delete it->second;
-		dynamic_drawables.erase(it);
-	}
 }
 
 //====================================================================================================================================
@@ -277,41 +286,37 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFra
 
 }
 
-void en::Core::on_resize_event(const std::vector<Drawable*>& static_frame) {
-	/*
+void en::Core::on_resize_event() {
 	sf::Vector2u new_size = window.getSize();
 
-	if ((new_size.x != settings.width) || (new_size.y != settings.height)) {
+	if ((new_size.x != width) || (new_size.y != height)) {
 		sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
 		window.setView(sf::View(visibleArea));
 
-		settings.width = new_size.x;
-		settings.height = new_size.y;
-
-
-		float old_delta_x = 1 / delta_x;
-		float old_delta_y = 1 / delta_y;
+		width = new_size.x;
+		height = new_size.y;
 
 		set_delta_values();
 
-		return { old_delta_x * delta_x, old_delta_y * delta_y };
+		manager->scale_drawables(delta_x, delta_y);
 	}
-	else {
-		return { 1.0f, 1.0f };
+}
+
+void en::Core::on_resize_event(DynamicFrame& dynamic_frame) {
+	sf::Vector2u new_size = window.getSize();
+
+	if ((new_size.x != width) || (new_size.y != height)) {
+		sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
+		window.setView(sf::View(visibleArea));
+
+		width = new_size.x;
+		height = new_size.y;
+
+		set_delta_values();
+
+		manager->scale_drawables(delta_x, delta_y);
+		manager->scale_drawables(delta_x, delta_y, dynamic_frame);
 	}
-	*/
-}
-
-void en::Core::on_resize_event(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame) {
-
-}
-
-void en::Core::on_resize_event(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame) {
-
-}
-
-void en::Core::on_sound_change() {
-
 }
 
 //====================================================================================================================================
