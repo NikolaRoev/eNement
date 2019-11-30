@@ -9,65 +9,73 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include <iostream>
+
+
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+
+en::Image::Image(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture) {
+	sprite.setTexture(texture);
+	sprite.setPosition(x * delta_x, y * delta_y);
+	sprite.scale(delta_x, delta_y);
+}
+
+void en::Image::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
+
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+}
+
+void en::Image::draw(sf::RenderWindow& window) {
+	window.draw(sprite);
+}
+
+void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
+	window.draw(sprite);
+}
 
 //====================================================================================================================================
 
-en::Image::Image(const float x, const float y, const sf::Texture& texture) {
+en::Label::Label(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
-}
-
-void en::Image::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
-}
-
-void en::Image::static_draw() {
-	core->window.draw(sprite);
-}
-
-void en::Image::draw() {
-	core->window.draw(sprite);
-}
-
-//====================================================================================================================================
-
-en::Label::Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
-	text_x_original = text_x;
-	text_y_original = text_y;
-	
-	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
+	sprite.setPosition(x * delta_x, y * delta_y);
+	sprite.scale(delta_x, delta_y);
 
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
-	text.setPosition(text_x * core->delta_x, text_y * core->delta_y);
+	text.setPosition(text_x * delta_x, text_y * delta_y);
 	text.setString(_text);
-	text.scale(core->delta_x, core->delta_y);
+	text.scale(delta_x, delta_y);
 }
 
-void en::Label::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
+void en::Label::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
 
-	text.setPosition(text_x_original * core->delta_x, text_y_original * core->delta_y);
-	text.scale(resize_delta_x, resize_delta_y);
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+	
+	
+	current_position = text.getGlobalBounds();
+
+	text.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	text.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
 }
 
-void en::Label::static_draw() {
-	core->window.draw(sprite);
-	core->window.draw(text);
+void en::Label::draw(sf::RenderWindow& window) {
+	window.draw(sprite);
+	window.draw(text);
 }
 
-void en::Label::draw() {
-	core->window.draw(sprite);
-	core->window.draw(text);
+void en::Label::draw(sf::RenderWindow& window, sf::Event& event) {
+	window.draw(sprite);
+	window.draw(text);
 }
 
 void en::Label::set_text(const std::string& new_text) {
@@ -76,302 +84,173 @@ void en::Label::set_text(const std::string& new_text) {
 
 //====================================================================================================================================
 
-en::Button::Button(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
+en::Button::Button(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer, const unsigned int volume) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
+	sprite.setPosition(x * delta_x, y * delta_y);
+	sprite.scale(delta_x, delta_y);
 
 	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	hl_sprite.scale(core->delta_x, core->delta_y);
+	hl_sprite.setPosition(x * delta_x, y * delta_y);
+	hl_sprite.scale(delta_x, delta_y);
 
 	function = _function;
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(core->settings.volume));
+	sound.setVolume(static_cast<float>(volume));
 }
 
-void en::Button::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
+void en::Button::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
 
-	temp = hl_sprite.getGlobalBounds();
-	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	hl_sprite.scale(resize_delta_x, resize_delta_y);
-}
-
-void en::Button::static_draw() {
-	core->window.draw(sprite);
-}
-
-void en::Button::draw() {
-	sf::Vector2i mouse_position = sf::Mouse::getPosition(core->window);
-	core->window.draw(sprite);
-
-	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-		if (core->event.type == sf::Event::MouseButtonPressed && core->event.mouseButton.button == sf::Mouse::Left) {
-			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-				core->window.waitEvent(core->event);
-				if (core->event.type == sf::Event::MouseButtonReleased) {
-					sound.play();
-					function();
-					break;
-				}
-				mouse_position = sf::Mouse::getPosition(core->window);
-			}
-		}
-		core->window.draw(hl_sprite);
-	}
-}
-
-void en::Button::set_volume() {
-	sound.setVolume(static_cast<float>(core->settings.volume));
-}
-
-//====================================================================================================================================
-
-en::TextButton::TextButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
-	text_x_original = text_x;
-	text_y_original = text_y;
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
 	
-	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
 
-	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	hl_sprite.scale(core->delta_x, core->delta_y);
+	current_position = hl_sprite.getGlobalBounds();
 
-	text.setFont(font);
-	text.setCharacterSize(text_size);
-	text.setFillColor(text_color);
-	text.setPosition(text_x * core->delta_x, text_y * core->delta_y);
-	text.setString(_text);
-	text.scale(core->delta_x, core->delta_y);
-
-	function = _function;
-
-	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(core->settings.volume));
+	hl_sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	hl_sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
 }
 
-void en::TextButton::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
-
-	temp = hl_sprite.getGlobalBounds();
-	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	hl_sprite.scale(resize_delta_x, resize_delta_y);
-
-	text.setPosition(text_x_original * core->delta_x, text_y_original * core->delta_y);
-	text.scale(resize_delta_x, resize_delta_y);
+void en::Button::draw(sf::RenderWindow& window) {
+	window.draw(sprite);
 }
 
-void en::TextButton::static_draw() {
-	core->window.draw(sprite);
-	core->window.draw(text);
-}
-
-void en::TextButton::draw() {
-	sf::Vector2i mouse_position = sf::Mouse::getPosition(core->window);
-	core->window.draw(sprite);
-	core->window.draw(text);
+void en::Button::draw(sf::RenderWindow& window, sf::Event& event) {
+	sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+	window.draw(sprite);
 
 	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-		if (core->event.type == sf::Event::MouseButtonPressed && core->event.mouseButton.button == sf::Mouse::Left) {
+		if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
 			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-				core->window.waitEvent(core->event);
-				if (core->event.type == sf::Event::MouseButtonReleased) {
+				window.waitEvent(event);
+				if (event.type == sf::Event::MouseButtonReleased) {
 					sound.play();
 					function();
 					break;
 				}
-				mouse_position = sf::Mouse::getPosition(core->window);
+				mouse_position = sf::Mouse::getPosition(window);
 			}
 		}
-		core->window.draw(hl_sprite);
+		window.draw(hl_sprite);
 	}
 }
 
-void en::TextButton::set_text(const std::string& new_text) {
-	text.setString(new_text);
-}
-
-void en::TextButton::set_volume() {
-	sound.setVolume(static_cast<float>(core->settings.volume));
+void en::Button::set_volume(const unsigned int volume) {
+	sound.setVolume(static_cast<float>(volume));
 }
 
 //====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
 
-en::ToggleButton::ToggleButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const bool _pressed, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
+en::EntityDrawable::EntityDrawable(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer, const unsigned int volume) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
-
-	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	hl_sprite.scale(core->delta_x, core->delta_y);
-
-	pressed_sprite.setTexture(pressed_texture);
-	pressed_sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	pressed_sprite.scale(core->delta_x, core->delta_y);
-
-	pressed = _pressed;
-
-	function = _function;
+	sprite.setPosition(x * delta_x, y * delta_y);
+	sprite.scale(delta_x, delta_y);
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(core->settings.volume));
+	sound.setVolume(static_cast<float>(volume));
 }
 
-void en::ToggleButton::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
-
-	temp = hl_sprite.getGlobalBounds();
-	hl_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	hl_sprite.scale(resize_delta_x, resize_delta_y);
-
-	temp = pressed_sprite.getGlobalBounds();
-	pressed_sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	pressed_sprite.scale(resize_delta_x, resize_delta_y);
+en::EntityDrawable::EntityDrawable(const EntityDrawable& other) {
+	sprite = other.sprite;
+	sound = other.sound;
 }
 
-void en::ToggleButton::static_draw() {
-	if (!pressed) {
-		core->window.draw(sprite);
-	}
-	else {
-		core->window.draw(pressed_sprite);
-	}
+void en::EntityDrawable::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
+
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
 }
 
-void en::ToggleButton::draw() {
-	sf::Vector2i mouse_position = sf::Mouse::getPosition(core->window);
-	if (!pressed) {
-		core->window.draw(sprite);
-	}
-	else {
-		core->window.draw(pressed_sprite);
-	}
-
-	if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-		if (core->event.type == sf::Event::MouseButtonPressed && core->event.mouseButton.button == sf::Mouse::Left) {
-			while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
-				core->window.waitEvent(core->event);
-				if (core->event.type == sf::Event::MouseButtonReleased) {
-					pressed = !pressed;
-					sound.play();
-					function();
-					break;
-				}
-				mouse_position = sf::Mouse::getPosition(core->window);
-			}
-		}
-		core->window.draw(hl_sprite);
-	}
+void en::EntityDrawable::draw(sf::RenderWindow& window) {
+	window.draw(sprite);
 }
 
-void en::ToggleButton::set_volume() {
-	sound.setVolume(static_cast<float>(core->settings.volume));
+void en::EntityDrawable::draw(sf::RenderWindow& window, sf::Event& event) {
+	window.draw(sprite);
 }
 
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-
-en::Player::Player(const float x, const float y, const sf::Texture& texture) {
-	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
+void en::EntityDrawable::set_volume(const unsigned int volume) {
+	sound.setVolume(static_cast<float>(volume));
 }
 
-void en::Player::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
-}
-
-void en::Player::static_draw() {
-	core->window.draw(sprite);
-}
-
-void en::Player::draw() {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-
-	//TO DO: Increment this many times with a check everytime if you want it to be smooth.
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		if (temp.left > 0) {
-			sprite.move(-10, 0);
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		if (temp.left < (core->settings.width - temp.width)) {
-			sprite.move(10, 0);
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		if (temp.top > 0) {
-			sprite.move(0, -10);
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		if (temp.top < (core->settings.height - temp.height)) {
-			sprite.move(0, 10);
-		}
-	}
-
-	core->window.draw(sprite);
-}
-
-const sf::Sprite* en::Player::get_sprite() {
+const sf::Sprite* en::EntityDrawable::get_sprite() {
 	return &sprite;
 }
 
+void en::EntityDrawable::move(const float delta_x, const float delta_y) {
+	sprite.move(delta_x, delta_y);
+}
+
+void en::EntityDrawable::play_sound() {
+	sound.play();
+}
+
+en::EntityDrawable* en::EntityDrawable::clone()
+{
+	return new EntityDrawable(*this);
+}
+
 //====================================================================================================================================
 
-en::PlayerSpell::PlayerSpell(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
+en::SpellDrawable::SpellDrawable(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer, const unsigned int volume) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * core->delta_x, y * core->delta_y);
-	sprite.scale(core->delta_x, core->delta_y);
+	sprite.setPosition(x * delta_x, y * delta_y);
+	sprite.scale(delta_x, delta_y);
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(core->settings.volume));
+	sound.setVolume(static_cast<float>(volume));
 }
 
-void en::PlayerSpell::resize(const float resize_delta_x, const float resize_delta_y) {
-	sf::FloatRect temp = sprite.getGlobalBounds();
-	sprite.setPosition(temp.left * resize_delta_x, temp.top * resize_delta_y);
-	sprite.scale(resize_delta_x, resize_delta_y);
+en::SpellDrawable::SpellDrawable(const SpellDrawable& other) {
+	sprite = other.sprite;
+	sound = other.sound;
 }
 
-void en::PlayerSpell::static_draw() {
-	core->window.draw(sprite);
+void en::SpellDrawable::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
+
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
 }
 
-void en::PlayerSpell::draw() {
-	core->window.draw(sprite);
+void en::SpellDrawable::draw(sf::RenderWindow& window) {
+	window.draw(sprite);
 }
 
-void en::PlayerSpell::set_volume() {
-	sound.setVolume(static_cast<float>(core->settings.volume));
+void en::SpellDrawable::draw(sf::RenderWindow& window, sf::Event& event) {
+	window.draw(sprite);
 }
 
-bool en::PlayerSpell::out_of_bounds_check() {
-	//TO DO:
-	return false;
+void en::SpellDrawable::set_volume(const unsigned int volume) {
+	sound.setVolume(static_cast<float>(volume));
 }
 
-bool en::PlayerSpell::hit_check(const sf::Sprite* target) {
-	return Collision::PixelPerfectTest(*target, sprite);
+const sf::Sprite* en::SpellDrawable::get_sprite() {
+	return &sprite;
 }
 
-void en::PlayerSpell::move() {
-	//TO DO:
+void en::SpellDrawable::move(const float delta_x, const float delta_y) {
+	sprite.move(delta_x, delta_y);
 }
 
+void en::SpellDrawable::play_sound() {
+	sound.play();
+}
+
+en::SpellDrawable* en::SpellDrawable::clone()
+{
+	return new SpellDrawable(*this);
+}
+
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
 //====================================================================================================================================

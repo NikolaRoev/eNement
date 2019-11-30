@@ -14,47 +14,46 @@
 //====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
 
 namespace en {
 
+	//====================================================================================================================================
+	//====================================================================================================================================
 	//====================================================================================================================================
 
 	class Drawable {
 	public:
 		virtual ~Drawable() = default;
 
+
 		//Utility functions.
-		virtual void resize(const float resize_delta_x, const float resize_delta_y) = 0;
+		virtual void resize(const float delta_x, const float delta_y) = 0;
 
-		virtual void static_draw() = 0;
+		virtual void draw(sf::RenderWindow& window) = 0;
 
-		virtual void draw() = 0;
+		virtual void draw(sf::RenderWindow& window, sf::Event& event) = 0;
 
 
+		//Setters.
 		virtual void set_text(const std::string& new_text) = 0;
 
-		virtual void set_volume() = 0;
+		virtual void set_volume(const unsigned int volume) = 0;
+
 
 		//Game drawables specific functions.
-
-		virtual bool out_of_bounds_check() = 0;
-
-		virtual bool hit_check(const sf::Sprite* target) = 0;
-
-		virtual void move() = 0; //TO DO: Add the move logic here.
-
 		virtual const sf::Sprite* get_sprite() = 0;
+
+		virtual void move(const float delta_x, const float delta_y) = 0;
+
+		virtual void play_sound() = 0;
+
+		virtual Drawable* clone() = 0;
 	};
 
-	struct DrawableDeleter {
-		void operator()(Drawable*& drawable) {
-			if (drawable->out_of_bounds_check()) {
-				delete drawable;
-				drawable = nullptr;
-			}
-		}
-	};
-
+	//====================================================================================================================================
+	//====================================================================================================================================
 	//====================================================================================================================================
 
 	class Image : public Drawable {
@@ -62,28 +61,39 @@ namespace en {
 		sf::Sprite sprite;
 
 	public:
-		Image(const float x, const float y, const sf::Texture& texture);
+		Image(const float x,
+			  const float y,
+			  const float delta_x,
+			  const float delta_y,
+			  const sf::Texture& texture);
 
 
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
+		Image(const Image&) = delete;
+		Image(Image&&) = delete;
+		Image& operator=(const Image&) = delete;
+		Image& operator=(Image&&) = delete;
+		~Image() = default;
 
-		void static_draw() override;
 
-		void draw() override;
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 
 		void set_text(const std::string& new_text) override {}
 
-		void set_volume() override {}
+		void set_volume(const unsigned int volume) override {}
 
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override {}
 
 		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		Image* clone() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -93,32 +103,46 @@ namespace en {
 		sf::Sprite sprite;
 		sf::Text text;
 
-		float text_x_original{ 0.0f };
-		float text_y_original{ 0.0f };
-
 	public:
-		Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text);
+		Label(const float x,
+			  const float y,
+			  const float delta_x,
+			  const float delta_y,
+			  const sf::Texture& texture,
+			  const float text_x,
+			  const float text_y,
+			  const sf::Font& font,
+			  const unsigned int text_size,
+			  const sf::Color text_color,
+			  const std::string& _text);
 
 
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
+		Label(const Label&) = delete;
+		Label(Label&&) = delete;
+		Label& operator=(const Label&) = delete;
+		Label& operator=(Label&&) = delete;
+		~Label() = default;
 
-		void static_draw() override;
 
-		void draw() override;
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 
 		void set_text(const std::string& new_text) override;
 
-		void set_volume() override {}
+		void set_volume(const unsigned int volume) override {}
 
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override {}
 
 		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		Label* clone() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -131,213 +155,151 @@ namespace en {
 		sf::Sound sound;
 
 	public:
-		Button(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);
+		Button(const float x,
+			   const float y,
+			   const float delta_x,
+			   const float delta_y,
+			   const sf::Texture& texture,
+			   const sf::Texture& hl_texture,
+			   std::function<void()> _function,
+			   const sf::SoundBuffer& sound_buffer,
+			   const unsigned int volume);
 
 
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
-
-		void static_draw() override;
-
-		void draw() override;
-
-
-		void set_text(const std::string& new_text) override {}
-
-		void set_volume() override;
+		Button(const Button&) = delete;
+		Button(Button&&) = delete;
+		Button& operator=(const Button&) = delete;
+		Button& operator=(Button&&) = delete;
+		~Button() = default;
 
 
-		bool out_of_bounds_check() override { return false; }
+		void resize(const float delta_x, const float delta_y) override;
 
-		bool hit_check(const sf::Sprite* target) override { return false; }
+		void draw(sf::RenderWindow& window) override;
 
-		void move() override {}
-
-		const sf::Sprite* get_sprite() override { return nullptr; }
-	};
-
-	//====================================================================================================================================
-
-	class TextButton : public Drawable {
-	private:
-		sf::Sprite sprite;
-		sf::Sprite hl_sprite;
-		sf::Text text;
-		std::function<void()> function;
-		sf::Sound sound;
-
-		float text_x_original{ 0.0f };
-		float text_y_original{ 0.0f };
-
-	public:
-		TextButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);
-
-
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
-
-		void static_draw() override;
-
-		void draw() override;
-
-
-		void set_text(const std::string& new_text) override;
-
-		void set_volume() override;
-
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override {}
-
-		const sf::Sprite* get_sprite() override { return nullptr; }
-	};
-
-	//====================================================================================================================================
-
-	class ToggleButton : public Drawable {
-	private:
-		sf::Sprite sprite;
-		sf::Sprite hl_sprite;
-		sf::Sprite pressed_sprite;
-		bool pressed{ false };
-		std::function<void()> function;
-		sf::Sound sound;
-
-	public:
-		ToggleButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, const sf::Texture& pressed_texture, const bool _pressed, std::function<void()> _function, const sf::SoundBuffer& sound_buffer);
-
-
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
-
-		void static_draw() override;
-
-		void draw() override;
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 
 		void set_text(const std::string& new_text) override {}
 
-		void set_volume() override;
+		void set_volume(const unsigned int volume) override;
 
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override {}
 
 		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		Button* clone() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
 	//====================================================================================================================================
 	//====================================================================================================================================
 	
-	class Player : public Drawable {
+	//TO DO: Add the eNement specific menu drawables. Like the spell selectors and the plus buttons.
+
+	class EntityDrawable : public Drawable {
 	private:
 		sf::Sprite sprite;
-
-	public:
-		Player(const float x, const float y, const sf::Texture& texture);
-
-
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
-
-		void static_draw() override;
-
-		void draw() override;
-
-
-		void set_text(const std::string& new_text) override {}
-
-		void set_volume() override {}
-
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override {}
-
-		const sf::Sprite* get_sprite() override;
-	};
-
-	//====================================================================================================================================
-	//TO DO: All of these.
-	class PlayerSpell : public Drawable {
-	private:
-		sf::Sprite sprite;
-
 		sf::Sound sound;
 
-		bool hit{ false };
-
 	public:
-		PlayerSpell(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer);
+		EntityDrawable(const float x,
+					   const float y,
+					   const float delta_x,
+					   const float delta_y,
+					   const sf::Texture& texture,
+					   const sf::SoundBuffer& sound_buffer,
+					   const unsigned int volume);
 
 
-		void resize(const float resize_delta_x, const float resize_delta_y) override;
+		EntityDrawable(const EntityDrawable& other);
 
-		void static_draw() override;
 
-		void draw() override;
+		EntityDrawable(EntityDrawable&&) = delete;
+		EntityDrawable& operator=(const EntityDrawable&) = delete;
+		EntityDrawable& operator=(EntityDrawable&&) = delete;
+		~EntityDrawable() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
 
 		void set_text(const std::string& new_text) override {}
 
-		void set_volume() override;
+		void set_volume(const unsigned int volume) override;
 
-
-		bool out_of_bounds_check() override;
-
-		bool hit_check(const sf::Sprite* target) override;
-
-		void move() override;
-
-		const sf::Sprite* get_sprite() override { return nullptr; }
-	};
-
-	//====================================================================================================================================
-
-	class Enemy : public Drawable {
-	private:
-
-	public:
-
-
-
-		bool out_of_bounds_check() override { return false; }
-
-		bool hit_check(const sf::Sprite* target) override { return false; }
-
-		void move() override;
 
 		const sf::Sprite* get_sprite() override;
+
+		void move(const float delta_x, const float delta_y) override;
+
+		void play_sound() override;
+
+		EntityDrawable* clone() override;
 	};
 
 	//====================================================================================================================================
 
-	class EnemySpell : public Drawable {
+	class SpellDrawable : public Drawable {
 	private:
-
-		bool hit{ false };
+		sf::Sprite sprite;
+		sf::Sound sound;
 
 	public:
+		SpellDrawable(const float x,
+					  const float y,
+					  const float delta_x,
+					  const float delta_y,
+					  const sf::Texture& texture,
+					  const sf::SoundBuffer& sound_buffer,
+					  const unsigned int volume);
 
 
+		SpellDrawable(const SpellDrawable& other);
 
-		bool out_of_bounds_check() override;
 
-		bool hit_check(const sf::Sprite* target) override;
+		SpellDrawable(SpellDrawable&&) = delete;
+		SpellDrawable& operator=(const SpellDrawable&) = delete;
+		SpellDrawable& operator=(SpellDrawable&&) = delete;
+		~SpellDrawable() = default;
 
-		void move() override;
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override;
+
+
+		const sf::Sprite* get_sprite() override;
+
+		void move(const float delta_x, const float delta_y) override;
+
+		void play_sound() override;
+
+		SpellDrawable* clone() override;
 	};
 
 	//====================================================================================================================================
-}
+	//====================================================================================================================================
+	//====================================================================================================================================
 
+} //"en" namespace END.
+
+//====================================================================================================================================
+//====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================

@@ -14,6 +14,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+
+
 //====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
@@ -205,15 +207,25 @@ bool en::ResourceManager::CreateTextureAndBitmask(sf::Texture& LoadInto, const s
 }
 
 void en::ResourceManager::scale_drawables(const float delta_x, const float delta_y) {
-
+	for (auto& each : drawables) {
+		each.second->resize(delta_x, delta_y);
+	}
 }
 
 void en::ResourceManager::scale_drawables(const float delta_x, const float delta_y, en::DynamicFrame& dynamic_frame) {
+	for (auto& each : drawables) {
+		each.second->resize(delta_x, delta_y);
+	}
 
+	for (auto& each : dynamic_frame.dynamic_drawables) {
+		each.second->resize(delta_x, delta_y);
+	}
 }
 
 void en::ResourceManager::change_volume(const unsigned int volume) {
-
+	for (auto& each : drawables) {
+		each.second->set_volume(volume);
+	}
 }
 
 //====================================================================================================================================
@@ -275,15 +287,33 @@ void en::Core::save_settings() {
 }
 
 void en::Core::draw(const std::vector<Drawable*>& static_frame) {
-
+	for (const auto& each : static_frame) {
+		each->draw(window, event);
+	}
 }
 
 void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame) {
+	for (const auto& each : static_frame) {
+		each->draw(window, event);
+	}
 
+	for (const auto& each : dynamic_frame.dynamic_drawables) {
+		each.second->draw(window, event);
+	}
 }
 
 void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame) {
+	for (const auto& each : static_frame) {
+		each->draw(window);
+	}
 
+	for (const auto& each : dynamic_frame.dynamic_drawables) {
+		each.second->draw(window);
+	}
+
+	for (const auto& each : pop_up_frame) {
+		each->draw(window, event);
+	}
 }
 
 void en::Core::on_resize_event() {
