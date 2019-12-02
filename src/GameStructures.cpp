@@ -16,6 +16,9 @@ en::PlayerSpell::~PlayerSpell() {
 
 en::PlayerSpell* en::PlayerSpell::make_spell(const SpellType type) {
 	switch (type) {
+		case SpellType::Empty:
+			return nullptr;
+			break;
 		case SpellType::Fire:
 			return new FireSpell();
 			break;

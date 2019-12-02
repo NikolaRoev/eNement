@@ -248,6 +248,7 @@ en::Core::Core(const double _native_width, const double _native_height) {
 
 en::Core::~Core() {
 	delete manager;
+	window.close();
 }
 
 void en::Core::set_window() {

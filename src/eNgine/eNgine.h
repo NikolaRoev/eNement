@@ -96,15 +96,15 @@ namespace en {
 		float delta_x{ 1.0f };
 		float delta_y{ 1.0f };
 
+
+		void set_delta_values();
+
+	public:
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };
 		sf::Clock clock;
 		sf::Time time;
 
-
-		void set_delta_values();
-
-	public:
 		ResourceManager* manager{ nullptr };
 
 
