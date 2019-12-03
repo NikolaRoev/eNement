@@ -420,6 +420,7 @@ void en::Game::game_loop() {
 		}
 	}
 
+	save_save_file();
 }
 
 void en::Game::chapter_loop() {
@@ -591,7 +592,7 @@ void en::Game::main_loop() {
 		}
 	}
 
-	save_save_file();
+
 	core->save_settings();
 	delete core;
 }
