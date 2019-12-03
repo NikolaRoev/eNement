@@ -264,7 +264,7 @@ void en::Core::set_window() {
 }
 
 void en::Core::load_settings() {
-	std::ifstream is("settings.bin", std::ios::binary | std::ios::in);
+	std::ifstream is("settings.bin", std::ios::binary);
 
 	if (is.is_open()) {
 		is.read((char*)&width, sizeof(unsigned int));
@@ -277,7 +277,7 @@ void en::Core::load_settings() {
 }
 
 void en::Core::save_settings() {
-	std::ofstream os("settings.bin", std::ios::binary | std::ios::out);
+	std::ofstream os("settings.bin", std::ios::binary);
 	os.write((char*)&width, sizeof(unsigned int));
 	os.write((char*)&height, sizeof(unsigned int));
 	os.write((char*)&frames, sizeof(unsigned int));

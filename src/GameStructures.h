@@ -18,8 +18,6 @@ namespace en {
 	//====================================================================================================================================
 
 	struct SaveFile {
-		bool played_before{ false };
-
 		unsigned int chapter{ 0 };
 
 		unsigned int spell0{ 0 };

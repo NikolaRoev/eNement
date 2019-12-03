@@ -4,7 +4,9 @@
 
 
 #include <algorithm>
+#include <fstream>
 #include <functional>
+#include <ios>
 #include <vector>
 
 
@@ -299,12 +301,54 @@ void en::Game::set_drawables() {
 
 //====================================================================================================================================
 
-void en::Game::load_save_file() {
+void en::Game::load_save_files() {
+	int i = 0;
+	for (auto& each : saves) {
+		std::ifstream is("save" + std::to_string(i) + ".bin", std::ios::binary);
 
+
+		if (is.is_open()) {
+			is.read((char*)&each.chapter, sizeof(unsigned int));
+
+			is.read((char*)&each.spell0, sizeof(unsigned int));
+			is.read((char*)&each.spell1, sizeof(unsigned int));
+
+			is.read((char*)&each.points, sizeof(unsigned int));
+			is.read((char*)&each.barrier_strength, sizeof(unsigned int));
+			is.read((char*)&each.magic_power, sizeof(unsigned int));
+			is.read((char*)&each.spell_mastery, sizeof(unsigned int));
+			is.read((char*)&each.magic_proficiency, sizeof(unsigned int));
+		}
+
+
+		++i;
+		is.close();
+	}
 }
 
-void en::Game::save_save_file() {
+void en::Game::save_save_files() {
+	int i = 0;
+	for (auto& each : saves) {
+		if (each.chapter != 0u) {
+			std::ofstream os("save" + std::to_string(i) + ".bin", std::ios::binary);
 
+			os.write((char*)&each.chapter, sizeof(unsigned int));
+
+			os.write((char*)&each.spell0, sizeof(unsigned int));
+			os.write((char*)&each.spell1, sizeof(unsigned int));
+
+			os.write((char*)&each.points, sizeof(unsigned int));
+			os.write((char*)&each.barrier_strength, sizeof(unsigned int));
+			os.write((char*)&each.magic_power, sizeof(unsigned int));
+			os.write((char*)&each.spell_mastery, sizeof(unsigned int));
+			os.write((char*)&each.magic_proficiency, sizeof(unsigned int));
+
+			os.flush();
+			os.close();
+		}
+
+		++i;
+	}
 }
 
 //====================================================================================================================================
