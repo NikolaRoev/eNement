@@ -287,10 +287,17 @@ void en::Core::save_settings() {
 	os.close();
 }
 
+void en::Core::adjust_drawables() {
+	manager->scale_drawables(delta_x, delta_y);
+	manager->change_volume(volume);
+}
+
 void en::Core::draw(const std::vector<Drawable*>& static_frame) {
 	for (const auto& each : static_frame) {
 		each->draw(window, event);
 	}
+
+	window.display();
 }
 
 void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame) {
@@ -301,6 +308,8 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFra
 	for (const auto& each : dynamic_frame.dynamic_drawables) {
 		each.second->draw(window, event);
 	}
+
+	window.display();
 }
 
 void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame) {
@@ -315,6 +324,8 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFra
 	for (const auto& each : pop_up_frame) {
 		each->draw(window, event);
 	}
+
+	window.display();
 }
 
 void en::Core::on_resize_event() {
@@ -348,6 +359,10 @@ void en::Core::on_resize_event(DynamicFrame& dynamic_frame) {
 		manager->scale_drawables(delta_x, delta_y);
 		manager->scale_drawables(delta_x, delta_y, dynamic_frame);
 	}
+}
+
+void en::Core::on_volume_change() {
+	manager->change_volume(volume);
 }
 
 //====================================================================================================================================

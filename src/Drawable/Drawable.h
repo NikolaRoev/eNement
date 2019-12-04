@@ -64,8 +64,6 @@ namespace en {
 	public:
 		Image(const float x,
 			  const float y,
-			  const float delta_x,
-			  const float delta_y,
 			  const sf::Texture& texture);
 
 
@@ -107,8 +105,6 @@ namespace en {
 	public:
 		Label(const float x,
 			  const float y,
-			  const float delta_x,
-			  const float delta_y,
 			  const sf::Texture& texture,
 			  const float text_x,
 			  const float text_y,
@@ -158,13 +154,10 @@ namespace en {
 	public:
 		Button(const float x,
 			   const float y,
-			   const float delta_x,
-			   const float delta_y,
 			   const sf::Texture& texture,
 			   const sf::Texture& hl_texture,
 			   std::function<void()> _function,
-			   const sf::SoundBuffer& sound_buffer,
-			   const unsigned int volume);
+			   const sf::SoundBuffer& sound_buffer);
 
 
 		Button(const Button&) = delete;
@@ -209,11 +202,8 @@ namespace en {
 	public:
 		EntityDrawable(const float x,
 					   const float y,
-					   const float delta_x,
-					   const float delta_y,
 					   const sf::Texture& texture,
-					   const sf::SoundBuffer& sound_buffer,
-					   const unsigned int volume);
+					   const sf::SoundBuffer& sound_buffer);
 
 
 		EntityDrawable(const EntityDrawable& other);
@@ -256,11 +246,8 @@ namespace en {
 	public:
 		SpellDrawable(const float x,
 					  const float y,
-					  const float delta_x,
-					  const float delta_y,
 					  const sf::Texture& texture,
-					  const sf::SoundBuffer& sound_buffer,
-					  const unsigned int volume);
+					  const sf::SoundBuffer& sound_buffer);
 
 
 		SpellDrawable(const SpellDrawable& other);

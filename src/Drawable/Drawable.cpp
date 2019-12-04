@@ -17,10 +17,9 @@
 //====================================================================================================================================
 //====================================================================================================================================
 
-en::Image::Image(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture) {
+en::Image::Image(const float x, const float y, const sf::Texture& texture) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * delta_x, y * delta_y);
-	sprite.scale(delta_x, delta_y);
+	sprite.setPosition(x, y);
 }
 
 void en::Image::resize(const float delta_x, const float delta_y) {
@@ -41,17 +40,15 @@ void en::Image::draw(sf::RenderWindow& window, sf::Event& event) {
 
 //====================================================================================================================================
 
-en::Label::Label(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
+en::Label::Label(const float x, const float y, const sf::Texture& texture, const float text_x, const float text_y, const sf::Font& font, const unsigned int text_size, const sf::Color text_color, const std::string& _text) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * delta_x, y * delta_y);
-	sprite.scale(delta_x, delta_y);
+	sprite.setPosition(x, y);
 
 	text.setFont(font);
 	text.setCharacterSize(text_size);
 	text.setFillColor(text_color);
-	text.setPosition(text_x * delta_x, text_y * delta_y);
+	text.setPosition(text_x, text_y);
 	text.setString(_text);
-	text.scale(delta_x, delta_y);
 }
 
 void en::Label::resize(const float delta_x, const float delta_y) {
@@ -84,19 +81,16 @@ void en::Label::set_text(const std::string& new_text) {
 
 //====================================================================================================================================
 
-en::Button::Button(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer, const unsigned int volume) {
+en::Button::Button(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * delta_x, y * delta_y);
-	sprite.scale(delta_x, delta_y);
+	sprite.setPosition(x, y);
 
 	hl_sprite.setTexture(hl_texture);
-	hl_sprite.setPosition(x * delta_x, y * delta_y);
-	hl_sprite.scale(delta_x, delta_y);
+	hl_sprite.setPosition(x, y);
 
 	function = _function;
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(volume));
 }
 
 void en::Button::resize(const float delta_x, const float delta_y) {
@@ -145,13 +139,11 @@ void en::Button::set_volume(const unsigned int volume) {
 //====================================================================================================================================
 //====================================================================================================================================
 
-en::EntityDrawable::EntityDrawable(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer, const unsigned int volume) {
+en::EntityDrawable::EntityDrawable(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * delta_x, y * delta_y);
-	sprite.scale(delta_x, delta_y);
+	sprite.setPosition(x, y);
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(volume));
 }
 
 en::EntityDrawable::EntityDrawable(const EntityDrawable& other) {
@@ -198,13 +190,11 @@ en::EntityDrawable* en::EntityDrawable::clone()
 
 //====================================================================================================================================
 
-en::SpellDrawable::SpellDrawable(const float x, const float y, const float delta_x, const float delta_y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer, const unsigned int volume) {
+en::SpellDrawable::SpellDrawable(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
-	sprite.setPosition(x * delta_x, y * delta_y);
-	sprite.scale(delta_x, delta_y);
+	sprite.setPosition(x, y);
 
 	sound.setBuffer(sound_buffer);
-	sound.setVolume(static_cast<float>(volume));
 }
 
 en::SpellDrawable::SpellDrawable(const SpellDrawable& other) {

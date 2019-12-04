@@ -92,11 +92,11 @@ namespace en {
 		unsigned int height{ 576 };
 		unsigned int frames{ 60 };
 		unsigned int volume{ 50 };
-
+		
 		float delta_x{ 1.0f };
 		float delta_y{ 1.0f };
 
-
+		
 		void set_delta_values();
 
 	public:
@@ -104,6 +104,7 @@ namespace en {
 		sf::Event event{ sf::Event::MouseMoved };
 		sf::Clock clock;
 		sf::Time time;
+
 
 		ResourceManager* manager{ nullptr };
 
@@ -127,6 +128,8 @@ namespace en {
 
 		void save_settings();
 
+		void adjust_drawables();
+
 		void draw(const std::vector<Drawable*>& static_frame);
 
 		void draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame);
@@ -136,6 +139,8 @@ namespace en {
 		void on_resize_event();
 
 		void on_resize_event(DynamicFrame& dynamic_frame);
+
+		void on_volume_change();
 	};
 
 	//====================================================================================================================================
