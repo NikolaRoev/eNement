@@ -200,9 +200,9 @@ void en::Game::set_drawables() {
 											 500,
 											 core->manager->get_texture("Main Menu Start Game Button"),
 											 core->manager->get_texture("Main Menu Start Game Button HL"),
-		                                     []()
+		                                     [&application_state = application_state]()
 		                                     {
-												std::cout << "YE";
+												application_state = START_MENU;
 		                                     },
 		                                     core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_game_button, "Main Menu Start Game Button");
@@ -213,9 +213,9 @@ void en::Game::set_drawables() {
 										  700,
 										  core->manager->get_texture("Main Menu Options Button"),
 										  core->manager->get_texture("Main Menu Options Button HL"),
-										  []()
+										  [&application_state = application_state]()
 										  {
-											std::cout << "YE1";
+											application_state = OPTIONS_MENU;
 										  },
 										  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(options_button, "Main Menu Options Button");
@@ -226,9 +226,9 @@ void en::Game::set_drawables() {
 									   900,
 									   core->manager->get_texture("Main Menu Quit Button"),
 									   core->manager->get_texture("Main Menu Quit Button HL"),
-									   []()
+									   [&application_state = application_state]()
 									   {
-										std::cout << "YE2";
+										application_state = EXIT;
 									   },
 									   core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(quit_button, "Main Menu Quit Button");
