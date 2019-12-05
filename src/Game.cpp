@@ -4,6 +4,7 @@
 
 
 #include <algorithm>
+#include <cstdio>
 #include <fstream>
 #include <functional>
 #include <ios>
@@ -269,10 +270,36 @@ void en::Game::set_drawables() {
 														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
 														  {
 														  	current_save = &saves[0];
+															current_save->chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_menu_start_load_button_0, "Start Menu Start Load Button 0");
+
+	Drawable* start_menu_save_label_0 = new Label(300,
+												  400,
+												  sf::Texture(),
+												  310,
+												  410,
+												  core->manager->get_font("Test Font"),
+												  50,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(start_menu_save_label_0, "Start Menu Save Label 0");
+
+	Drawable* start_menu_delete_button_0 = new DeleteButton(700,
+															400,
+															core->manager->get_texture("Start Menu Delete Button"),
+															core->manager->get_texture("Start Menu Delete Button HL"),
+															[start_menu_save_label_0, &saves = saves]()
+															{
+																start_menu_save_label_0->set_text("New Game");
+																saves[0] = {};
+																std::remove("save0.bin");
+															},
+															core->manager->get_sound_buffer("Test Sound"),
+															saves[0].chapter);
+	core->manager->add_drawable(start_menu_delete_button_0, "Start Menu Delete Button 0");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -283,10 +310,36 @@ void en::Game::set_drawables() {
 														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
 														  {
 														  	current_save = &saves[1];
+															current_save->chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_menu_start_load_button_1, "Start Menu Start Load Button 1");
+
+	Drawable* start_menu_save_label_1 = new Label(1000,
+												  400,
+												  sf::Texture(),
+												  1010,
+												  410,
+												  core->manager->get_font("Test Font"),
+												  50,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(start_menu_save_label_1, "Start Menu Save Label 1");
+
+	Drawable* start_menu_delete_button_1 = new DeleteButton(1400,
+															400,
+															core->manager->get_texture("Start Menu Delete Button"),
+															core->manager->get_texture("Start Menu Delete Button HL"),
+															[start_menu_save_label_1, &saves = saves]()
+															{
+																start_menu_save_label_1->set_text("New Game");
+																saves[1] = {};
+																std::remove("save1.bin");
+															},
+															core->manager->get_sound_buffer("Test Sound"),
+															saves[1].chapter);
+	core->manager->add_drawable(start_menu_delete_button_1, "Start Menu Delete Button 1");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -297,10 +350,36 @@ void en::Game::set_drawables() {
 														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
 														  {
 														  	current_save = &saves[2];
+															current_save->chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_menu_start_load_button_2, "Start Menu Start Load Button 2");
+
+	Drawable* start_menu_save_label_2 = new Label(300,
+												  600,
+												  sf::Texture(),
+												  310,
+												  610,
+												  core->manager->get_font("Test Font"),
+												  50,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(start_menu_save_label_2, "Start Menu Save Label 2");
+
+	Drawable* start_menu_delete_button_2 = new DeleteButton(700,
+															600,
+															core->manager->get_texture("Start Menu Delete Button"),
+															core->manager->get_texture("Start Menu Delete Button HL"),
+															[start_menu_save_label_2, &saves = saves]()
+															{
+																start_menu_save_label_2->set_text("New Game");
+																saves[2] = {};
+																std::remove("save2.bin");
+															},
+															core->manager->get_sound_buffer("Test Sound"),
+															saves[2].chapter);
+	core->manager->add_drawable(start_menu_delete_button_2, "Start Menu Delete Button 2");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -311,10 +390,36 @@ void en::Game::set_drawables() {
 														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
 														  {
 														  	current_save = &saves[3];
+															current_save->chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_menu_start_load_button_3, "Start Menu Start Load Button 3");
+
+	Drawable* start_menu_save_label_3 = new Label(1000,
+												  600,
+												  sf::Texture(),
+												  1010,
+												  610,
+												  core->manager->get_font("Test Font"),
+												  50,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(start_menu_save_label_3, "Start Menu Save Label 3");
+
+	Drawable* start_menu_delete_button_3 = new DeleteButton(1400,
+															600,
+															core->manager->get_texture("Start Menu Delete Button"),
+															core->manager->get_texture("Start Menu Delete Button HL"),
+															[start_menu_save_label_3, &saves = saves]()
+															{
+																start_menu_save_label_3->set_text("New Game");
+																saves[3] = {};
+																std::remove("save3.bin");
+															},
+															core->manager->get_sound_buffer("Test Sound"),
+															saves[3].chapter);
+	core->manager->add_drawable(start_menu_delete_button_3, "Start Menu Delete Button 3");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -325,10 +430,36 @@ void en::Game::set_drawables() {
 														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
 														  {
 														  	current_save = &saves[4];
+															current_save->chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_menu_start_load_button_4, "Start Menu Start Load Button 4");
+
+	Drawable* start_menu_save_label_4 = new Label(300,
+												  800,
+												  sf::Texture(),
+												  310,
+												  810,
+												  core->manager->get_font("Test Font"),
+												  50,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(start_menu_save_label_4, "Start Menu Save Label 4");
+
+	Drawable* start_menu_delete_button_4 = new DeleteButton(700,
+															800,
+															core->manager->get_texture("Start Menu Delete Button"),
+															core->manager->get_texture("Start Menu Delete Button HL"),
+															[start_menu_save_label_4, &saves = saves]()
+															{
+																start_menu_save_label_4->set_text("New Game");
+																saves[4] = {};
+																std::remove("save4.bin");
+															},
+															core->manager->get_sound_buffer("Test Sound"),
+															saves[4].chapter);
+	core->manager->add_drawable(start_menu_delete_button_4, "Start Menu Delete Button 4");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -339,10 +470,36 @@ void en::Game::set_drawables() {
 														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
 														  {
 														  	current_save = &saves[5];
+															current_save->chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(start_menu_start_load_button_5, "Start Menu Start Load Button 5");
+
+	Drawable* start_menu_save_label_5 = new Label(1000,
+												  800,
+												  sf::Texture(),
+												  1010,
+												  810,
+												  core->manager->get_font("Test Font"),
+												  50,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(start_menu_save_label_5, "Start Menu Save Label 5");
+
+	Drawable* start_menu_delete_button_5 = new DeleteButton(1400,
+															800,
+															core->manager->get_texture("Start Menu Delete Button"),
+															core->manager->get_texture("Start Menu Delete Button HL"),
+															[start_menu_save_label_5, &saves = saves]()
+															{
+																start_menu_save_label_5->set_text("New Game");
+																saves[5] = {};
+																std::remove("save5.bin");
+															},
+															core->manager->get_sound_buffer("Test Sound"),
+															saves[5].chapter);
+	core->manager->add_drawable(start_menu_delete_button_5, "Start Menu Delete Button 5");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -539,11 +696,65 @@ void en::Game::main_menu_loop() {
 			application_state = EXIT;
 		}
 	}
-
 }
 
 void en::Game::start_menu_loop() {
-	
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Start Menu Background"),
+
+		core->manager->get_drawable("Start Menu Start Load Button 0"),
+		core->manager->get_drawable("Start Menu Save Label 0"),
+		core->manager->get_drawable("Start Menu Delete Button 0"),
+
+		core->manager->get_drawable("Start Menu Start Load Button 1"),
+		core->manager->get_drawable("Start Menu Save Label 1"),
+		core->manager->get_drawable("Start Menu Delete Button 1"),
+
+		core->manager->get_drawable("Start Menu Start Load Button 2"),
+		core->manager->get_drawable("Start Menu Save Label 2"),
+		core->manager->get_drawable("Start Menu Delete Button 2"),
+
+		core->manager->get_drawable("Start Menu Start Load Button 3"),
+		core->manager->get_drawable("Start Menu Save Label 3"),
+		core->manager->get_drawable("Start Menu Delete Button 3"),
+
+		core->manager->get_drawable("Start Menu Start Load Button 4"),
+		core->manager->get_drawable("Start Menu Save Label 4"),
+		core->manager->get_drawable("Start Menu Delete Button 4"),
+
+		core->manager->get_drawable("Start Menu Start Load Button 5"),
+		core->manager->get_drawable("Start Menu Save Label 5"),
+		core->manager->get_drawable("Start Menu Delete Button 5"),
+
+		core->manager->get_drawable("Start Menu Back Button")
+	};
+
+	int i = 0;
+	for (auto& each : saves) {
+		if (each.chapter != 0u) {
+			core->manager->get_drawable("Start Menu Save Label " + std::to_string(i))->set_text("Chapter " + std::to_string(each.chapter));
+		}
+		else {
+			core->manager->get_drawable("Start Menu Save Label " + std::to_string(i))->set_text("New Game");
+		}
+
+		++i;
+	}
+
+
+	while (application_state == START_MENU) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 void en::Game::options_menu_loop() {
@@ -616,7 +827,7 @@ void en::Game::game_loop() {
 }
 
 void en::Game::chapter_loop() {
-
+	application_state = START_MENU;
 }
 
 void en::Game::spells_loop() {
@@ -760,7 +971,7 @@ void en::Game::main_loop() {
 	core = new Core(1920.0, 1080.0);
 	core->load_settings();
 	core->set_window();
-
+	load_save_files();
 
 	set_resources();
 	set_drawables();

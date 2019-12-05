@@ -102,6 +102,9 @@ namespace en {
 		sf::Sprite sprite;
 		sf::Text text;
 
+		float text_x_original{ 0.0f };
+		float text_y_original{ 0.0f };
+
 	public:
 		Label(const float x,
 			  const float y,
@@ -192,7 +195,56 @@ namespace en {
 	//====================================================================================================================================
 	//====================================================================================================================================
 	
-	//TO DO: Add the eNement specific menu drawables. Like the spell selectors and the plus buttons.
+	class DeleteButton : public Drawable {
+	private:
+		sf::Sprite sprite;
+		sf::Sprite hl_sprite;
+		std::function<void()> function;
+		sf::Sound sound;
+
+		unsigned int* watcher{ nullptr };
+
+	public:
+		DeleteButton(const float x,
+					 const float y,
+					 const sf::Texture& texture,
+					 const sf::Texture& hl_texture,
+					 std::function<void()> _function,
+					 const sf::SoundBuffer& sound_buffer,
+					 unsigned int& _watcher);
+
+
+		DeleteButton(const DeleteButton&) = delete;
+		DeleteButton(DeleteButton&&) = delete;
+		DeleteButton& operator=(const DeleteButton&) = delete;
+		DeleteButton& operator=(DeleteButton&&) = delete;
+		~DeleteButton() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override;
+
+
+		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		DeleteButton* clone() override { return nullptr; }
+	};
+
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
 
 	class EntityDrawable : public Drawable {
 	private:
