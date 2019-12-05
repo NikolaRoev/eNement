@@ -56,7 +56,20 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture("assets/images/Start Menu/Start_Menu_Background.png", "Start Menu Background");
 
+	core->manager->add_texture("assets/images/Start Menu/Start_Load_Button.png", "Start Menu Start Load Button");
+	core->manager->add_texture("assets/images/Start Menu/Start_Load_Button_HL.png", "Start Menu Start Load Button HL");
+
+	core->manager->add_texture("assets/images/Start Menu/Delete_Button.png", "Start Menu Delete Button");
+	core->manager->add_texture("assets/images/Start Menu/Delete_Button_HL.png", "Start Menu Delete Button HL");
+
+	core->manager->add_texture("assets/images/Start Menu/Back_Button.png", "Start Menu Back Button");
+	core->manager->add_texture("assets/images/Start Menu/Back_Button_HL.png", "Start Menu Back Button HL");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	core->manager->add_font("assets/fonts/TNR.ttf", "Test Font");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -242,7 +255,107 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* start_menu_background = new Image(0,
+												0,
+												core->manager->get_texture("Start Menu Background"));
+	core->manager->add_drawable(start_menu_background, "Start Menu Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_start_load_button_0 = new Button(300,
+														  400,
+														  core->manager->get_texture("Start Menu Start Load Button"),
+														  core->manager->get_texture("Start Menu Start Load Button HL"),
+														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  {
+														  	current_save = &saves[0];
+														  	application_state = GAME;
+														  },
+														  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_start_load_button_0, "Start Menu Start Load Button 0");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_start_load_button_1 = new Button(1000,
+														  400,
+														  core->manager->get_texture("Start Menu Start Load Button"),
+														  core->manager->get_texture("Start Menu Start Load Button HL"),
+														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  {
+														  	current_save = &saves[1];
+														  	application_state = GAME;
+														  },
+														  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_start_load_button_1, "Start Menu Start Load Button 1");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_start_load_button_2 = new Button(300,
+														  600,
+														  core->manager->get_texture("Start Menu Start Load Button"),
+														  core->manager->get_texture("Start Menu Start Load Button HL"),
+														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  {
+														  	current_save = &saves[2];
+														  	application_state = GAME;
+														  },
+														  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_start_load_button_2, "Start Menu Start Load Button 2");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_start_load_button_3 = new Button(1000,
+														  600,
+														  core->manager->get_texture("Start Menu Start Load Button"),
+														  core->manager->get_texture("Start Menu Start Load Button HL"),
+														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  {
+														  	current_save = &saves[3];
+														  	application_state = GAME;
+														  },
+														  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_start_load_button_3, "Start Menu Start Load Button 3");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_start_load_button_4 = new Button(300,
+														  800,
+														  core->manager->get_texture("Start Menu Start Load Button"),
+														  core->manager->get_texture("Start Menu Start Load Button HL"),
+														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  {
+														  	current_save = &saves[4];
+														  	application_state = GAME;
+														  },
+														  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_start_load_button_4, "Start Menu Start Load Button 4");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_start_load_button_5 = new Button(1000,
+														  800,
+														  core->manager->get_texture("Start Menu Start Load Button"),
+														  core->manager->get_texture("Start Menu Start Load Button HL"),
+														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  {
+														  	current_save = &saves[5];
+														  	application_state = GAME;
+														  },
+														  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_start_load_button_5, "Start Menu Start Load Button 5");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* start_menu_back_button = new Button(1500,
+												  900,
+												  core->manager->get_texture("Start Menu Back Button"),
+												  core->manager->get_texture("Start Menu Back Button HL"),
+												  [&application_state = application_state]()
+												  {
+													application_state = MAIN_MENU;
+												  },
+												  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(start_menu_back_button, "Start Menu Back Button");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
