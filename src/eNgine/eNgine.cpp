@@ -263,6 +263,18 @@ void en::Core::set_window() {
 	set_delta_values();
 }
 
+void en::Core::set_window(const unsigned int _width, const unsigned int _height) {
+	window.create(sf::VideoMode{ _width, _height, 32 }, "eNement", sf::Style::Default);
+	window.setFramerateLimit(frames);
+
+	//const char icon_data;
+	//sf::Image icon;
+	//icon.loadFromMemory(icon_data, sizeof(icon_data));
+	//window.setIcon(32, 32, icon.getPixelsPtr());
+
+	on_resize_event();
+}
+
 void en::Core::load_settings() {
 	std::ifstream is("settings.bin", std::ios::binary);
 

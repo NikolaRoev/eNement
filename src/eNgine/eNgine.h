@@ -124,6 +124,8 @@ namespace en {
 
 		void set_window();
 
+		void set_window(const unsigned int _width, const unsigned int _height);
+
 		void load_settings();
 
 		void save_settings();

@@ -4,6 +4,8 @@
 
 
 #include <array>
+#include <utility>
+#include <vector>
 
 
 #include <SFML/Audio.hpp>
@@ -66,6 +68,8 @@ namespace en {
 		std::array<SaveFile, 6> saves{};
 
 		SaveFile* current_save{ nullptr };
+
+		std::vector<std::pair<unsigned int, unsigned int>> sizes{ {1024, 576}, {1280, 720}, {1280, 1024}, {1366, 768}, {1920, 1080} };
 
 		//====================================================================================================================================
 
