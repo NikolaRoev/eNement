@@ -98,7 +98,22 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
-	
+	core->manager->add_texture("assets/images/Chapter/Chapter_Background.png", "Chapter Background");
+
+	core->manager->add_texture("assets/images/Chapter/Chapter_Start_Button.png", "Chapter Start Button");
+	core->manager->add_texture("assets/images/Chapter/Chapter_Start_Button_HL.png", "Chapter Start Button HL");
+
+	core->manager->add_texture("assets/images/Chapter/Chapter_Spells_Button.png", "Chapter Spells Button");
+	core->manager->add_texture("assets/images/Chapter/Chapter_Spells_Button_HL.png", "Chapter Spells Button HL");
+
+	core->manager->add_texture("assets/images/Chapter/Chapter_Stats_Button.png", "Chapter Stats Button");
+	core->manager->add_texture("assets/images/Chapter/Chapter_Stats_Button_HL.png", "Chapter Stats Button HL");
+
+	core->manager->add_texture("assets/images/Chapter/Chapter_Main_Menu_Button.png", "Chapter Main Menu Button");
+	core->manager->add_texture("assets/images/Chapter/Chapter_Main_Menu_Button_HL.png", "Chapter Main Menu Button HL");
+
+	core->manager->add_texture("assets/images/Chapter/Chapter_Scene1.png", "Chapter Scene 1");
+	core->manager->add_texture("assets/images/Chapter/Chapter_Scene2.png", "Chapter Scene 2");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -682,7 +697,87 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* chapter_background = new Image(0,
+											 0,
+											 core->manager->get_texture("Chapter Background"));
+	core->manager->add_drawable(chapter_background, "Chapter Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* chapter_scene_1 = new Image(0,
+										  0,
+										  core->manager->get_texture("Chapter Scene 1"));
+	core->manager->add_drawable(chapter_scene_1, "Chapter Scene 1");
+
+	Drawable* chapter_scene_2 = new Image(0,
+										  0,
+										  core->manager->get_texture("Chapter Scene 2"));
+	core->manager->add_drawable(chapter_scene_2, "Chapter Scene 2");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* chapter_start_button = new Button(1000,
+												880,
+												core->manager->get_texture("Chapter Start Button"),
+												core->manager->get_texture("Chapter Start Button HL"),
+												[&game_state = game_state]()
+												{
+													game_state = FIGHT;
+												},
+												core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(chapter_start_button, "Chapter Start Button");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* chapter_spells_button = new Button(1420,
+												 20,
+												 core->manager->get_texture("Chapter Spells Button"),
+												 core->manager->get_texture("Chapter Spells Button HL"),
+												 [&game_state = game_state]()
+												 {
+												 	game_state = SPELLS;
+												 },
+												 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(chapter_spells_button, "Chapter Spells Button");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* chapter_stats_button = new Button(1720,
+												20,
+												core->manager->get_texture("Chapter Stats Button"),
+												core->manager->get_texture("Chapter Stats Button HL"),
+												[&game_state = game_state]()
+												{
+													game_state = STATS;
+												},
+												core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(chapter_stats_button, "Chapter Stats Button");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* chapter_main_menu_button = new Button(1420,
+													300,
+													core->manager->get_texture("Chapter Main Menu Button"),
+													core->manager->get_texture("Chapter Main Menu Button HL"),
+													[&application_state = application_state]()
+													{
+														application_state = MAIN_MENU;
+													},
+													core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(chapter_main_menu_button, "Chapter Main Menu Button");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* chapter_lore_label = new Label(1450,
+											 500,
+											 sf::Texture(),
+											 1450,
+											 500,
+											 core->manager->get_font("Test Font"),
+											 30,
+											 sf::Color::Black,
+											 "");
+	core->manager->add_drawable(chapter_lore_label, "Chapter Lore Label");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -984,7 +1079,40 @@ void en::Game::game_loop() {
 }
 
 void en::Game::chapter_loop() {
-	application_state = START_MENU;
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Chapter Background"),
+
+		core->manager->get_drawable("Chapter Scene " + std::to_string(current_save->chapter)),
+
+		core->manager->get_drawable("Chapter Start Button"),
+
+		core->manager->get_drawable("Chapter Spells Button"),
+
+		core->manager->get_drawable("Chapter Stats Button"),
+
+		core->manager->get_drawable("Chapter Main Menu Button"),
+
+		core->manager->get_drawable("Chapter Lore Label"),
+	};
+
+
+	core->manager->get_drawable("Chapter Lore Label")->set_text(lores[current_save->chapter - 1u]);
+
+
+	while (application_state == GAME && game_state == CHAPTER) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+			sizes_at = 99;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 void en::Game::spells_loop() {
