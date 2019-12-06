@@ -69,7 +69,10 @@ namespace en {
 
 		SaveFile* current_save{ nullptr };
 
-		std::vector<std::pair<unsigned int, unsigned int>> sizes{ {1024, 576}, {1280, 720}, {1280, 1024}, {1366, 768}, {1920, 1080} };
+
+		const std::vector<std::pair<unsigned int, unsigned int>> sizes{ {1024u, 576u}, {1280u, 720u}, {1280u, 1024u}, {1366u, 768u}, {1920u, 1080u} };
+
+		unsigned int sizes_at{ 99u };
 
 		//====================================================================================================================================
 

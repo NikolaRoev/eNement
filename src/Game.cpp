@@ -65,8 +65,8 @@ void en::Game::set_resources() {
 	core->manager->add_texture("assets/images/Start Menu/Delete_Button.png", "Start Menu Delete Button");
 	core->manager->add_texture("assets/images/Start Menu/Delete_Button_HL.png", "Start Menu Delete Button HL");
 
-	core->manager->add_texture("assets/images/Start Menu/Back_Button.png", "Start Menu Back Button");
-	core->manager->add_texture("assets/images/Start Menu/Back_Button_HL.png", "Start Menu Back Button HL");
+	core->manager->add_texture("assets/images/Start Menu/Back_Button.png", "Back Button");
+	core->manager->add_texture("assets/images/Start Menu/Back_Button_HL.png", "Back Button HL");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -80,19 +80,15 @@ void en::Game::set_resources() {
 	//Options Menu:
 
 	//------------------------------------------------------------------------------------------------------------------------------------
-	/*
-	manager->add_texture("assets/images/Options Menu/Options_Menu_Background.png", "Options Menu Background");
-	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Left.png", "Volume Arrow Left");
-	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Left_HL.png", "Volume Arrow Left HL");
-	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Right.png", "Volume Arrow Right");
-	manager->add_texture("assets/images/Options Menu/Volume_Arrow_Right_HL.png", "Volume Arrow Right HL");
-	manager->add_texture("assets/images/Options Menu/Back_Button.png", "Back Button");
-	manager->add_texture("assets/images/Options Menu/Back_Button_HL.png", "Back Button HL");
+	
+	core->manager->add_texture("assets/images/Options Menu/Options_Menu_Background.png", "Options Menu Background");
 
-	manager->add_sound_buffer("assets/sounds/TEST_CLICK.wav", "Test Sound");
+	core->manager->add_texture("assets/images/Options Menu/Arrow_Left.png", "Arrow Left");
+	core->manager->add_texture("assets/images/Options Menu/Arrow_Left_HL.png", "Arrow Left HL");
 
-	manager->add_font("assets/fonts/TNR.ttf", "Test Font");
-	*/
+	core->manager->add_texture("assets/images/Options Menu/Arrow_Right.png", "Arrow Right");
+	core->manager->add_texture("assets/images/Options Menu/Arrow_Right_HL.png", "Arrow Right HL");
+	
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	//====================================================================================================================================
@@ -505,8 +501,8 @@ void en::Game::set_drawables() {
 
 	Drawable* start_menu_back_button = new Button(1500,
 												  900,
-												  core->manager->get_texture("Start Menu Back Button"),
-												  core->manager->get_texture("Start Menu Back Button HL"),
+												  core->manager->get_texture("Back Button"),
+												  core->manager->get_texture("Back Button HL"),
 												  [&application_state = application_state]()
 												  {
 													application_state = MAIN_MENU;
@@ -523,8 +519,160 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
-
+	Drawable* options_menu_background = new Image(0,
+												  0,
+												  core->manager->get_texture("Options Menu Background"));
+	core->manager->add_drawable(options_menu_background, "Options Menu Background");
 	
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* options_menu_resolution_label = new Label(1000,
+														400,
+														sf::Texture(),
+														1000,
+														400,
+														core->manager->get_font("Test Font"),
+														50, sf::Color::White,
+														"");
+	core->manager->add_drawable(options_menu_resolution_label, "Options Menu Resolution Label");
+
+	Drawable* options_menu_resolution_button_left = new Button(900,
+															   400,
+															   core->manager->get_texture("Arrow Left"),
+															   core->manager->get_texture("Arrow Left HL"),
+															   [&core = core, &sizes = sizes, &sizes_at = sizes_at, options_menu_resolution_label]()
+															   {
+																if (sizes_at == 99u) {
+																	sizes_at = 0;
+																	core->set_window(sizes[sizes_at].first, sizes[sizes_at].second);
+																	options_menu_resolution_label->set_text(std::to_string(core->width) + "x" + std::to_string(core->height));
+																}
+																else if (sizes_at > 0u) {
+																	--sizes_at;
+																	core->set_window(sizes[sizes_at].first, sizes[sizes_at].second);
+																	options_menu_resolution_label->set_text(std::to_string(core->width) + "x" + std::to_string(core->height));
+																}
+															   },
+															   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_resolution_button_left, "Options Menu Resolution Button Left");
+
+	Drawable* options_menu_resolution_button_right = new Button(1200,
+																400,
+																core->manager->get_texture("Arrow Right"),
+																core->manager->get_texture("Arrow Right HL"),
+																[&core = core, &sizes = sizes, &sizes_at = sizes_at, options_menu_resolution_label]()
+																{
+																	if (sizes_at == 99u) {
+																		sizes_at = 0;
+																		core->set_window(sizes[sizes_at].first, sizes[sizes_at].second);
+																		options_menu_resolution_label->set_text(std::to_string(core->width) + "x" + std::to_string(core->height));
+																	}
+																	else if (sizes_at < (sizes.size() - 1)) {
+																		++sizes_at;
+																		core->set_window(sizes[sizes_at].first, sizes[sizes_at].second);
+																		options_menu_resolution_label->set_text(std::to_string(core->width) + "x" + std::to_string(core->height));
+																	}
+																},
+																core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_resolution_button_right, "Options Menu Resolution Button Right");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* options_menu_frames_label = new Label(1000,
+													540,
+													sf::Texture(),
+													1000,
+													540,
+													core->manager->get_font("Test Font"),
+													50, sf::Color::White,
+													"");
+	core->manager->add_drawable(options_menu_frames_label, "Options Menu Frames Label");
+
+	Drawable* options_menu_frames_button_left = new Button(900,
+														   540,
+														   core->manager->get_texture("Arrow Left"),
+														   core->manager->get_texture("Arrow Left HL"),
+														   [&frames = core->frames, &window = core->window, options_menu_frames_label]()
+														   {
+															if (frames != 30u) {
+																frames /= 2u;
+																window.setFramerateLimit(frames);
+																options_menu_frames_label->set_text(std::to_string(frames));
+															}
+														   },
+														   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_frames_button_left, "Options Menu Frames Button Left");
+
+	Drawable* options_menu_frames_button_right = new Button(1200,
+															540,
+															core->manager->get_texture("Arrow Right"),
+															core->manager->get_texture("Arrow Right HL"),
+															[&frames = core->frames, &window = core->window, options_menu_frames_label]()
+															{
+																if (frames != 240u) {
+																	frames *= 2u;
+																	window.setFramerateLimit(frames);
+																	options_menu_frames_label->set_text(std::to_string(frames));
+																}
+															},
+															core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_frames_button_right, "Options Menu Frames Button Right");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* options_menu_volume_label = new Label(1000,
+													700,
+													sf::Texture(),
+													1000,
+													700,
+													core->manager->get_font("Test Font"),
+													50, sf::Color::White,
+													"");
+	core->manager->add_drawable(options_menu_volume_label, "Options Menu Volume Label");
+
+	Drawable* options_menu_volume_button_left = new Button(900,
+														   700,
+														   core->manager->get_texture("Arrow Left"),
+														   core->manager->get_texture("Arrow Left HL"),
+														   [&core = core, options_menu_volume_label]()
+														   {
+															if (core->volume != 0u) {
+																core->volume -= 5u;
+																core->manager->change_volume(core->volume);
+																options_menu_volume_label->set_text(std::to_string(core->volume));
+														   	}
+														   },
+														   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_volume_button_left, "Options Menu Volume Button Left");
+
+	Drawable* options_menu_volume_button_right = new Button(1200,
+															700,
+															core->manager->get_texture("Arrow Right"),
+															core->manager->get_texture("Arrow Right HL"),
+															[&core = core, options_menu_volume_label]()
+															{
+																if (core->volume != 100u) {
+																	core->volume += 5u;
+																	core->manager->change_volume(core->volume);
+																	options_menu_volume_label->set_text(std::to_string(core->volume));
+																}
+															},
+															core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_volume_button_right, "Options Menu Volume Button Right");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* options_menu_back_button = new Button(1500,
+													900,
+													core->manager->get_texture("Back Button"),
+													core->manager->get_texture("Back Button HL"),
+													[&application_state = application_state]()
+													{
+														application_state = MAIN_MENU;
+													},
+													core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(options_menu_back_button, "Options Menu Back Button");
+
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	//====================================================================================================================================
@@ -691,6 +839,7 @@ void en::Game::main_menu_loop() {
 		core->window.pollEvent(core->event);
 		if (core->event.type == sf::Event::Resized) {
 			core->on_resize_event();
+			sizes_at = 99;
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -729,6 +878,7 @@ void en::Game::start_menu_loop() {
 		core->manager->get_drawable("Start Menu Back Button")
 	};
 
+
 	int i = 0;
 	for (auto& each : saves) {
 		if (each.chapter != 0u) {
@@ -750,6 +900,7 @@ void en::Game::start_menu_loop() {
 		core->window.pollEvent(core->event);
 		if (core->event.type == sf::Event::Resized) {
 			core->on_resize_event();
+			sizes_at = 99;
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
@@ -758,39 +909,45 @@ void en::Game::start_menu_loop() {
 }
 
 void en::Game::options_menu_loop() {
-	/*
-	std::vector<Drawable*> in_frame = {
-		manager->get_drawable("Options Menu Background"),
-		manager->get_drawable("Volume Arrow Left"),
-		manager->get_drawable("Volume Label"),
-		manager->get_drawable("Volume Arrow Right"),
-		manager->get_drawable("Back Button"),
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Options Menu Background"),
+
+		core->manager->get_drawable("Options Menu Resolution Label"),
+		core->manager->get_drawable("Options Menu Resolution Button Left"),
+		core->manager->get_drawable("Options Menu Resolution Button Right"),
+
+		core->manager->get_drawable("Options Menu Frames Label"),
+		core->manager->get_drawable("Options Menu Frames Button Left"),
+		core->manager->get_drawable("Options Menu Frames Button Right"),
+
+		core->manager->get_drawable("Options Menu Volume Label"),
+		core->manager->get_drawable("Options Menu Volume Button Left"),
+		core->manager->get_drawable("Options Menu Volume Button Right"),
+
+		core->manager->get_drawable("Options Menu Back Button")
 	};
+
+
+	core->manager->get_drawable("Options Menu Resolution Label")->set_text(std::to_string(core->width) + "x" + std::to_string(core->height));
+	core->manager->get_drawable("Options Menu Frames Label")->set_text(std::to_string(core->frames));
+	core->manager->get_drawable("Options Menu Volume Label")->set_text(std::to_string(core->volume));
 
 
 	while (application_state == OPTIONS_MENU) {
 
-		for (const auto& each : in_frame) {
-			each->draw();
-		}
+		core->draw(static_frame);
 
-		core->window.display();
+
 		core->window.pollEvent(core->event);
-
 		if (core->event.type == sf::Event::Resized) {
-			auto [resize_d_x, resize_d_y] = core->on_resize_event();
-
-			auto temp_drawables = manager->get_all_drawables();
-			for (const auto& each : temp_drawables) {
-				each.second->resize(resize_d_x, resize_d_y);
-			}
+			core->on_resize_event();
+			core->manager->get_drawable("Options Menu Resolution Label")->set_text(std::to_string(core->width) + "x" + std::to_string(core->height));
+			sizes_at = 99;
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
 		}
-
 	}
-	*/
 }
 
 //====================================================================================================================================

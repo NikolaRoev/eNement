@@ -263,7 +263,7 @@ void en::Core::set_window() {
 	set_delta_values();
 }
 
-void en::Core::set_window(const unsigned int _width, const unsigned int _height) {
+void en::Core::set_window(unsigned int _width, unsigned int _height) {
 	window.create(sf::VideoMode{ _width, _height, 32 }, "eNement", sf::Style::Default);
 	window.setFramerateLimit(frames);
 
@@ -371,10 +371,6 @@ void en::Core::on_resize_event(DynamicFrame& dynamic_frame) {
 		manager->scale_drawables(delta_x, delta_y);
 		manager->scale_drawables(delta_x, delta_y, dynamic_frame);
 	}
-}
-
-void en::Core::on_volume_change() {
-	manager->change_volume(volume);
 }
 
 //====================================================================================================================================

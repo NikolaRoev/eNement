@@ -88,10 +88,6 @@ namespace en {
 		double native_width{ 1920.0 };
 		double native_height{ 1080.0 };
 
-		unsigned int width{ 1024 };
-		unsigned int height{ 576 };
-		unsigned int frames{ 60 };
-		unsigned int volume{ 50 };
 		
 		float delta_x{ 1.0f };
 		float delta_y{ 1.0f };
@@ -100,6 +96,11 @@ namespace en {
 		void set_delta_values();
 
 	public:
+		unsigned int width{ 1024 };
+		unsigned int height{ 576 };
+		unsigned int frames{ 60 };
+		unsigned int volume{ 50 };
+
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };
 		sf::Clock clock;
@@ -124,7 +125,7 @@ namespace en {
 
 		void set_window();
 
-		void set_window(const unsigned int _width, const unsigned int _height);
+		void set_window(unsigned int _width, unsigned int _height);
 
 		void load_settings();
 
@@ -141,8 +142,6 @@ namespace en {
 		void on_resize_event();
 
 		void on_resize_event(DynamicFrame& dynamic_frame);
-
-		void on_volume_change();
 	};
 
 	//====================================================================================================================================
