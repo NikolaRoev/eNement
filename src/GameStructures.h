@@ -37,7 +37,7 @@ namespace en {
 		unsigned int chapter{ 0 };
 
 		unsigned int spell0{ 0 };
-		unsigned int spell1{ 1 };
+		unsigned int spell1{ 0 };
 
 		unsigned int points{ 0 };
 		unsigned int barrier_strength{ 0 };
@@ -72,8 +72,8 @@ namespace en {
 	public:
 		Drawable* drawable{ nullptr };
 
-		SpellType first_spell{ SpellType::Fire };
-		SpellType second_spell{ SpellType::Water };
+		unsigned int first_spell{ SpellType::Empty };
+		unsigned int second_spell{ SpellType::Empty };
 	};
 
 	//====================================================================================================================================

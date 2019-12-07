@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <functional>
 #include <string>
 #include <vector>
@@ -240,6 +241,115 @@ namespace en {
 		void play_sound() override {}
 
 		DeleteButton* clone() override { return nullptr; }
+	};
+
+	//====================================================================================================================================
+
+	class SpellIcon : public Drawable {
+	private:
+		std::array<sf::Sprite, 9> sprites;
+		
+		unsigned int* watcher{ nullptr };
+
+	public:
+		SpellIcon(const float x,
+				  const float y,
+				  const sf::Texture& texture_empty,
+				  const sf::Texture& texture_fire,
+				  const sf::Texture& texture_water,
+				  const sf::Texture& texture_wind,
+				  const sf::Texture& texture_earth,
+				  const sf::Texture& texture_ice,
+				  const sf::Texture& texture_lightning,
+				  const sf::Texture& texture_light,
+				  const sf::Texture& texture_dark,
+				  unsigned int& _watcher);
+
+
+		SpellIcon(const SpellIcon&) = delete;
+		SpellIcon(SpellIcon&&) = delete;
+		SpellIcon& operator=(const SpellIcon&) = delete;
+		SpellIcon& operator=(SpellIcon&&) = delete;
+		~SpellIcon() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override {}
+
+
+		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		SpellIcon* clone() override { return nullptr; }
+	};
+
+	//====================================================================================================================================
+
+	class SpellButton : public Drawable {
+	private:
+		bool pressed{ false };
+
+		sf::Sprite sprite;
+		sf::Sprite hl_sprite;
+		sf::Sprite pressed_sprite;
+		sf::Sprite unavailable_sprite;
+		sf::Sound sound;
+
+		unsigned int type{ 0 };
+
+		unsigned int* watcher1{ nullptr };
+		unsigned int* watcher2{ nullptr };
+
+	public:
+		SpellButton(const float x,
+					const float y,
+					const sf::Texture& texture,
+					const sf::Texture& hl_texture,
+					const sf::Texture& pressed_texture,
+					const sf::Texture& unavailable_texture,
+					const sf::SoundBuffer& sound_buffer,
+					const unsigned int _type, 
+					unsigned int& _watcher1,
+					unsigned int& _watcher2);
+
+
+		SpellButton(const SpellButton&) = delete;
+		SpellButton(SpellButton&&) = delete;
+		SpellButton& operator=(const SpellButton&) = delete;
+		SpellButton& operator=(SpellButton&&) = delete;
+		~SpellButton() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override;
+
+
+		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		SpellButton* clone() override { return nullptr; }
 	};
 
 	//====================================================================================================================================

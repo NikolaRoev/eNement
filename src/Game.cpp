@@ -112,6 +112,8 @@ void en::Game::set_resources() {
 	core->manager->add_texture("assets/images/Chapter/Chapter_Main_Menu_Button.png", "Chapter Main Menu Button");
 	core->manager->add_texture("assets/images/Chapter/Chapter_Main_Menu_Button_HL.png", "Chapter Main Menu Button HL");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
 	core->manager->add_texture("assets/images/Chapter/Chapter_Scene1.png", "Chapter Scene 1");
 	core->manager->add_texture("assets/images/Chapter/Chapter_Scene2.png", "Chapter Scene 2");
 
@@ -124,7 +126,59 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture("assets/images/Spells/Spells_Background.png", "Spells Background");
 
+	core->manager->add_texture("assets/images/Spells/Spells_Empty_Icon.png", "Spells Empty Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Fire_Icon.png", "Spells Fire Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Water_Icon.png", "Spells Water Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Wind_Icon.png", "Spells Wind Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Earth_Icon.png", "Spells Earth Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Ice_Icon.png", "Spells Ice Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Lightning_Icon.png", "Spells Lightning Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Light_Icon.png", "Spells Light Icon");
+	core->manager->add_texture("assets/images/Spells/Spells_Dark_Icon.png", "Spells Dark Icon");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Fire_Button.png", "Spells Fire Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Fire_Button_HL.png", "Spells Fire Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Fire_Button_PRESSED.png", "Spells Fire Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Fire_Button_UNAVAILABLE.png", "Spells Fire Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Water_Button.png", "Spells Water Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Water_Button_HL.png", "Spells Water Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Water_Button_PRESSED.png", "Spells Water Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Water_Button_UNAVAILABLE.png", "Spells Water Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Wind_Button.png", "Spells Wind Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Wind_Button_HL.png", "Spells Wind Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Wind_Button_PRESSED.png", "Spells Wind Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Wind_Button_UNAVAILABLE.png", "Spells Wind Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Earth_Button.png", "Spells Earth Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Earth_Button_HL.png", "Spells Earth Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Earth_Button_PRESSED.png", "Spells Earth Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Earth_Button_UNAVAILABLE.png", "Spells Earth Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Ice_Button.png", "Spells Ice Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Ice_Button_HL.png", "Spells Ice Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Ice_Button_PRESSED.png", "Spells Ice Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Ice_Button_UNAVAILABLE.png", "Spells Ice Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Lightning_Button.png", "Spells Lightning Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Lightning_Button_HL.png", "Spells Lightning Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Lightning_Button_PRESSED.png", "Spells Lightning Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Lightning_Button_UNAVAILABLE.png", "Spells Lightning Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Light_Button.png", "Spells Light Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Light_Button_HL.png", "Spells Light Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Light_Button_PRESSED.png", "Spells Light Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Light_Button_UNAVAILABLE.png", "Spells Light Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Dark_Button.png", "Spells Dark Button");
+	core->manager->add_texture("assets/images/Spells/Spells_Dark_Button_HL.png", "Spells Dark Button HL");
+	core->manager->add_texture("assets/images/Spells/Spells_Dark_Button_PRESSED.png", "Spells Dark Button PRESSED");
+	core->manager->add_texture("assets/images/Spells/Spells_Dark_Button_UNAVAILABLE.png", "Spells Dark Button UNAVAILABLE");
+
+	core->manager->add_texture("assets/images/Spells/Spells_Description_Frame.png", "Spells Description Frame");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -788,7 +842,253 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* spells_background = new Image(0,
+											0,
+											core->manager->get_texture("Spells Background"));
+	core->manager->add_drawable(spells_background, "Spells Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_spell_icon_1 = new SpellIcon(200,
+												  50,
+												  core->manager->get_texture("Spells Empty Icon"),
+												  core->manager->get_texture("Spells Fire Icon"),
+												  core->manager->get_texture("Spells Water Icon"),
+												  core->manager->get_texture("Spells Wind Icon"),
+												  core->manager->get_texture("Spells Earth Icon"),
+												  core->manager->get_texture("Spells Ice Icon"),
+												  core->manager->get_texture("Spells Lightning Icon"),
+												  core->manager->get_texture("Spells Light Icon"),
+												  core->manager->get_texture("Spells Dark Icon"),
+												  player.first_spell);
+	core->manager->add_drawable(spells_spell_icon_1, "Spells Spell Icon 1");
+
+	Drawable* spells_spell_icon_2 = new SpellIcon(700,
+												  50,
+												  core->manager->get_texture("Spells Empty Icon"),
+												  core->manager->get_texture("Spells Fire Icon"),
+												  core->manager->get_texture("Spells Water Icon"),
+												  core->manager->get_texture("Spells Wind Icon"),
+												  core->manager->get_texture("Spells Earth Icon"),
+												  core->manager->get_texture("Spells Ice Icon"),
+												  core->manager->get_texture("Spells Lightning Icon"),
+												  core->manager->get_texture("Spells Light Icon"),
+												  core->manager->get_texture("Spells Dark Icon"),
+												  player.second_spell);
+	core->manager->add_drawable(spells_spell_icon_2, "Spells Spell Icon 2");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_fire_button = new SpellButton(60,
+												   380,
+												   core->manager->get_texture("Spells Fire Button"),
+												   core->manager->get_texture("Spells Fire Button HL"),
+												   core->manager->get_texture("Spells Fire Button PRESSED"),
+												   core->manager->get_texture("Spells Fire Button UNAVAILABLE"),
+												   core->manager->get_sound_buffer("Test Sound"),
+												   SpellType::Fire,
+												   player.first_spell,
+												   player.second_spell);
+	core->manager->add_drawable(spells_fire_button, "Spells Fire Button");
+
+	Drawable* spells_fire_description = new Label(60,
+												  500,
+												  core->manager->get_texture("Spells Description Frame"),
+												  70,
+												  510,
+												  core->manager->get_font("Test Font"),
+												  30,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(spells_fire_description, "Spells Fire Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_water_button = new SpellButton(400,
+													380,
+													core->manager->get_texture("Spells Water Button"),
+													core->manager->get_texture("Spells Water Button HL"),
+													core->manager->get_texture("Spells Water Button PRESSED"),
+													core->manager->get_texture("Spells Water Button UNAVAILABLE"),
+													core->manager->get_sound_buffer("Test Sound"),
+													SpellType::Water,
+													player.first_spell,
+													player.second_spell);
+	core->manager->add_drawable(spells_water_button, "Spells Water Button");
+
+	Drawable* spells_water_description = new Label(400,
+												   500,
+												   core->manager->get_texture("Spells Description Frame"),
+												   410,
+												   510,
+												   core->manager->get_font("Test Font"),
+												   30,
+												   sf::Color::White,
+												   "");
+	core->manager->add_drawable(spells_water_description, "Spells Water Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_wind_button = new SpellButton(900,
+												   380,
+												   core->manager->get_texture("Spells Wind Button"),
+												   core->manager->get_texture("Spells Wind Button HL"),
+												   core->manager->get_texture("Spells Wind Button PRESSED"),
+												   core->manager->get_texture("Spells Wind Button UNAVAILABLE"),
+												   core->manager->get_sound_buffer("Test Sound"),
+												   SpellType::Wind,
+												   player.first_spell,
+												   player.second_spell);
+	core->manager->add_drawable(spells_wind_button, "Spells Wind Button");
+
+	Drawable* spells_wind_description = new Label(900,
+												  500,
+												  core->manager->get_texture("Spells Description Frame"),
+												  910,
+												  510,
+												  core->manager->get_font("Test Font"),
+												  30,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(spells_wind_description, "Spells Wind Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_earth_button = new SpellButton(1500,
+													380,
+													core->manager->get_texture("Spells Earth Button"),
+													core->manager->get_texture("Spells Earth Button HL"),
+													core->manager->get_texture("Spells Earth Button PRESSED"),
+													core->manager->get_texture("Spells Earth Button UNAVAILABLE"),
+													core->manager->get_sound_buffer("Test Sound"),
+													SpellType::Earth,
+													player.first_spell,
+													player.second_spell);
+	core->manager->add_drawable(spells_earth_button, "Spells Earth Button");
+
+	Drawable* spells_earth_description = new Label(1500,
+												   500,
+												   core->manager->get_texture("Spells Description Frame"),
+												   1510,
+												   510,
+												   core->manager->get_font("Test Font"),
+												   30,
+												   sf::Color::White,
+												   "");
+	core->manager->add_drawable(spells_earth_description, "Spells Earth Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_ice_button = new SpellButton(60,
+												  700,
+												  core->manager->get_texture("Spells Ice Button"),
+												  core->manager->get_texture("Spells Ice Button HL"),
+												  core->manager->get_texture("Spells Ice Button PRESSED"),
+												  core->manager->get_texture("Spells Ice Button UNAVAILABLE"),
+												  core->manager->get_sound_buffer("Test Sound"),
+												  SpellType::Ice,
+												  player.first_spell,
+												  player.second_spell);
+	core->manager->add_drawable(spells_ice_button, "Spells Ice Button");
+
+	Drawable* spells_ice_description = new Label(60,
+											     700,
+											     core->manager->get_texture("Spells Description Frame"),
+											     70,
+											     710,
+											     core->manager->get_font("Test Font"),
+											     30,
+											     sf::Color::White,
+											     "");
+	core->manager->add_drawable(spells_ice_description, "Spells Ice Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_lightning_button = new SpellButton(400,
+														700,
+														core->manager->get_texture("Spells Lightning Button"),
+														core->manager->get_texture("Spells Lightning Button HL"),
+														core->manager->get_texture("Spells Lightning Button PRESSED"),
+														core->manager->get_texture("Spells Lightning Button UNAVAILABLE"),
+														core->manager->get_sound_buffer("Test Sound"),
+														SpellType::Lightning,
+														player.first_spell,
+														player.second_spell);
+	core->manager->add_drawable(spells_lightning_button, "Spells Lightning Button");
+
+	Drawable* spells_lightning_description = new Label(400,
+													   700,
+													   core->manager->get_texture("Spells Description Frame"),
+													   410,
+													   710,
+													   core->manager->get_font("Test Font"),
+													   30,
+													   sf::Color::White,
+													   "");
+	core->manager->add_drawable(spells_lightning_description, "Spells Lightning Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_light_button = new SpellButton(900,
+													700,
+													core->manager->get_texture("Spells Light Button"),
+													core->manager->get_texture("Spells Light Button HL"),
+													core->manager->get_texture("Spells Light Button PRESSED"),
+													core->manager->get_texture("Spells Light Button UNAVAILABLE"),
+													core->manager->get_sound_buffer("Test Sound"),
+													SpellType::Light,
+													player.first_spell,
+													player.second_spell);
+	core->manager->add_drawable(spells_light_button, "Spells Light Button");
+
+	Drawable* spells_light_description = new Label(900,
+												   700,
+												   core->manager->get_texture("Spells Description Frame"),
+												   910,
+												   710,
+												   core->manager->get_font("Test Font"),
+												   30,
+												   sf::Color::White,
+												   "");
+	core->manager->add_drawable(spells_light_description, "Spells Light Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_dark_button = new SpellButton(1500,
+												   700,
+												   core->manager->get_texture("Spells Dark Button"),
+												   core->manager->get_texture("Spells Dark Button HL"),
+												   core->manager->get_texture("Spells Dark Button PRESSED"),
+												   core->manager->get_texture("Spells Dark Button UNAVAILABLE"),
+												   core->manager->get_sound_buffer("Test Sound"),
+												   SpellType::Dark,
+												   player.first_spell,
+												   player.second_spell);
+	core->manager->add_drawable(spells_dark_button, "Spells Dark Button");
+
+	Drawable* spells_dark_description = new Label(1500,
+												  700,
+												  core->manager->get_texture("Spells Description Frame"),
+												  1510,
+												  710,
+												  core->manager->get_font("Test Font"),
+												  30,
+												  sf::Color::White,
+												  "");
+	core->manager->add_drawable(spells_dark_description, "Spells Dark Description");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* spells_back_button = new Button(1500,
+											  80,
+											  core->manager->get_texture("Back Button"),
+											  core->manager->get_texture("Back Button HL"),
+											  [&game_state = game_state]()
+											  {
+											  	game_state = CHAPTER;
+											  },
+											  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(spells_back_button, "Spells Back Button");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1048,6 +1348,9 @@ void en::Game::options_menu_loop() {
 //====================================================================================================================================
 
 void en::Game::game_loop() {
+	//TO DO: Setup the player object from the save over here.
+	player.first_spell = current_save->spell0;
+	player.second_spell = current_save->spell1;
 
 	while (application_state == GAME) {
 		switch (game_state) {
@@ -1075,6 +1378,8 @@ void en::Game::game_loop() {
 		}
 	}
 
+	current_save->spell0 = player.first_spell;
+	current_save->spell1 = player.second_spell;
 	save_save_files();
 }
 
@@ -1116,7 +1421,64 @@ void en::Game::chapter_loop() {
 }
 
 void en::Game::spells_loop() {
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Spells Background"),
 
+		core->manager->get_drawable("Spells Spell Icon 1"),
+		core->manager->get_drawable("Spells Spell Icon 2"),
+
+		core->manager->get_drawable("Spells Fire Button"),
+		core->manager->get_drawable("Spells Fire Description"),
+
+		core->manager->get_drawable("Spells Water Button"),
+		core->manager->get_drawable("Spells Water Description"),
+
+		core->manager->get_drawable("Spells Wind Button"),
+		core->manager->get_drawable("Spells Wind Description"),
+
+		core->manager->get_drawable("Spells Earth Button"),
+		core->manager->get_drawable("Spells Earth Description"),
+
+		core->manager->get_drawable("Spells Ice Button"),
+		core->manager->get_drawable("Spells Ice Description"),
+
+		core->manager->get_drawable("Spells Lightning Button"),
+		core->manager->get_drawable("Spells Lightning Description"),
+
+		core->manager->get_drawable("Spells Light Button"),
+		core->manager->get_drawable("Spells Light Description"),
+
+		core->manager->get_drawable("Spells Dark Button"),
+		core->manager->get_drawable("Spells Dark Description"),
+
+		core->manager->get_drawable("Spells Back Button")
+	};
+
+
+	core->manager->get_drawable("Spells Fire Description")->set_text("Fire");
+	core->manager->get_drawable("Spells Water Description")->set_text("Water");
+	core->manager->get_drawable("Spells Wind Description")->set_text("Wind");
+	core->manager->get_drawable("Spells Earth Description")->set_text("Earth");
+	core->manager->get_drawable("Spells Ice Description")->set_text("Ice");
+	core->manager->get_drawable("Spells Lightning Description")->set_text("Lightning");
+	core->manager->get_drawable("Spells Light Description")->set_text("Light");
+	core->manager->get_drawable("Spells Dark Description")->set_text("Dark");
+
+
+	while (application_state == GAME && game_state == SPELLS) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+			sizes_at = 99;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 void en::Game::stats_loop() {
