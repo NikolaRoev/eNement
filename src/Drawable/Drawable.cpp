@@ -375,9 +375,7 @@ en::EntityDrawable::EntityDrawable(const float x, const float y, const sf::Textu
 	sound.setBuffer(sound_buffer);
 }
 
-en::EntityDrawable::EntityDrawable(const EntityDrawable& other) {
-	sprite = other.sprite;
-	sound = other.sound;
+en::EntityDrawable::EntityDrawable(const EntityDrawable& other) : sprite{ other.sprite }, sound{other.sound} {
 }
 
 void en::EntityDrawable::resize(const float delta_x, const float delta_y) {
@@ -426,9 +424,7 @@ en::SpellDrawable::SpellDrawable(const float x, const float y, const sf::Texture
 	sound.setBuffer(sound_buffer);
 }
 
-en::SpellDrawable::SpellDrawable(const SpellDrawable& other) {
-	sprite = other.sprite;
-	sound = other.sound;
+en::SpellDrawable::SpellDrawable(const SpellDrawable& other) : sprite{ other.sprite }, sound{ other.sound }  {
 }
 
 void en::SpellDrawable::resize(const float delta_x, const float delta_y) {
