@@ -235,11 +235,11 @@ void en::ResourceManager::change_volume(const unsigned int volume) {
 //====================================================================================================================================
 
 void en::Core::set_delta_values() {
-	delta_x = 1 - (((static_cast<float>(native_width) - static_cast<float>(width)) / (static_cast<float>(native_width) / 100.0f)) / 100.0f);
-	delta_y = 1 - (((static_cast<float>(native_height) - static_cast<float>(height)) / (static_cast<float>(native_height) / 100.0f)) / 100.0f);
+	delta_x = 1 - (((native_width - static_cast<float>(width)) / (native_width / 100.0f)) / 100.0f);
+	delta_y = 1 - (((native_height - static_cast<float>(height)) / (native_height / 100.0f)) / 100.0f);
 }
 
-en::Core::Core(const double _native_width, const double _native_height) {
+en::Core::Core(const float _native_width, const float _native_height) {
 	native_width = _native_width;
 	native_height = _native_height;
 

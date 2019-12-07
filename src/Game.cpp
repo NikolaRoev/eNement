@@ -332,10 +332,10 @@ void en::Game::set_drawables() {
 														  400,
 														  core->manager->get_texture("Start Menu Start Load Button"),
 														  core->manager->get_texture("Start Menu Start Load Button HL"),
-														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  [&application_state = application_state, &saves = saves, &saves_at = saves_at]()
 														  {
-														  	current_save = &saves[0];
-															current_save->chapter = 1u;
+															saves_at = 0u;
+															saves[saves_at].chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
@@ -372,10 +372,10 @@ void en::Game::set_drawables() {
 														  400,
 														  core->manager->get_texture("Start Menu Start Load Button"),
 														  core->manager->get_texture("Start Menu Start Load Button HL"),
-														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  [&application_state = application_state, &saves = saves, &saves_at = saves_at]()
 														  {
-														  	current_save = &saves[1];
-															current_save->chapter = 1u;
+														  	saves_at = 1u;
+														  	saves[saves_at].chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
@@ -412,10 +412,10 @@ void en::Game::set_drawables() {
 														  600,
 														  core->manager->get_texture("Start Menu Start Load Button"),
 														  core->manager->get_texture("Start Menu Start Load Button HL"),
-														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  [&application_state = application_state, &saves = saves, &saves_at = saves_at]()
 														  {
-														  	current_save = &saves[2];
-															current_save->chapter = 1u;
+														  	saves_at = 2u;
+														  	saves[saves_at].chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
@@ -452,10 +452,10 @@ void en::Game::set_drawables() {
 														  600,
 														  core->manager->get_texture("Start Menu Start Load Button"),
 														  core->manager->get_texture("Start Menu Start Load Button HL"),
-														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  [&application_state = application_state, &saves = saves, &saves_at = saves_at]()
 														  {
-														  	current_save = &saves[3];
-															current_save->chapter = 1u;
+														  	saves_at = 3u;
+														  	saves[saves_at].chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
@@ -492,10 +492,10 @@ void en::Game::set_drawables() {
 														  800,
 														  core->manager->get_texture("Start Menu Start Load Button"),
 														  core->manager->get_texture("Start Menu Start Load Button HL"),
-														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  [&application_state = application_state, &saves = saves, &saves_at = saves_at]()
 														  {
-														  	current_save = &saves[4];
-															current_save->chapter = 1u;
+														  	saves_at = 4u;
+														  	saves[saves_at].chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
@@ -532,10 +532,10 @@ void en::Game::set_drawables() {
 														  800,
 														  core->manager->get_texture("Start Menu Start Load Button"),
 														  core->manager->get_texture("Start Menu Start Load Button HL"),
-														  [&application_state = application_state, &saves = saves, &current_save = current_save]()
+														  [&application_state = application_state, &saves = saves, &saves_at = saves_at]()
 														  {
-														  	current_save = &saves[5];
-															current_save->chapter = 1u;
+														  	saves_at = 5u;
+														  	saves[saves_at].chapter = 1u;
 														  	application_state = GAME;
 														  },
 														  core->manager->get_sound_buffer("Test Sound"));
@@ -1348,9 +1348,18 @@ void en::Game::options_menu_loop() {
 //====================================================================================================================================
 
 void en::Game::game_loop() {
-	//TO DO: Setup the player object from the save over here.
-	player.first_spell = current_save->spell0;
-	player.second_spell = current_save->spell1;
+	player.first_spell = saves[saves_at].spell0;
+	player.second_spell = saves[saves_at].spell1;
+
+	player.barriers = saves[saves_at].barrier_strength / 10u;
+
+	player.damage = 10.0f + (0.1f * saves[saves_at].magic_power);
+
+	player.cast_time = 120.0f - (1.0f * saves[saves_at].spell_mastery);
+	player.cooldown_time = 300.0f - (2.0f * saves[saves_at].spell_mastery);
+
+	player.secondary_effect_increase = 0.0f + (1.5f * saves[saves_at].magic_proficiency);
+
 
 	while (application_state == GAME) {
 		switch (game_state) {
@@ -1378,8 +1387,9 @@ void en::Game::game_loop() {
 		}
 	}
 
-	current_save->spell0 = player.first_spell;
-	current_save->spell1 = player.second_spell;
+
+	saves[saves_at].spell0 = player.first_spell;
+	saves[saves_at].spell1 = player.second_spell;
 	save_save_files();
 }
 
@@ -1387,7 +1397,7 @@ void en::Game::chapter_loop() {
 	std::vector<Drawable*> static_frame = {
 		core->manager->get_drawable("Chapter Background"),
 
-		core->manager->get_drawable("Chapter Scene " + std::to_string(current_save->chapter)),
+		core->manager->get_drawable("Chapter Scene " + std::to_string(saves[saves_at].chapter)),
 
 		core->manager->get_drawable("Chapter Start Button"),
 
@@ -1401,7 +1411,7 @@ void en::Game::chapter_loop() {
 	};
 
 
-	core->manager->get_drawable("Chapter Lore Label")->set_text(lores[current_save->chapter - 1u]);
+	core->manager->get_drawable("Chapter Lore Label")->set_text(lores[saves[saves_at].chapter - 1u]);
 
 
 	while (application_state == GAME && game_state == CHAPTER) {
@@ -1615,7 +1625,7 @@ void en::Game::end_loop() {
 //====================================================================================================================================
 
 void en::Game::main_loop() {
-	core = new Core(1920.0, 1080.0);
+	core = new Core(1920.0f, 1080.0f);
 	core->load_settings();
 	core->set_window();
 	load_save_files();

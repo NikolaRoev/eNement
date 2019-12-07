@@ -85,8 +85,8 @@ namespace en {
 
 	class Core {
 	private:
-		double native_width{ 1920.0 };
-		double native_height{ 1080.0 };
+		float native_width{ 1920.0f };
+		float native_height{ 1080.0f };
 
 		
 		float delta_x{ 1.0f };
@@ -96,10 +96,10 @@ namespace en {
 		void set_delta_values();
 
 	public:
-		unsigned int width{ 1024 };
-		unsigned int height{ 576 };
-		unsigned int frames{ 60 };
-		unsigned int volume{ 50 };
+		unsigned int width{ 1024u };
+		unsigned int height{ 576u };
+		unsigned int frames{ 60u };
+		unsigned int volume{ 50u };
 
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };
@@ -110,7 +110,7 @@ namespace en {
 		ResourceManager* manager{ nullptr };
 
 
-		Core(const double _native_width, const double _native_height);
+		Core(const float _native_width, const float _native_height);
 
 		Core(const Core&) = delete;
 

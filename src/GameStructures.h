@@ -70,10 +70,19 @@ namespace en {
 	private:
 
 	public:
-		Drawable* drawable{ nullptr };
-
 		unsigned int first_spell{ SpellType::Empty };
 		unsigned int second_spell{ SpellType::Empty };
+
+		unsigned int barriers{ 0u };				//Each point is a barrier.
+		float damage{ 0.0f };					    //Each point is a point of damage.
+		float cast_time{ 0.0f };				    //Each point is time in milliseconds.
+		float cooldown_time{ 0.0f };				//Each point is time in milliseconds.
+		float secondary_effect_increase{ 0.0f };	//each point is a percent.
+
+
+		Drawable* drawable{ nullptr };
+
+		
 	};
 
 	//====================================================================================================================================

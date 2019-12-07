@@ -65,9 +65,9 @@ namespace en {
 
 		//====================================================================================================================================
 
-		std::array<SaveFile, 6> saves{};
+		std::array<SaveFile, 6u> saves{};
 
-		SaveFile* current_save{ nullptr };
+		unsigned int saves_at{ 0 };
 
 
 		const std::vector<std::pair<unsigned int, unsigned int>> sizes{ {1024u, 576u}, {1280u, 720u}, {1280u, 1024u}, {1366u, 768u}, {1920u, 1080u} };
