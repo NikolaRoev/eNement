@@ -22,6 +22,49 @@
 //====================================================================================================================================
 //====================================================================================================================================
 
+/*
+ * File:   collision.h/.cpp
+ * Authors: Nick Koirala (original version), ahnonay (SFML2 compatibility)
+ *
+ * Collision Detection and handling class
+ * For SFML2.
+
+Notice from the original version:
+
+(c) 2009 - LittleMonkey Ltd
+
+This software is provided 'as-is', without any express or
+implied warranty. In no event will the authors be held
+liable for any damages arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute
+it freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented;
+   you must not claim that you wrote the original software.
+   If you use this software in a product, an acknowledgment
+   in the product documentation would be appreciated but
+   is not required.
+
+2. Altered source versions must be plainly marked as such,
+   and must not be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any
+   source distribution.
+
+ *
+ * Created on 30 January 2009, 11:02
+ */
+
+//Altered.
+
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+
 en::DynamicFrame::~DynamicFrame() {
 	for (auto& each : dynamic_drawables) {
 		delete each.second;
@@ -63,7 +106,7 @@ void en::ResourceManager::add_texture(const std::string& file_path, const std::s
 void en::ResourceManager::add_texture_for_pixel_perfect(const std::string& file_path, const std::string& texture_name) {
 	textures.insert(std::make_pair(texture_name, sf::Texture()));
 
-	CreateTextureAndBitmask(textures.find(texture_name)->second, file_path);
+	create_texture_and_bitmask(textures.find(texture_name)->second, file_path);
 }
 
 void en::ResourceManager::add_font(const std::string& file_path, const std::string& font_name) {
@@ -117,6 +160,7 @@ public:
 		}
 	}
 
+
 	sf::Uint8 GetPixel(const sf::Uint8* mask, const sf::Texture* tex, unsigned int x, unsigned int y) {
 		if (x > tex->getSize().x || y > tex->getSize().y) {
 			return 0;
@@ -140,7 +184,7 @@ public:
 	}
 
 	sf::Uint8* CreateMask(const sf::Texture* tex, const sf::Image& img) {
-		sf::Uint8* mask = new sf::Uint8[tex->getSize().y * tex->getSize().x + 1];
+		sf::Uint8* mask = new sf::Uint8[tex->getSize().y * tex->getSize().x];
 
 		for (unsigned int y = 0; y < tex->getSize().y; y++) {
 			for (unsigned int x = 0; x < tex->getSize().x; x++) {
@@ -152,14 +196,16 @@ public:
 
 		return mask;
 	}
+
 private:
 	std::map<const sf::Texture*, sf::Uint8*> Bitmasks;
 };
 
 BitmaskManager Bitmasks;
 
-bool en::ResourceManager::PixelPerfectTest(const sf::Sprite& Object1, const sf::Sprite& Object2, sf::Uint8 AlphaLimit) {
+bool en::ResourceManager::pixel_perfect_test(const sf::Sprite& Object1, const sf::Sprite& Object2, sf::Uint8 AlphaLimit) {
 	sf::FloatRect Intersection;
+
 	if (Object1.getGlobalBounds().intersects(Object2.getGlobalBounds(), Intersection)) {
 		sf::IntRect O1SubRect = Object1.getTextureRect();
 		sf::IntRect O2SubRect = Object2.getTextureRect();
@@ -168,11 +214,11 @@ bool en::ResourceManager::PixelPerfectTest(const sf::Sprite& Object1, const sf::
 		sf::Uint8* mask2 = Bitmasks.GetMask(Object2.getTexture());
 
 		// Loop through our pixels
-		for (int i = static_cast<int>(Intersection.left); i < Intersection.left + Intersection.width; ++i) {
-			for (int j = static_cast<int>(Intersection.top); j < Intersection.top + Intersection.height; ++j) {
+		for (int i = Intersection.left; i < Intersection.left + Intersection.width; i++) {
+			for (int j = Intersection.top; j < Intersection.top + Intersection.height; j++) {
 
-				sf::Vector2f o1v = Object1.getInverseTransform().transformPoint(static_cast<float>(i), static_cast<float>(j));
-				sf::Vector2f o2v = Object2.getInverseTransform().transformPoint(static_cast<float>(i), static_cast<float>(j));
+				sf::Vector2f o1v = Object1.getInverseTransform().transformPoint(i, j);
+				sf::Vector2f o2v = Object2.getInverseTransform().transformPoint(i, j);
 
 				// Make sure pixels fall within the sprite's subrect
 				if (o1v.x > 0 && o1v.y > 0 && o2v.x > 0 && o2v.y > 0 &&
@@ -180,11 +226,8 @@ bool en::ResourceManager::PixelPerfectTest(const sf::Sprite& Object1, const sf::
 					o2v.x < O2SubRect.width && o2v.y < O2SubRect.height) {
 
 					if (Bitmasks.GetPixel(mask1, Object1.getTexture(), (int)(o1v.x) + O1SubRect.left, (int)(o1v.y) + O1SubRect.top) > AlphaLimit&&
-						Bitmasks.GetPixel(mask2, Object2.getTexture(), (int)(o2v.x) + O2SubRect.left, (int)(o2v.y) + O2SubRect.top) > AlphaLimit) {
-
+						Bitmasks.GetPixel(mask2, Object2.getTexture(), (int)(o2v.x) + O2SubRect.left, (int)(o2v.y) + O2SubRect.top) > AlphaLimit)
 						return true;
-					}
-
 
 				}
 			}
@@ -193,8 +236,9 @@ bool en::ResourceManager::PixelPerfectTest(const sf::Sprite& Object1, const sf::
 	return false;
 }
 
-bool en::ResourceManager::CreateTextureAndBitmask(sf::Texture& LoadInto, const std::string& Filename) {
+bool en::ResourceManager::create_texture_and_bitmask(sf::Texture& LoadInto, const std::string& Filename) {
 	sf::Image img;
+
 	if (!img.loadFromFile(Filename)) {
 		return false;
 	}

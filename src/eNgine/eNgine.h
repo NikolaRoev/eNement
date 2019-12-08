@@ -68,8 +68,8 @@ namespace en {
 		std::unordered_map<std::string, Drawable*>& get_all_drawables();
 
 		//Collision.
-		bool PixelPerfectTest(const sf::Sprite& Object1, const sf::Sprite& Object2, sf::Uint8 AlphaLimit = 0);
-		bool CreateTextureAndBitmask(sf::Texture& LoadInto, const std::string& Filename);
+		bool pixel_perfect_test(const sf::Sprite& Object1, const sf::Sprite& Object2, sf::Uint8 AlphaLimit = 0);
+		bool create_texture_and_bitmask(sf::Texture& LoadInto, const std::string& Filename);
 
 		//Scale functions.
 		void scale_drawables(const float delta_x, const float delta_y);
