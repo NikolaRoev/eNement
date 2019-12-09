@@ -365,6 +365,69 @@ void en::SpellButton::set_volume(const unsigned int volume) {
 }
 
 //====================================================================================================================================
+
+en::PlusButton::PlusButton(const float x, const float y, const sf::Texture& texture, const sf::Texture& hl_texture, std::function<void()> _function, const sf::SoundBuffer& sound_buffer, unsigned int& _points_watcher, unsigned int& _stat_watcher) {
+	sprite.setTexture(texture);
+	sprite.setPosition(x, y);
+
+	hl_sprite.setTexture(hl_texture);
+	hl_sprite.setPosition(x, y);
+
+	function = _function;
+
+	sound.setBuffer(sound_buffer);
+
+	points_watcher = &_points_watcher;
+	stat_watcher = &_stat_watcher;
+}
+
+void en::PlusButton::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
+
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+
+
+	hl_sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	hl_sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+}
+
+void en::PlusButton::draw(sf::RenderWindow& window) {
+	if (*points_watcher != 0u) {
+		window.draw(sprite);
+	}
+}
+
+void en::PlusButton::draw(sf::RenderWindow& window, sf::Event& event) {
+	if ((*points_watcher != 0u) && (*stat_watcher < 100u)) {
+		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
+		window.draw(sprite);
+
+		if (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+				while (sprite.getGlobalBounds().contains(static_cast<float>(mouse_position.x), static_cast<float>(mouse_position.y))) {
+					window.waitEvent(event);
+					if (event.type == sf::Event::MouseButtonReleased) {
+						sound.play();
+						--(*points_watcher);
+						++(*stat_watcher);
+						function();
+						break;
+					}
+					mouse_position = sf::Mouse::getPosition(window);
+				}
+			}
+			window.draw(hl_sprite);
+		}
+	}
+}
+
+void en::PlusButton::set_volume(const unsigned int volume) {
+	sound.setVolume(static_cast<float>(volume));
+}
+
+//====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
 

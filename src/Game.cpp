@@ -189,7 +189,10 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture("assets/images/Stats/Stats_Background.png", "Stats Background");
 
+	core->manager->add_texture("assets/images/Stats/Stats_Plus_Button.png", "Stats Plus Button");
+	core->manager->add_texture("assets/images/Stats/Stats_Plus_Button_HL.png", "Stats Plus Button HL");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -229,7 +232,10 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture("assets/images/Win/Win_Background.png", "Win Background");
 
+	core->manager->add_texture("assets/images/Win/Win_Next_Button.png", "Win Next Button");
+	core->manager->add_texture("assets/images/Win/Win_Next_Button_HL.png", "Win Next Button HL");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -240,7 +246,13 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture("assets/images/Loss/Loss_Background.png", "Loss Background");
 
+	core->manager->add_texture("assets/images/Loss/Loss_Retry_Button.png", "Loss Retry Button");
+	core->manager->add_texture("assets/images/Loss/Loss_Retry_Button_HL.png", "Loss Retry Button HL");
+
+	core->manager->add_texture("assets/images/Loss/Loss_Return_Button.png", "Loss Return Button");
+	core->manager->add_texture("assets/images/Loss/Loss_Return_Button_HL.png", "Loss Return Button HL");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -251,7 +263,7 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
-
+	core->manager->add_texture("assets/images/End/End_Background.png", "End Background");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -992,10 +1004,10 @@ void en::Game::set_drawables() {
 	core->manager->add_drawable(spells_ice_button, "Spells Ice Button");
 
 	Drawable* spells_ice_description = new Label(60,
-											     700,
+											     800,
 											     core->manager->get_texture("Spells Description Frame"),
 											     70,
-											     710,
+											     810,
 											     core->manager->get_font("Test Font"),
 											     30,
 											     sf::Color::White,
@@ -1017,10 +1029,10 @@ void en::Game::set_drawables() {
 	core->manager->add_drawable(spells_lightning_button, "Spells Lightning Button");
 
 	Drawable* spells_lightning_description = new Label(400,
-													   700,
+													   800,
 													   core->manager->get_texture("Spells Description Frame"),
 													   410,
-													   710,
+													   810,
 													   core->manager->get_font("Test Font"),
 													   30,
 													   sf::Color::White,
@@ -1042,10 +1054,10 @@ void en::Game::set_drawables() {
 	core->manager->add_drawable(spells_light_button, "Spells Light Button");
 
 	Drawable* spells_light_description = new Label(900,
-												   700,
+												   800,
 												   core->manager->get_texture("Spells Description Frame"),
 												   910,
-												   710,
+												   810,
 												   core->manager->get_font("Test Font"),
 												   30,
 												   sf::Color::White,
@@ -1067,10 +1079,10 @@ void en::Game::set_drawables() {
 	core->manager->add_drawable(spells_dark_button, "Spells Dark Button");
 
 	Drawable* spells_dark_description = new Label(1500,
-												  700,
+												  800,
 												  core->manager->get_texture("Spells Description Frame"),
 												  1510,
-												  710,
+												  810,
 												  core->manager->get_font("Test Font"),
 												  30,
 												  sf::Color::White,
@@ -1099,7 +1111,217 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* stats_background = new Image(0,
+										   0,
+										   core->manager->get_texture("Stats Background"));
+	core->manager->add_drawable(stats_background, "Stats Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* stats_barriers = new Label(400,
+										 30,
+										 sf::Texture(),
+										 400,
+										 30,
+										 core->manager->get_font("Test Font"),
+										 50,
+										 sf::Color::White,
+										 "");
+	core->manager->add_drawable(stats_barriers, "Stats Barriers");
+
+	Drawable* stats_damage = new Label(400,
+									   130,
+									   sf::Texture(),
+									   400,
+									   130,
+									   core->manager->get_font("Test Font"),
+									   50,
+									   sf::Color::White,
+									   "");
+	core->manager->add_drawable(stats_damage, "Stats Damage");
+
+	Drawable* stats_cast_time = new Label(400,
+										  230,
+										  sf::Texture(),
+										  400,
+										  230,
+										  core->manager->get_font("Test Font"),
+										  50,
+										  sf::Color::White,
+										  "");
+	core->manager->add_drawable(stats_cast_time, "Stats Cast Time");
+
+	Drawable* stats_cooldown_time = new Label(400,
+											  330,
+											  sf::Texture(),
+											  400,
+											  330,
+											  core->manager->get_font("Test Font"),
+											  50,
+											  sf::Color::White,
+											  "");
+	core->manager->add_drawable(stats_cooldown_time, "Stats Cooldown Time");
+
+	Drawable* stats_secondary_effect_increase = new Label(400,
+														  430,
+														  sf::Texture(),
+														  400,
+														  430,
+														  core->manager->get_font("Test Font"),
+														  50,
+														  sf::Color::White,
+														  "");
+	core->manager->add_drawable(stats_secondary_effect_increase, "Stats Secondary Effect Increase");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* stats_points = new Label(400,
+		540,
+		sf::Texture(),
+		400,
+		540,
+		core->manager->get_font("Test Font"),
+		50,
+		sf::Color::White,
+		"");
+	core->manager->add_drawable(stats_points, "Stats Points");
+
+	Drawable* stats_barrier_strength = new Label(400,
+		650,
+		sf::Texture(),
+		400,
+		650,
+		core->manager->get_font("Test Font"),
+		50,
+		sf::Color::White,
+		"");
+	core->manager->add_drawable(stats_barrier_strength, "Stats Barrier Strength");
+
+	Drawable* stats_magic_power = new Label(400,
+		750,
+		sf::Texture(),
+		400,
+		750,
+		core->manager->get_font("Test Font"),
+		50,
+		sf::Color::White,
+		"");
+	core->manager->add_drawable(stats_magic_power, "Stats Magic Power");
+
+	Drawable* stats_spell_mastery = new Label(400,
+		850,
+		sf::Texture(),
+		400,
+		850,
+		core->manager->get_font("Test Font"),
+		50,
+		sf::Color::White,
+		"");
+	core->manager->add_drawable(stats_spell_mastery, "Stats Spell Mastery");
+
+	Drawable* stats_magic_proficiency = new Label(400,
+		950,
+		sf::Texture(),
+		400,
+		950,
+		core->manager->get_font("Test Font"),
+		50,
+		sf::Color::White,
+		"");
+	core->manager->add_drawable(stats_magic_proficiency, "Stats Magic Proficiency");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* stats_barrier_strength_button = new PlusButton(600,
+															 650,
+															 core->manager->get_texture("Stats Plus Button"),
+															 core->manager->get_texture("Stats Plus Button HL"),
+															 [stats_barrier_strength, stats_barriers, stats_points, &player = player]()
+															 {
+																stats_barrier_strength->set_text(std::to_string(player.barrier_strength));
+
+																player.barriers = player.barrier_strength / 10u;
+																stats_barriers->set_text(std::to_string(player.barriers));
+
+																stats_points->set_text(std::to_string(player.points));
+															 },
+															 core->manager->get_sound_buffer("Test Sound"),
+															 player.points,
+															 player.barrier_strength);
+	core->manager->add_drawable(stats_barrier_strength_button, "Stats Barrier Strength Button");
+
+	Drawable* stats_magic_power_button = new PlusButton(600,
+														750,
+														core->manager->get_texture("Stats Plus Button"),
+														core->manager->get_texture("Stats Plus Button HL"),
+														[stats_magic_power, stats_damage, stats_points, &player = player]()
+														{
+															stats_magic_power->set_text(std::to_string(player.magic_power));
+
+															player.damage = 10.0f + (0.1f * player.magic_power);
+															stats_damage->set_text(std::to_string(player.damage));
+
+															stats_points->set_text(std::to_string(player.points));
+														},
+														core->manager->get_sound_buffer("Test Sound"),
+														player.points,
+														player.magic_power);
+	core->manager->add_drawable(stats_magic_power_button, "Stats Magic Power Button");
+
+	Drawable* stats_spell_mastery_button = new PlusButton(600,
+														  850,
+														  core->manager->get_texture("Stats Plus Button"),
+														  core->manager->get_texture("Stats Plus Button HL"),
+														  [stats_spell_mastery, stats_cast_time, stats_points, stats_cooldown_time, &player = player]()
+														  {
+														  	stats_spell_mastery->set_text(std::to_string(player.spell_mastery));
+														  
+															player.cast_time = 120.0f - (1.0f * player.spell_mastery);
+														  	stats_cast_time->set_text(std::to_string(player.cast_time));
+															player.cooldown_time = 300.0f - (2.0f * player.spell_mastery);
+														  	stats_cooldown_time->set_text(std::to_string(player.cooldown_time));
+
+															stats_points->set_text(std::to_string(player.points));
+														  },
+														  core->manager->get_sound_buffer("Test Sound"),
+														  player.points,
+														  player.spell_mastery);
+	core->manager->add_drawable(stats_spell_mastery_button, "Stats Spell Mastery Button");
+
+	Drawable* stats_magic_proficiency_button = new PlusButton(600,
+															  950,
+															  core->manager->get_texture("Stats Plus Button"),
+															  core->manager->get_texture("Stats Plus Button HL"),
+															  [stats_magic_proficiency, stats_secondary_effect_increase, stats_points, &player = player]()
+															  {
+															  	stats_magic_proficiency->set_text(std::to_string(player.magic_proficiency));
+															  
+																player.secondary_effect_increase = 0.0f + (1.5f * player.magic_proficiency);
+															  	stats_secondary_effect_increase->set_text(std::to_string(player.secondary_effect_increase));
+
+																stats_points->set_text(std::to_string(player.points));
+															  },
+															  core->manager->get_sound_buffer("Test Sound"),
+															  player.points,
+															  player.magic_proficiency);
+	core->manager->add_drawable(stats_magic_proficiency_button, "Stats Magic Proficiency Button");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	//TO DO: Add the description labels.
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* stats_back_button = new Button(1500,
+											 80,
+											 core->manager->get_texture("Back Button"),
+											 core->manager->get_texture("Back Button HL"),
+											 [&game_state = game_state]()
+											 {
+											 	game_state = CHAPTER;
+											 },
+											 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(stats_back_button, "Stats Back Button");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1132,7 +1354,23 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* win_background = new Image(0,
+										 0,
+										 core->manager->get_texture("Win Background"));
+	core->manager->add_drawable(win_background, "Win Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* win_next_button = new Button(960,
+										   800,
+										   core->manager->get_texture("Win Next Button"),
+										   core->manager->get_texture("Win Next Button HL"),
+										   [&game_state = game_state]()
+										   {
+										   	game_state = CHAPTER;
+										   },
+										   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(win_next_button, "Win Next Button");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1143,7 +1381,36 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* loss_background = new Image(0,
+										  0,
+										  core->manager->get_texture("Loss Background"));
+	core->manager->add_drawable(loss_background, "Loss Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* loss_retry_button = new Button(480,
+											 800,
+											 core->manager->get_texture("Loss Retry Button"),
+											 core->manager->get_texture("Loss Retry Button HL"),
+											 [&game_state = game_state]()
+											 {
+											 	game_state = FIGHT;
+											 },
+											 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(loss_retry_button, "Loss Retry Button");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* loss_return_button = new Button(1440,
+											  800,
+											  core->manager->get_texture("Loss Return Button"),
+											  core->manager->get_texture("Loss Return Button HL"),
+											  [&game_state = game_state]()
+											  {
+											  	game_state = CHAPTER;
+											  },
+											  core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(loss_return_button, "Loss Return Button");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1154,7 +1421,23 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* end_background = new Image(0,
+										 0,
+										 core->manager->get_texture("End Background"));
+	core->manager->add_drawable(end_background, "End Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* end_next_button = new Button(960,
+										   800,
+										   core->manager->get_texture("Win Next Button"),
+										   core->manager->get_texture("Win Next Button HL"),
+										   [&application_state = application_state]()
+										   {
+										   	application_state = MAIN_MENU;
+										   },
+										   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(end_next_button, "End Next Button");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1174,8 +1457,8 @@ void en::Game::load_save_files() {
 		if (is.is_open()) {
 			is.read((char*)&each.chapter, sizeof(unsigned int));
 
-			is.read((char*)&each.spell0, sizeof(unsigned int));
-			is.read((char*)&each.spell1, sizeof(unsigned int));
+			is.read((char*)&each.first_spell, sizeof(unsigned int));
+			is.read((char*)&each.second_spell, sizeof(unsigned int));
 
 			is.read((char*)&each.points, sizeof(unsigned int));
 			is.read((char*)&each.barrier_strength, sizeof(unsigned int));
@@ -1198,8 +1481,8 @@ void en::Game::save_save_files() {
 
 			os.write((char*)&each.chapter, sizeof(unsigned int));
 
-			os.write((char*)&each.spell0, sizeof(unsigned int));
-			os.write((char*)&each.spell1, sizeof(unsigned int));
+			os.write((char*)&each.first_spell, sizeof(unsigned int));
+			os.write((char*)&each.second_spell, sizeof(unsigned int));
 
 			os.write((char*)&each.points, sizeof(unsigned int));
 			os.write((char*)&each.barrier_strength, sizeof(unsigned int));
@@ -1348,8 +1631,17 @@ void en::Game::options_menu_loop() {
 //====================================================================================================================================
 
 void en::Game::game_loop() {
-	player.first_spell = saves[saves_at].spell0;
-	player.second_spell = saves[saves_at].spell1;
+	player.first_spell = saves[saves_at].first_spell;
+	player.second_spell = saves[saves_at].second_spell;
+
+
+	player.points = saves[saves_at].points;
+
+	player.barrier_strength = saves[saves_at].barrier_strength;
+	player.magic_power = saves[saves_at].magic_power;
+	player.spell_mastery = saves[saves_at].spell_mastery;
+	player.magic_proficiency = saves[saves_at].magic_proficiency;
+
 
 	player.barriers = saves[saves_at].barrier_strength / 10u;
 
@@ -1388,8 +1680,16 @@ void en::Game::game_loop() {
 	}
 
 
-	saves[saves_at].spell0 = player.first_spell;
-	saves[saves_at].spell1 = player.second_spell;
+	saves[saves_at].first_spell = player.first_spell;
+	saves[saves_at].second_spell = player.second_spell;
+
+	saves[saves_at].points = player.points;
+
+	saves[saves_at].barrier_strength = player.barrier_strength;
+	saves[saves_at].magic_power = player.magic_power;
+	saves[saves_at].spell_mastery = player.spell_mastery;
+	saves[saves_at].magic_proficiency = player.magic_proficiency;
+
 	save_save_files();
 }
 
@@ -1492,7 +1792,59 @@ void en::Game::spells_loop() {
 }
 
 void en::Game::stats_loop() {
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Stats Background"),
 
+		core->manager->get_drawable("Stats Barriers"),
+		core->manager->get_drawable("Stats Damage"),
+		core->manager->get_drawable("Stats Cast Time"),
+		core->manager->get_drawable("Stats Cooldown Time"),
+		core->manager->get_drawable("Stats Secondary Effect Increase"),
+
+		core->manager->get_drawable("Stats Points"),
+
+		core->manager->get_drawable("Stats Barrier Strength"),
+		core->manager->get_drawable("Stats Magic Power"),
+		core->manager->get_drawable("Stats Spell Mastery"),
+		core->manager->get_drawable("Stats Magic Proficiency"),
+
+		core->manager->get_drawable("Stats Barrier Strength Button"),
+		core->manager->get_drawable("Stats Magic Power Button"),
+		core->manager->get_drawable("Stats Spell Mastery Button"),
+		core->manager->get_drawable("Stats Magic Proficiency Button"),
+
+		core->manager->get_drawable("Stats Back Button")
+	};
+
+
+	core->manager->get_drawable("Stats Barriers")->set_text(std::to_string(player.barriers));
+	core->manager->get_drawable("Stats Damage")->set_text(std::to_string(player.damage));
+	core->manager->get_drawable("Stats Cast Time")->set_text(std::to_string(player.cast_time));
+	core->manager->get_drawable("Stats Cooldown Time")->set_text(std::to_string(player.cooldown_time));
+	core->manager->get_drawable("Stats Secondary Effect Increase")->set_text(std::to_string(player.secondary_effect_increase));
+
+	core->manager->get_drawable("Stats Points")->set_text(std::to_string(player.points));
+
+	core->manager->get_drawable("Stats Barrier Strength")->set_text(std::to_string(player.barrier_strength));
+	core->manager->get_drawable("Stats Magic Power")->set_text(std::to_string(player.magic_power));
+	core->manager->get_drawable("Stats Spell Mastery")->set_text(std::to_string(player.spell_mastery));
+	core->manager->get_drawable("Stats Magic Proficiency")->set_text(std::to_string(player.magic_proficiency));
+
+
+	while (application_state == GAME && game_state == STATS) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+			sizes_at = 99;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 void en::Game::fight_loop() {
@@ -1611,15 +1963,76 @@ void en::Game::pause_loop() {
 }
 
 void en::Game::win_loop() {
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Win Background"),
 
+		core->manager->get_drawable("Win Next Button")
+	};
+
+
+	while (application_state == GAME && game_state == WIN) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+			sizes_at = 99;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 void en::Game::loss_loop() {
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Loss Background"),
 
+		core->manager->get_drawable("Loss Retry Button"),
+		core->manager->get_drawable("Loss Return Button")
+	};
+
+
+	while (application_state == GAME && game_state == LOSS) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+			sizes_at = 99;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 void en::Game::end_loop() {
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("End Background"),
 
+		core->manager->get_drawable("End Next Button")
+	};
+
+
+	while (application_state == GAME && game_state == END) {
+
+		core->draw(static_frame);
+
+
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event();
+			sizes_at = 99;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+	}
 }
 
 //====================================================================================================================================

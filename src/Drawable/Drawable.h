@@ -353,6 +353,57 @@ namespace en {
 	};
 
 	//====================================================================================================================================
+
+	class PlusButton : public Drawable {
+	private:
+		sf::Sprite sprite;
+		sf::Sprite hl_sprite;
+		std::function<void()> function;
+		sf::Sound sound;
+
+		unsigned int* points_watcher{ nullptr };
+		unsigned int* stat_watcher{ nullptr };
+
+	public:
+		PlusButton(const float x,
+				   const float y,
+				   const sf::Texture& texture,
+				   const sf::Texture& hl_texture,
+				   std::function<void()> _function,
+				   const sf::SoundBuffer& sound_buffer,
+				   unsigned int& _points_watcher,
+				   unsigned int& _stat_watcher);
+
+
+		PlusButton(const PlusButton&) = delete;
+		PlusButton(PlusButton&&) = delete;
+		PlusButton& operator=(const PlusButton&) = delete;
+		PlusButton& operator=(PlusButton&&) = delete;
+		~PlusButton() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override;
+
+
+		const sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		PlusButton* clone() override { return nullptr; }
+	};
+
+	//====================================================================================================================================
 	//====================================================================================================================================
 	//====================================================================================================================================
 

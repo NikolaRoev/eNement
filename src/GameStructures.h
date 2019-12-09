@@ -36,10 +36,11 @@ namespace en {
 	struct SaveFile {
 		unsigned int chapter{ 0 };
 
-		unsigned int spell0{ 0 };
-		unsigned int spell1{ 0 };
+		unsigned int first_spell{ 0 };
+		unsigned int second_spell{ 0 };
 
-		unsigned int points{ 0 };
+		unsigned int points{ 2000 };
+
 		unsigned int barrier_strength{ 0 };
 		unsigned int magic_power{ 0 };
 		unsigned int spell_mastery{ 0 };
@@ -72,6 +73,15 @@ namespace en {
 	public:
 		unsigned int first_spell{ SpellType::Empty };
 		unsigned int second_spell{ SpellType::Empty };
+
+
+		unsigned int points{ 0 };
+
+		unsigned int barrier_strength{ 0 };
+		unsigned int magic_power{ 0 };
+		unsigned int spell_mastery{ 0 };
+		unsigned int magic_proficiency{ 0 };
+
 
 		unsigned int barriers{ 0u };				//Each point is a barrier.
 		float damage{ 0.0f };					    //Each point is a point of damage.
