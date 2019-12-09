@@ -1276,9 +1276,9 @@ void en::Game::set_drawables() {
 														  {
 														  	stats_spell_mastery->set_text(std::to_string(player.spell_mastery));
 														  
-															player.cast_time = 120.0f - (1.0f * player.spell_mastery);
+															player.cast_time = 2000.0f - (20.0f * player.spell_mastery);
 														  	stats_cast_time->set_text(std::to_string(player.cast_time));
-															player.cooldown_time = 300.0f - (2.0f * player.spell_mastery);
+															player.cooldown_time = 5000.0f - (25.0f * player.spell_mastery);
 														  	stats_cooldown_time->set_text(std::to_string(player.cooldown_time));
 
 															stats_points->set_text(std::to_string(player.points));
@@ -1647,8 +1647,8 @@ void en::Game::game_loop() {
 
 	player.damage = 10.0f + (0.1f * saves[saves_at].magic_power);
 
-	player.cast_time = 120.0f - (1.0f * saves[saves_at].spell_mastery);
-	player.cooldown_time = 300.0f - (2.0f * saves[saves_at].spell_mastery);
+	player.cast_time = 2000.0f - (20.0f * saves[saves_at].spell_mastery);
+	player.cooldown_time = 5000.0f - (25.0f * saves[saves_at].spell_mastery);
 
 	player.secondary_effect_increase = 0.0f + (1.5f * saves[saves_at].magic_proficiency);
 
