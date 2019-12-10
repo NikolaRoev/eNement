@@ -1857,114 +1857,15 @@ void en::Game::stats_loop() {
 }
 
 void en::Game::fight_loop() {
-	/*
-	std::vector<Drawable*> in_frame_static = {
-		manager->get_drawable("Fight Background"),
 
-	};
-
-	if (current_enemy) {
-		delete current_enemy->drawable;
-		delete current_enemy;
-	}
-
-	//TO DO: Set the current enemy and his drawable pointer here.
-	current_enemy = new EnemyEntity;
-
-	std::vector<SpellEntity*> player_spells{SpellEntity::make_spell(player->first_spell), SpellEntity::make_spell(player->second_spell) };
-	
-	std::vector<Drawable*> enemy_spells;
 
 
 	while (game_state == FIGHT && application_state == GAME) {
 		core->time = core->clock.restart();
-		//std::cout << TIME.asMicroseconds() << '\n';
+		std::cout << core->time.asMicroseconds() << '\n';
 		
 
-		//Handle events. Generate player spells. Generate enemy spells.
-		core->window.pollEvent(core->event);
-
-		if (core->event.type == sf::Event::Resized) {
-			auto [resize_d_x, resize_d_y] = core->on_resize_event();
-
-			auto temp_drawables = manager->get_all_drawables();
-			for (const auto& each : temp_drawables) {
-				each.second->resize(resize_d_x, resize_d_y);
-			}
-		}
-		else if (core->event.type == sf::Event::Closed) {
-			application_state = EXIT;
-		}
-
-		//TO DO: Add the player spells generation from key press here and the current enemy generate spells function also.
-
-		//------------------------------------------------------------------------------------------------------------------------------------
-
-
-		//Draws.
-		for (const auto& each : in_frame_static) {
-			each->draw();
-		}
-
-		player->drawable->draw();
-
-		//current_enemy->drawable->draw(core->window);
-
-		//for (const auto& each : enemy_spells) {
-			//each->draw(core->window);
-		//}
-
-		//for (const auto& each : player_spells) {
-			//each->drawable->draw(core->window);
-		//}
-
-
-		core->window.display();
-		//------------------------------------------------------------------------------------------------------------------------------------
-
-		
-		//Hit checks.
-		//for (const auto& each : enemy_spells) {
-			//if (each->hit_check(player->drawable->get_sprite())) {
-				//Call a do damage function from current enemy.
-			//}
-		//}
-
-		//for (const auto& each : player_spells) {
-			//if (each->drawable->hit_check(current_enemy->drawable->get_sprite())) {
-				//TO DO: Add a player spell entity do dmg function here.
-			//}
-		//}
-
-		//------------------------------------------------------------------------------------------------------------------------------------
-
-
-		//Health check, for player and enemy.
-
-		//TO DO:
-
-		//------------------------------------------------------------------------------------------------------------------------------------
-
-
-		//Move spells and enemy.
-		//for (const auto& each : enemy_spells) {
-			//each->move();
-		//}
-
-		//for (const auto& each : player_spells) {
-			//each->drawable->move();
-		//}
-
-		//current_enemy->drawable->move();
-
-		//------------------------------------------------------------------------------------------------------------------------------------
-
-
-		//Clear out of bounds enemy spells.
-
-		//------------------------------------------------------------------------------------------------------------------------------------
 	}
-	*/
 }
 
 void en::Game::pause_loop() {
