@@ -1140,22 +1140,11 @@ void en::Game::set_drawables() {
 									   "");
 	core->manager->add_drawable(stats_damage, "Stats Damage");
 
-	Drawable* stats_cast_time = new Label(400,
-										  230,
-										  sf::Texture(),
-										  400,
-										  230,
-										  core->manager->get_font("Test Font"),
-										  50,
-										  sf::Color::White,
-										  "");
-	core->manager->add_drawable(stats_cast_time, "Stats Cast Time");
-
 	Drawable* stats_cooldown_time = new Label(400,
-											  330,
+											  230,
 											  sf::Texture(),
 											  400,
-											  330,
+											  230,
 											  core->manager->get_font("Test Font"),
 											  50,
 											  sf::Color::White,
@@ -1163,10 +1152,10 @@ void en::Game::set_drawables() {
 	core->manager->add_drawable(stats_cooldown_time, "Stats Cooldown Time");
 
 	Drawable* stats_secondary_effect_increase = new Label(400,
-														  430,
+														  330,
 														  sf::Texture(),
 														  400,
-														  430,
+														  330,
 														  core->manager->get_font("Test Font"),
 														  50,
 														  sf::Color::White,
@@ -1272,12 +1261,10 @@ void en::Game::set_drawables() {
 														  850,
 														  core->manager->get_texture("Stats Plus Button"),
 														  core->manager->get_texture("Stats Plus Button HL"),
-														  [stats_spell_mastery, stats_cast_time, stats_points, stats_cooldown_time, &player = player]()
+														  [stats_spell_mastery, stats_cooldown_time, stats_points, &player = player]()
 														  {
 														  	stats_spell_mastery->set_text(std::to_string(player.spell_mastery));
 														  
-															player.cast_time = 2000.0f - (20.0f * player.spell_mastery);
-														  	stats_cast_time->set_text(std::to_string(player.cast_time));
 															player.cooldown_time = 5000.0f - (25.0f * player.spell_mastery);
 														  	stats_cooldown_time->set_text(std::to_string(player.cooldown_time));
 
@@ -1465,7 +1452,6 @@ void en::Game::load_player() {
 
 	player.damage = 10.0f + (0.1f * saves[saves_at].magic_power);
 
-	player.cast_time = 2000.0f - (20.0f * saves[saves_at].spell_mastery);
 	player.cooldown_time = 5000.0f - (25.0f * saves[saves_at].spell_mastery);
 
 	player.secondary_effect_increase = 0.0f + (1.5f * saves[saves_at].magic_proficiency);
@@ -1806,7 +1792,6 @@ void en::Game::stats_loop() {
 
 		core->manager->get_drawable("Stats Barriers"),
 		core->manager->get_drawable("Stats Damage"),
-		core->manager->get_drawable("Stats Cast Time"),
 		core->manager->get_drawable("Stats Cooldown Time"),
 		core->manager->get_drawable("Stats Secondary Effect Increase"),
 
@@ -1828,7 +1813,6 @@ void en::Game::stats_loop() {
 
 	core->manager->get_drawable("Stats Barriers")->set_text(std::to_string(player.barriers));
 	core->manager->get_drawable("Stats Damage")->set_text(std::to_string(player.damage));
-	core->manager->get_drawable("Stats Cast Time")->set_text(std::to_string(player.cast_time));
 	core->manager->get_drawable("Stats Cooldown Time")->set_text(std::to_string(player.cooldown_time));
 	core->manager->get_drawable("Stats Secondary Effect Increase")->set_text(std::to_string(player.secondary_effect_increase));
 
