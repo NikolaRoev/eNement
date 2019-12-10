@@ -1448,6 +1448,41 @@ void en::Game::set_drawables() {
 
 //====================================================================================================================================
 
+void en::Game::load_player() {
+	player.first_spell = saves[saves_at].first_spell;
+	player.second_spell = saves[saves_at].second_spell;
+
+
+	player.points = saves[saves_at].points;
+
+	player.barrier_strength = saves[saves_at].barrier_strength;
+	player.magic_power = saves[saves_at].magic_power;
+	player.spell_mastery = saves[saves_at].spell_mastery;
+	player.magic_proficiency = saves[saves_at].magic_proficiency;
+
+
+	player.barriers = saves[saves_at].barrier_strength / 10u;
+
+	player.damage = 10.0f + (0.1f * saves[saves_at].magic_power);
+
+	player.cast_time = 2000.0f - (20.0f * saves[saves_at].spell_mastery);
+	player.cooldown_time = 5000.0f - (25.0f * saves[saves_at].spell_mastery);
+
+	player.secondary_effect_increase = 0.0f + (1.5f * saves[saves_at].magic_proficiency);
+}
+
+void en::Game::save_player() {
+	saves[saves_at].first_spell = player.first_spell;
+	saves[saves_at].second_spell = player.second_spell;
+
+	saves[saves_at].points = player.points;
+
+	saves[saves_at].barrier_strength = player.barrier_strength;
+	saves[saves_at].magic_power = player.magic_power;
+	saves[saves_at].spell_mastery = player.spell_mastery;
+	saves[saves_at].magic_proficiency = player.magic_proficiency;
+}
+
 void en::Game::load_save_files() {
 	int i = 0;
 	for (auto& each : saves) {
@@ -1474,6 +1509,9 @@ void en::Game::load_save_files() {
 }
 
 void en::Game::save_save_files() {
+	save_player();
+
+
 	int i = 0;
 	for (auto& each : saves) {
 		if (each.chapter != 0u) {
@@ -1631,26 +1669,7 @@ void en::Game::options_menu_loop() {
 //====================================================================================================================================
 
 void en::Game::game_loop() {
-	player.first_spell = saves[saves_at].first_spell;
-	player.second_spell = saves[saves_at].second_spell;
-
-
-	player.points = saves[saves_at].points;
-
-	player.barrier_strength = saves[saves_at].barrier_strength;
-	player.magic_power = saves[saves_at].magic_power;
-	player.spell_mastery = saves[saves_at].spell_mastery;
-	player.magic_proficiency = saves[saves_at].magic_proficiency;
-
-
-	player.barriers = saves[saves_at].barrier_strength / 10u;
-
-	player.damage = 10.0f + (0.1f * saves[saves_at].magic_power);
-
-	player.cast_time = 2000.0f - (20.0f * saves[saves_at].spell_mastery);
-	player.cooldown_time = 5000.0f - (25.0f * saves[saves_at].spell_mastery);
-
-	player.secondary_effect_increase = 0.0f + (1.5f * saves[saves_at].magic_proficiency);
+	load_player();
 
 
 	while (application_state == GAME) {
@@ -1679,16 +1698,6 @@ void en::Game::game_loop() {
 		}
 	}
 
-
-	saves[saves_at].first_spell = player.first_spell;
-	saves[saves_at].second_spell = player.second_spell;
-
-	saves[saves_at].points = player.points;
-
-	saves[saves_at].barrier_strength = player.barrier_strength;
-	saves[saves_at].magic_power = player.magic_power;
-	saves[saves_at].spell_mastery = player.spell_mastery;
-	saves[saves_at].magic_proficiency = player.magic_proficiency;
 
 	save_save_files();
 }
