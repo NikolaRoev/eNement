@@ -202,16 +202,12 @@ void en::Game::set_resources() {
 	//Fight:
 
 	//------------------------------------------------------------------------------------------------------------------------------------
-	/*
-	manager->add_texture("assets/images/Game/Fight_Background.png", "Fight Background");
 
-	manager->add_texture_for_pixel_perfect("assets/images/Game/Player.png", "Player");
-	manager->add_texture_for_pixel_perfect("assets/images/Game/Spell0.png", "Spell0");
-	manager->add_texture_for_pixel_perfect("assets/images/Game/Spell1.png", "Spell1");
+	core->manager->add_texture("assets/images/Fight/Fight_Background.png", "Fight Background");
 
-	manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0.png", "Enemy0");
-	manager->add_texture_for_pixel_perfect("assets/images/Game/Enemy0_Attack.png", "Enemy0 Attack");
-	*/
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Player.png", "Player");
+
+
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	//====================================================================================================================================
@@ -1319,7 +1315,18 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* fight_background = new Image(0,
+										   0,
+										   core->manager->get_texture("Fight Background"));
+	core->manager->add_drawable(fight_background, "Fight Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* fight_player = new EntityDrawable(960,
+												800,
+												core->manager->get_texture("Player"),
+												core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_player, "Player");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1841,15 +1848,68 @@ void en::Game::stats_loop() {
 }
 
 void en::Game::fight_loop() {
+	//Setup.
+	player.drawable = core->manager->get_drawable("Player")->clone();
 
 
+	std::vector<Drawable*> static_frame = {
+		core->manager->get_drawable("Fight Background"),
 
-	while (game_state == FIGHT && application_state == GAME) {
+
+		player.drawable,
+
+
+	};
+	DynamicFrame dynamic_frame;
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+
+	while (application_state == GAME && game_state == FIGHT) {
+		//Time.
 		core->time = core->clock.restart();
-		std::cout << core->time.asMicroseconds() << '\n';
+		std::cout << core->time.asSeconds() << '\n';
+		//------------------------------------------------------------------------------------------------------------------------------------
 		
 
+		//Draws.
+		core->draw(static_frame, dynamic_frame);
+
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Checks.
+
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Moves.
+		player.move(core->width, core->height, core->delta_x, core->delta_y, core->time);
+
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Events.
+		core->window.pollEvent(core->event);
+		if (core->event.type == sf::Event::Resized) {
+			core->on_resize_event(dynamic_frame);
+			sizes_at = 99;
+
+			player.drawable->resize(core->delta_x, core->delta_y);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+			game_state = CHAPTER;
+		}
+		else if (core->event.type == sf::Event::Closed) {
+			application_state = EXIT;
+		}
+		//------------------------------------------------------------------------------------------------------------------------------------
 	}
+
+
+	//Cleanup.
+	delete player.drawable;
+
+	//------------------------------------------------------------------------------------------------------------------------------------
 }
 
 void en::Game::pause_loop() {

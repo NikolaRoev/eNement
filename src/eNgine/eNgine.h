@@ -89,10 +89,6 @@ namespace en {
 		float native_height{ 1080.0f };
 
 		
-		float delta_x{ 1.0f };
-		float delta_y{ 1.0f };
-
-		
 		void set_delta_values();
 
 	public:
@@ -100,6 +96,9 @@ namespace en {
 		unsigned int height{ 576u };
 		unsigned int frames{ 60u };
 		unsigned int volume{ 50u };
+
+		float delta_x{ 1.0f };
+		float delta_y{ 1.0f };
 
 		sf::RenderWindow window;
 		sf::Event event{ sf::Event::MouseMoved };
