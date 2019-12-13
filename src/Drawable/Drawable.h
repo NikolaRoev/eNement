@@ -46,7 +46,7 @@ namespace en {
 
 
 		//Game drawables specific functions.
-		virtual const sf::Sprite* get_sprite() = 0;
+		virtual sf::Sprite* get_sprite() = 0;
 
 		virtual void move(const float delta_x, const float delta_y) = 0;
 
@@ -87,7 +87,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override {}
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -137,7 +137,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override {}
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -183,7 +183,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override;
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -234,7 +234,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override;
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -285,7 +285,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override {}
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -343,7 +343,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override;
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -394,7 +394,7 @@ namespace en {
 		void set_volume(const unsigned int volume) override;
 
 
-		const sf::Sprite* get_sprite() override { return nullptr; }
+		sf::Sprite* get_sprite() override { return nullptr; }
 
 		void move(const float delta_x, const float delta_y) override {}
 
@@ -407,69 +407,25 @@ namespace en {
 	//====================================================================================================================================
 	//====================================================================================================================================
 
-	class EntityDrawable : public Drawable {
+	class ObjectDrawable : public Drawable {
 	private:
 		sf::Sprite sprite;
 		sf::Sound sound;
 
 	public:
-		EntityDrawable(const float x,
+		ObjectDrawable(const float x,
 					   const float y,
 					   const sf::Texture& texture,
 					   const sf::SoundBuffer& sound_buffer);
 
 
-		EntityDrawable(const EntityDrawable& other);
+		ObjectDrawable(const ObjectDrawable& other);
 
 
-		EntityDrawable(EntityDrawable&&) = delete;
-		EntityDrawable& operator=(const EntityDrawable&) = delete;
-		EntityDrawable& operator=(EntityDrawable&&) = delete;
-		~EntityDrawable() = default;
-
-
-		void resize(const float delta_x, const float delta_y) override;
-
-		void draw(sf::RenderWindow& window) override;
-
-		void draw(sf::RenderWindow& window, sf::Event& event) override;
-
-
-		void set_text(const std::string& new_text) override {}
-
-		void set_volume(const unsigned int volume) override;
-
-
-		const sf::Sprite* get_sprite() override;
-
-		void move(const float delta_x, const float delta_y) override;
-
-		void play_sound() override;
-
-		EntityDrawable* clone() override;
-	};
-
-	//====================================================================================================================================
-
-	class SpellDrawable : public Drawable {
-	private:
-		sf::Sprite sprite;
-		sf::Sound sound;
-
-	public:
-		SpellDrawable(const float x,
-					  const float y,
-					  const sf::Texture& texture,
-					  const sf::SoundBuffer& sound_buffer);
-
-
-		SpellDrawable(const SpellDrawable& other);
-
-
-		SpellDrawable(SpellDrawable&&) = delete;
-		SpellDrawable& operator=(const SpellDrawable&) = delete;
-		SpellDrawable& operator=(SpellDrawable&&) = delete;
-		~SpellDrawable() = default;
+		ObjectDrawable(ObjectDrawable&&) = delete;
+		ObjectDrawable& operator=(const ObjectDrawable&) = delete;
+		ObjectDrawable& operator=(ObjectDrawable&&) = delete;
+		~ObjectDrawable() = default;
 
 
 		void resize(const float delta_x, const float delta_y) override;
@@ -484,13 +440,13 @@ namespace en {
 		void set_volume(const unsigned int volume) override;
 
 
-		const sf::Sprite* get_sprite() override;
+		sf::Sprite* get_sprite() override;
 
 		void move(const float delta_x, const float delta_y) override;
 
 		void play_sound() override;
 
-		SpellDrawable* clone() override;
+		ObjectDrawable* clone() override;
 	};
 
 	//====================================================================================================================================

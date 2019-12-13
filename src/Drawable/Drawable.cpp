@@ -431,17 +431,17 @@ void en::PlusButton::set_volume(const unsigned int volume) {
 //====================================================================================================================================
 //====================================================================================================================================
 
-en::EntityDrawable::EntityDrawable(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
+en::ObjectDrawable::ObjectDrawable(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
 	sprite.setTexture(texture);
 	sprite.setPosition(x, y);
 
 	sound.setBuffer(sound_buffer);
 }
 
-en::EntityDrawable::EntityDrawable(const EntityDrawable& other) : sprite{ other.sprite }, sound{other.sound} {
+en::ObjectDrawable::ObjectDrawable(const ObjectDrawable& other) : sprite{ other.sprite }, sound{other.sound} {
 }
 
-void en::EntityDrawable::resize(const float delta_x, const float delta_y) {
+void en::ObjectDrawable::resize(const float delta_x, const float delta_y) {
 	sf::FloatRect current_position = sprite.getGlobalBounds();
 	sf::Vector2 current_scale = sprite.getScale();
 
@@ -449,82 +449,33 @@ void en::EntityDrawable::resize(const float delta_x, const float delta_y) {
 	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
 }
 
-void en::EntityDrawable::draw(sf::RenderWindow& window) {
+void en::ObjectDrawable::draw(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 
-void en::EntityDrawable::draw(sf::RenderWindow& window, sf::Event& event) {
+void en::ObjectDrawable::draw(sf::RenderWindow& window, sf::Event& event) {
 	window.draw(sprite);
 }
 
-void en::EntityDrawable::set_volume(const unsigned int volume) {
+void en::ObjectDrawable::set_volume(const unsigned int volume) {
 	sound.setVolume(static_cast<float>(volume));
 }
 
-const sf::Sprite* en::EntityDrawable::get_sprite() {
+sf::Sprite* en::ObjectDrawable::get_sprite() {
 	return &sprite;
 }
 
-void en::EntityDrawable::move(const float delta_x, const float delta_y) {
+void en::ObjectDrawable::move(const float delta_x, const float delta_y) {
 	sprite.move(delta_x, delta_y);
 }
 
-void en::EntityDrawable::play_sound() {
+void en::ObjectDrawable::play_sound() {
 	sound.play();
 }
 
-en::EntityDrawable* en::EntityDrawable::clone()
+en::ObjectDrawable* en::ObjectDrawable::clone()
 {
-	return new EntityDrawable(*this);
-}
-
-//====================================================================================================================================
-
-en::SpellDrawable::SpellDrawable(const float x, const float y, const sf::Texture& texture, const sf::SoundBuffer& sound_buffer) {
-	sprite.setTexture(texture);
-	sprite.setPosition(x, y);
-
-	sound.setBuffer(sound_buffer);
-}
-
-en::SpellDrawable::SpellDrawable(const SpellDrawable& other) : sprite{ other.sprite }, sound{ other.sound }  {
-}
-
-void en::SpellDrawable::resize(const float delta_x, const float delta_y) {
-	sf::FloatRect current_position = sprite.getGlobalBounds();
-	sf::Vector2 current_scale = sprite.getScale();
-
-	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
-	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
-}
-
-void en::SpellDrawable::draw(sf::RenderWindow& window) {
-	window.draw(sprite);
-}
-
-void en::SpellDrawable::draw(sf::RenderWindow& window, sf::Event& event) {
-	window.draw(sprite);
-}
-
-void en::SpellDrawable::set_volume(const unsigned int volume) {
-	sound.setVolume(static_cast<float>(volume));
-}
-
-const sf::Sprite* en::SpellDrawable::get_sprite() {
-	return &sprite;
-}
-
-void en::SpellDrawable::move(const float delta_x, const float delta_y) {
-	sprite.move(delta_x, delta_y);
-}
-
-void en::SpellDrawable::play_sound() {
-	sound.play();
-}
-
-en::SpellDrawable* en::SpellDrawable::clone()
-{
-	return new SpellDrawable(*this);
+	return new ObjectDrawable(*this);
 }
 
 //====================================================================================================================================

@@ -1,6 +1,6 @@
 #pragma once
 #include "Drawable/Drawable.h"
-
+#include "eNgine\\eNgine.h"
 
 #include <string>
 #include <vector>
@@ -114,12 +114,22 @@ namespace en {
 	private:
 
 	public:
+		float cooldown{ 0.0f };
+
+		const ResourceManager* manager{ nullptr };
+
 		Drawable* drawable{ nullptr };
 
 
 		virtual ~PlayerSpell();
 
-		static PlayerSpell* make_spell(const SpellType type);
+		
+		virtual void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) = 0;
+
+		virtual void move(const float delta_x, const float delta_y, sf::Time time) = 0;
+
+
+		static PlayerSpell* make_spell(const unsigned type, const ResourceManager* manager);
 	};
 
 	//====================================================================================================================================
@@ -129,8 +139,12 @@ namespace en {
 	private:
 
 	public:
-		FireSpell();
+		FireSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -139,7 +153,12 @@ namespace en {
 	private:
 
 	public:
+		WaterSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -148,7 +167,12 @@ namespace en {
 	private:
 
 	public:
+		WindSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -157,7 +181,12 @@ namespace en {
 	private:
 
 	public:
+		EarthSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -166,7 +195,12 @@ namespace en {
 	private:
 
 	public:
+		IceSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -175,7 +209,12 @@ namespace en {
 	private:
 
 	public:
+		LightningSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -184,7 +223,12 @@ namespace en {
 	private:
 
 	public:
+		LightSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================
@@ -193,7 +237,12 @@ namespace en {
 	private:
 
 	public:
+		DarkSpell(const ResourceManager* _manager);
 
+
+		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+
+		void move(const float delta_x, const float delta_y, sf::Time time) override;
 	};
 
 	//====================================================================================================================================

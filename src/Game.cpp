@@ -205,7 +205,20 @@ void en::Game::set_resources() {
 
 	core->manager->add_texture("assets/images/Fight/Fight_Background.png", "Fight Background");
 
+	//------------------------------------------------------------------------------------------------------------------------------------
+
 	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Player.png", "Player");
+
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Fire.png", "Spell Fire");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Water.png", "Spell Water");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Wind.png", "Spell Wind");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Earth.png", "Spell Earth");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Ice.png", "Spell Ice");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Lightning.png", "Spell Lightning");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Light.png", "Spell Light");
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Spell_Dark.png", "Spell Dark");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
 
 
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -1322,11 +1335,61 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
-	Drawable* fight_player = new EntityDrawable(960,
+	Drawable* fight_player = new ObjectDrawable(960,
 												800,
 												core->manager->get_texture("Player"),
 												core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(fight_player, "Player");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
+	Drawable* fight_spell_fire = new ObjectDrawable(0,
+													0,
+													core->manager->get_texture("Spell Fire"),
+													core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_fire, "Spell Fire");
+
+	Drawable* fight_spell_water = new ObjectDrawable(0,
+													 0,
+													 core->manager->get_texture("Spell Water"),
+													 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_water, "Spell Water");
+
+	Drawable* fight_spell_wind = new ObjectDrawable(0,
+													0,
+													core->manager->get_texture("Spell Wind"),
+													core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_wind, "Spell Wind");
+
+	Drawable* fight_spell_earth = new ObjectDrawable(0,
+													 0,
+													 core->manager->get_texture("Spell Earth"),
+													 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_earth, "Spell Earth");
+
+	Drawable* fight_spell_ice = new ObjectDrawable(0,
+												   0,
+												   core->manager->get_texture("Spell Ice"),
+												   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_ice, "Spell Ice");
+
+	Drawable* fight_spell_lightning = new ObjectDrawable(0,
+														 0,
+														 core->manager->get_texture("Spell Lightning"),
+														 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_lightning, "Spell Lightning");
+
+	Drawable* fight_spell_light = new ObjectDrawable(0,
+													 0,
+													 core->manager->get_texture("Spell Light"),
+													 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_light, "Spell Light");
+
+	Drawable* fight_spell_dark = new ObjectDrawable(0,
+													0,
+													core->manager->get_texture("Spell Dark"),
+													core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_spell_dark, "Spell Dark");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1851,14 +1914,17 @@ void en::Game::fight_loop() {
 	//Setup.
 	player.drawable = core->manager->get_drawable("Player")->clone();
 
+	PlayerSpell* first_spell_entity = PlayerSpell::make_spell(player.first_spell, core->manager);
+	PlayerSpell* second_spell_entity = PlayerSpell::make_spell(player.second_spell, core->manager);
+
 
 	std::vector<Drawable*> static_frame = {
 		core->manager->get_drawable("Fight Background"),
 
-
 		player.drawable,
 
-
+		first_spell_entity->drawable,
+		second_spell_entity->drawable,
 	};
 	DynamicFrame dynamic_frame;
 	//------------------------------------------------------------------------------------------------------------------------------------
@@ -1867,9 +1933,17 @@ void en::Game::fight_loop() {
 	while (application_state == GAME && game_state == FIGHT) {
 		//Time.
 		core->time = core->clock.restart();
-		std::cout << core->time.asSeconds() << '\n';
+		//std::cout << core->time.asSeconds() << '\n';
 		//------------------------------------------------------------------------------------------------------------------------------------
 		
+
+		//Generates.
+		first_spell_entity->generate(player, core->time, sf::Keyboard::Z);
+		second_spell_entity->generate(player, core->time, sf::Keyboard::X);
+
+
+		//------------------------------------------------------------------------------------------------------------------------------------
+
 
 		//Draws.
 		core->draw(static_frame, dynamic_frame);
@@ -1885,6 +1959,8 @@ void en::Game::fight_loop() {
 		//Moves.
 		player.move(core->width, core->height, core->delta_x, core->delta_y, core->time);
 
+		first_spell_entity->move(core->delta_x, core->delta_y, core->time);
+		second_spell_entity->move(core->delta_x, core->delta_y, core->time);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1895,6 +1971,9 @@ void en::Game::fight_loop() {
 			sizes_at = 99;
 
 			player.drawable->resize(core->delta_x, core->delta_y);
+
+			first_spell_entity->drawable->resize(core->delta_x, core->delta_y);
+			second_spell_entity->drawable->resize(core->delta_x, core->delta_y);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			game_state = CHAPTER;
@@ -1909,6 +1988,8 @@ void en::Game::fight_loop() {
 	//Cleanup.
 	delete player.drawable;
 
+	delete first_spell_entity;
+	delete second_spell_entity;
 	//------------------------------------------------------------------------------------------------------------------------------------
 }
 
