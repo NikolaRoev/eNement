@@ -112,11 +112,11 @@ namespace en {
 
 	class PlayerSpell {
 	private:
-
+		
 	public:
-		float cooldown{ 0.0f };
+		sf::Keyboard::Key key;
 
-		const ResourceManager* manager{ nullptr };
+		float cooldown{ 0.0f };
 
 		Drawable* drawable{ nullptr };
 
@@ -124,12 +124,14 @@ namespace en {
 		virtual ~PlayerSpell();
 
 		
-		virtual void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) = 0;
+		virtual void generate(sf::Vector2f player_position, sf::Time time) = 0;
 
 		virtual void move(const float delta_x, const float delta_y, sf::Time time) = 0;
 
+		virtual void collision_detection(EnemyEntity& enemy) = 0;
 
-		static PlayerSpell* make_spell(const unsigned type, const ResourceManager* manager);
+
+		static PlayerSpell* make_spell(const unsigned type, const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key key);
 	};
 
 	//====================================================================================================================================
@@ -139,12 +141,14 @@ namespace en {
 	private:
 
 	public:
-		FireSpell(const ResourceManager* _manager);
+		FireSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -153,12 +157,14 @@ namespace en {
 	private:
 
 	public:
-		WaterSpell(const ResourceManager* _manager);
+		WaterSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -167,12 +173,14 @@ namespace en {
 	private:
 
 	public:
-		WindSpell(const ResourceManager* _manager);
+		WindSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -181,12 +189,14 @@ namespace en {
 	private:
 
 	public:
-		EarthSpell(const ResourceManager* _manager);
+		EarthSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -195,12 +205,14 @@ namespace en {
 	private:
 
 	public:
-		IceSpell(const ResourceManager* _manager);
+		IceSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -209,12 +221,14 @@ namespace en {
 	private:
 
 	public:
-		LightningSpell(const ResourceManager* _manager);
+		LightningSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -223,12 +237,14 @@ namespace en {
 	private:
 
 	public:
-		LightSpell(const ResourceManager* _manager);
+		LightSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================
@@ -237,12 +253,14 @@ namespace en {
 	private:
 
 	public:
-		DarkSpell(const ResourceManager* _manager);
+		DarkSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key);
 
 
-		void generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) override;
+		void generate(sf::Vector2f player_position, sf::Time time) override;
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
+
+		void collision_detection(EnemyEntity& enemy) override;
 	};
 
 	//====================================================================================================================================

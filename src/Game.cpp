@@ -1914,8 +1914,8 @@ void en::Game::fight_loop() {
 	//Setup.
 	player.drawable = core->manager->get_drawable("Player")->clone();
 
-	PlayerSpell* first_spell_entity = PlayerSpell::make_spell(player.first_spell, core->manager);
-	PlayerSpell* second_spell_entity = PlayerSpell::make_spell(player.second_spell, core->manager);
+	PlayerSpell* first_spell_entity = PlayerSpell::make_spell(player.first_spell, player.cooldown_time, core->manager, sf::Keyboard::Z);
+	PlayerSpell* second_spell_entity = PlayerSpell::make_spell(player.second_spell, player.cooldown_time, core->manager, sf::Keyboard::X);
 
 
 	std::vector<Drawable*> static_frame = {
@@ -1938,8 +1938,8 @@ void en::Game::fight_loop() {
 		
 
 		//Generates.
-		first_spell_entity->generate(player, core->time, sf::Keyboard::Z);
-		second_spell_entity->generate(player, core->time, sf::Keyboard::X);
+		first_spell_entity->generate(player.drawable->get_sprite()->getPosition(), core->time);
+		second_spell_entity->generate(player.drawable->get_sprite()->getPosition(), core->time);
 
 
 		//------------------------------------------------------------------------------------------------------------------------------------

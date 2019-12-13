@@ -51,34 +51,34 @@ en::PlayerSpell::~PlayerSpell() {
 	delete drawable;
 }
 
-en::PlayerSpell* en::PlayerSpell::make_spell(const unsigned type, const ResourceManager* manager) {
+en::PlayerSpell* en::PlayerSpell::make_spell(const unsigned type, const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key key) {
 	switch (type) {
 		case SpellType::Empty:
 			return nullptr;
 			break;
 		case SpellType::Fire:
-			return new FireSpell(manager);
+			return new FireSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Water:
-			return new WaterSpell(manager);
+			return new WaterSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Wind:
-			return new WindSpell(manager);
+			return new WindSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Earth:
-			return new EarthSpell(manager);
+			return new EarthSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Ice:
-			return new IceSpell(manager);
+			return new IceSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Lightning:
-			return new LightningSpell(manager);
+			return new LightningSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Light:
-			return new LightSpell(manager);
+			return new LightSpell(cooldown_time, manager, key);
 			break;
 		case SpellType::Dark:
-			return new DarkSpell(manager);
+			return new DarkSpell(cooldown_time, manager, key);
 			break;
 	}
 	return nullptr;
@@ -87,18 +87,24 @@ en::PlayerSpell* en::PlayerSpell::make_spell(const unsigned type, const Resource
 //====================================================================================================================================
 //====================================================================================================================================
 
-en::FireSpell::FireSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::FireSpell::FireSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+	
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Fire")->clone();
 }
 
-void en::FireSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::FireSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+	
 	if (cooldown <= 0.0f) {
-		if (sf::Keyboard::isKeyPressed(key)) {		
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+		if (sf::Keyboard::isKeyPressed(key)) {
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -107,26 +113,34 @@ void en::FireSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyb
 }
 
 void en::FireSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::FireSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::WaterSpell::WaterSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::WaterSpell::WaterSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Water")->clone();
 }
 
-void en::WaterSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::WaterSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -135,26 +149,34 @@ void en::WaterSpell::generate(PlayerEntity& player, sf::Time time, const sf::Key
 }
 
 void en::WaterSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::WaterSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::WindSpell::WindSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::WindSpell::WindSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Wind")->clone();
 }
 
-void en::WindSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::WindSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -163,26 +185,34 @@ void en::WindSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyb
 }
 
 void en::WindSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::WindSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::EarthSpell::EarthSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::EarthSpell::EarthSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Earth")->clone();
 }
 
-void en::EarthSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::EarthSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -191,26 +221,34 @@ void en::EarthSpell::generate(PlayerEntity& player, sf::Time time, const sf::Key
 }
 
 void en::EarthSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::EarthSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::IceSpell::IceSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::IceSpell::IceSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Ice")->clone();
 }
 
-void en::IceSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::IceSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -219,26 +257,34 @@ void en::IceSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keybo
 }
 
 void en::IceSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::IceSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::LightningSpell::LightningSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::LightningSpell::LightningSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Lightning")->clone();
 }
 
-void en::LightningSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::LightningSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -247,26 +293,34 @@ void en::LightningSpell::generate(PlayerEntity& player, sf::Time time, const sf:
 }
 
 void en::LightningSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::LightningSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::LightSpell::LightSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::LightSpell::LightSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Light")->clone();
 }
 
-void en::LightSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::LightSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position.x, player_position.y - drawable->get_sprite()->getGlobalBounds().height);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -275,26 +329,41 @@ void en::LightSpell::generate(PlayerEntity& player, sf::Time time, const sf::Key
 }
 
 void en::LightSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
+	static float timer = 500.0f;
+	
+	if (timer > 0.0f) {
+		timer -= time.asMilliseconds();
 	}
+	else {
+		timer = 500.0f;
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+	}
+}
+
+void en::LightSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
 
-en::DarkSpell::DarkSpell(const ResourceManager* _manager) {
-	manager = _manager;
+en::DarkSpell::DarkSpell(const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key _key) {
+	key = _key;
+
+	cooldown = cooldown_time;
 
 	drawable = manager->get_drawable("Spell Dark")->clone();
 }
 
-void en::DarkSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyboard::Key key) {
+void en::DarkSpell::generate(sf::Vector2f player_position, sf::Time time) {
+	static float cooldown_hold = cooldown;
+
 	if (cooldown <= 0.0f) {
 		if (sf::Keyboard::isKeyPressed(key)) {
-			drawable->get_sprite()->setPosition(player.drawable->get_sprite()->getPosition());
+			drawable->get_sprite()->setPosition(player_position);
 
-			cooldown = player.cooldown_time;
+			cooldown = cooldown_hold;
+
+			drawable->play_sound();
 		}
 	}
 	else if (cooldown > 0.0f) {
@@ -303,10 +372,12 @@ void en::DarkSpell::generate(PlayerEntity& player, sf::Time time, const sf::Keyb
 }
 
 void en::DarkSpell::move(const float delta_x, const float delta_y, sf::Time time) {
-	if (drawable) {
-		float move_y = 1000 * delta_y * time.asSeconds();
-		drawable->move(0, -move_y);
-	}
+	float move_y = 1000 * delta_y * time.asSeconds();
+	drawable->move(0, -move_y);
+}
+
+void en::DarkSpell::collision_detection(EnemyEntity& enemy) {
+
 }
 
 //====================================================================================================================================
