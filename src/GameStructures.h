@@ -128,7 +128,7 @@ namespace en {
 
 		virtual void move(const float delta_x, const float delta_y, sf::Time time) = 0;
 
-		virtual void collision_detection(EnemyEntity& enemy) = 0;
+		virtual void collision_detection(EnemyEntity& enemy, ResourceManager* manager) = 0;
 
 
 		static PlayerSpell* make_spell(const unsigned type, const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key key);
@@ -148,7 +148,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -164,7 +164,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -180,7 +180,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -196,7 +196,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -212,7 +212,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -228,7 +228,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -244,7 +244,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -260,7 +260,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy) override;
+		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================

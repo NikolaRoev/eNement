@@ -1,6 +1,7 @@
 #include "GameStructures.h"
 
 #include "Drawable/Drawable.h"
+#include "eNgine\\eNgine.h"
 
 
 
@@ -117,8 +118,14 @@ void en::FireSpell::move(const float delta_x, const float delta_y, sf::Time time
 	drawable->move(0, -move_y);
 }
 
-void en::FireSpell::collision_detection(EnemyEntity& enemy) {
+void en::FireSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -153,8 +160,14 @@ void en::WaterSpell::move(const float delta_x, const float delta_y, sf::Time tim
 	drawable->move(0, -move_y);
 }
 
-void en::WaterSpell::collision_detection(EnemyEntity& enemy) {
+void en::WaterSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -189,8 +202,14 @@ void en::WindSpell::move(const float delta_x, const float delta_y, sf::Time time
 	drawable->move(0, -move_y);
 }
 
-void en::WindSpell::collision_detection(EnemyEntity& enemy) {
+void en::WindSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -225,8 +244,14 @@ void en::EarthSpell::move(const float delta_x, const float delta_y, sf::Time tim
 	drawable->move(0, -move_y);
 }
 
-void en::EarthSpell::collision_detection(EnemyEntity& enemy) {
+void en::EarthSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -261,8 +286,14 @@ void en::IceSpell::move(const float delta_x, const float delta_y, sf::Time time)
 	drawable->move(0, -move_y);
 }
 
-void en::IceSpell::collision_detection(EnemyEntity& enemy) {
+void en::IceSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -297,8 +328,14 @@ void en::LightningSpell::move(const float delta_x, const float delta_y, sf::Time
 	drawable->move(0, -move_y);
 }
 
-void en::LightningSpell::collision_detection(EnemyEntity& enemy) {
+void en::LightningSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -340,8 +377,14 @@ void en::LightSpell::move(const float delta_x, const float delta_y, sf::Time tim
 	}
 }
 
-void en::LightSpell::collision_detection(EnemyEntity& enemy) {
+void en::LightSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================
@@ -376,8 +419,14 @@ void en::DarkSpell::move(const float delta_x, const float delta_y, sf::Time time
 	drawable->move(0, -move_y);
 }
 
-void en::DarkSpell::collision_detection(EnemyEntity& enemy) {
+void en::DarkSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		drawable->play_sound();
+		enemy.drawable->play_sound();
 
+		//Do the effects here, like damage and stuff.
+	}
 }
 
 //====================================================================================================================================

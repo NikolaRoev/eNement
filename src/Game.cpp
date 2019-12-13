@@ -220,6 +220,10 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Enemy1.png", "Enemy1");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1393,6 +1397,14 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* fight_enemy_1 = new ObjectDrawable(960,
+												 100,
+												 core->manager->get_texture("Enemy1"),
+												 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_enemy_1, "Enemy1");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
 	//====================================================================================================================================
 	//====================================================================================================================================
 	//====================================================================================================================================
@@ -1918,10 +1930,16 @@ void en::Game::fight_loop() {
 	PlayerSpell* second_spell_entity = PlayerSpell::make_spell(player.second_spell, player.cooldown_time, core->manager, sf::Keyboard::X);
 
 
+	EnemyEntity enemy;
+	enemy.drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter))->clone();
+
+
 	std::vector<Drawable*> static_frame = {
 		core->manager->get_drawable("Fight Background"),
 
 		player.drawable,
+
+		enemy.drawable,
 
 		first_spell_entity->drawable,
 		second_spell_entity->drawable,
@@ -1952,6 +1970,8 @@ void en::Game::fight_loop() {
 
 
 		//Checks.
+		first_spell_entity->collision_detection(enemy, core->manager);
+		second_spell_entity->collision_detection(enemy, core->manager);
 
 		//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1974,6 +1994,8 @@ void en::Game::fight_loop() {
 
 			first_spell_entity->drawable->resize(core->delta_x, core->delta_y);
 			second_spell_entity->drawable->resize(core->delta_x, core->delta_y);
+
+			enemy.drawable->resize(core->delta_x, core->delta_y);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			game_state = CHAPTER;
@@ -1990,6 +2012,8 @@ void en::Game::fight_loop() {
 
 	delete first_spell_entity;
 	delete second_spell_entity;
+
+	delete enemy.drawable;
 	//------------------------------------------------------------------------------------------------------------------------------------
 }
 
