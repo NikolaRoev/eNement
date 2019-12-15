@@ -65,31 +65,6 @@ it freely, subject to the following restrictions:
 //====================================================================================================================================
 //====================================================================================================================================
 
-en::DynamicFrame::~DynamicFrame() {
-	for (auto& each : dynamic_drawables) {
-		delete each.second;
-	}
-}
-
-void en::DynamicFrame::add_dynamic_drawable(const std::string& name, en::Drawable* drawable) {
-	dynamic_drawables.insert(std::make_pair(name, drawable->clone()));
-}
-
-void en::DynamicFrame::delete_dynamic_drawable(const std::string& name) {
-	std::unordered_map<std::string, en::Drawable*>::iterator it = dynamic_drawables.find(name);
-
-	if (it != dynamic_drawables.end()) {
-		delete it->second;
-		dynamic_drawables.erase(it);
-	}
-}
-
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-//====================================================================================================================================
-
 en::ResourceManager::~ResourceManager() {
 	for (auto& each : drawables) {
 		delete each.second;
@@ -256,16 +231,6 @@ void en::ResourceManager::scale_drawables(const float delta_x, const float delta
 	}
 }
 
-void en::ResourceManager::scale_drawables(const float delta_x, const float delta_y, en::DynamicFrame& dynamic_frame) {
-	for (auto& each : drawables) {
-		each.second->resize(delta_x, delta_y);
-	}
-
-	for (auto& each : dynamic_frame.dynamic_drawables) {
-		each.second->resize(delta_x, delta_y);
-	}
-}
-
 void en::ResourceManager::change_volume(const unsigned int volume) {
 	for (auto& each : drawables) {
 		each.second->set_volume(volume);
@@ -356,29 +321,21 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame) {
 	window.display();
 }
 
-void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame) {
+void en::Core::draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame) {
 	for (const auto& each : static_frame) {
 		each->draw(window, event);
 	}
 
-	for (const auto& each : dynamic_frame.dynamic_drawables) {
-		each.second->draw(window, event);
+	for (const auto& each : enemy_spell_frame) {
+		each->draw(window, event);
 	}
 
 	window.display();
 }
 
-void en::Core::draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame) {
+void en::Core::pause_draw(const std::vector<Drawable*>& static_frame) {
 	for (const auto& each : static_frame) {
 		each->draw(window);
-	}
-
-	for (const auto& each : dynamic_frame.dynamic_drawables) {
-		each.second->draw(window);
-	}
-
-	for (const auto& each : pop_up_frame) {
-		each->draw(window, event);
 	}
 
 	window.display();
@@ -397,23 +354,6 @@ void en::Core::on_resize_event() {
 		set_delta_values();
 
 		manager->scale_drawables(delta_x, delta_y);
-	}
-}
-
-void en::Core::on_resize_event(DynamicFrame& dynamic_frame) {
-	sf::Vector2u new_size = window.getSize();
-
-	if ((new_size.x != width) || (new_size.y != height)) {
-		sf::FloatRect visibleArea(0, 0, static_cast<float>(new_size.x), static_cast<float>(new_size.y));
-		window.setView(sf::View(visibleArea));
-
-		width = new_size.x;
-		height = new_size.y;
-
-		set_delta_values();
-
-		manager->scale_drawables(delta_x, delta_y);
-		manager->scale_drawables(delta_x, delta_y, dynamic_frame);
 	}
 }
 

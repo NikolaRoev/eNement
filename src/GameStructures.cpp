@@ -11,6 +11,33 @@
 //====================================================================================================================================
 //====================================================================================================================================
 
+void en::EnemySpell::collision_detection(PlayerEntity& player, ResourceManager* manager, const unsigned int window_width, const unsigned int window_height) {
+	if (manager->pixel_perfect_test(*drawable->get_sprite(), *player.drawable->get_sprite())) {
+		drawable->play_sound();
+		player.drawable->play_sound();
+
+		--player.barriers;
+
+		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+	}
+	else {
+		sf::Vector2f position = drawable->get_sprite()->getPosition();
+
+		if ((position.x < 0.0f) || (position.x > window_width)) {
+			drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		}
+		if ((position.y < 0.0f) || (position.y > window_height)) {
+			drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
+		}
+	}
+}
+
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+
 void en::PlayerEntity::move(const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time) {
 	sf::FloatRect position = drawable->get_sprite()->getGlobalBounds();
 
@@ -118,7 +145,7 @@ void en::FireSpell::move(const float delta_x, const float delta_y, sf::Time time
 	drawable->move(0, -move_y);
 }
 
-void en::FireSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::FireSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -160,7 +187,7 @@ void en::WaterSpell::move(const float delta_x, const float delta_y, sf::Time tim
 	drawable->move(0, -move_y);
 }
 
-void en::WaterSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::WaterSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -202,7 +229,7 @@ void en::WindSpell::move(const float delta_x, const float delta_y, sf::Time time
 	drawable->move(0, -move_y);
 }
 
-void en::WindSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::WindSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -244,7 +271,7 @@ void en::EarthSpell::move(const float delta_x, const float delta_y, sf::Time tim
 	drawable->move(0, -move_y);
 }
 
-void en::EarthSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::EarthSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -286,7 +313,7 @@ void en::IceSpell::move(const float delta_x, const float delta_y, sf::Time time)
 	drawable->move(0, -move_y);
 }
 
-void en::IceSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::IceSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -328,7 +355,7 @@ void en::LightningSpell::move(const float delta_x, const float delta_y, sf::Time
 	drawable->move(0, -move_y);
 }
 
-void en::LightningSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::LightningSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -377,7 +404,7 @@ void en::LightSpell::move(const float delta_x, const float delta_y, sf::Time tim
 	}
 }
 
-void en::LightSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::LightSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();
@@ -419,7 +446,7 @@ void en::DarkSpell::move(const float delta_x, const float delta_y, sf::Time time
 	drawable->move(0, -move_y);
 }
 
-void en::DarkSpell::collision_detection(EnemyEntity& enemy, ResourceManager* manager) {
+void en::DarkSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) {
 	if (manager->pixel_perfect_test(*drawable->get_sprite(), *enemy.drawable->get_sprite())) {
 		drawable->get_sprite()->setPosition(-1000.0f, -1000.0f);
 		drawable->play_sound();

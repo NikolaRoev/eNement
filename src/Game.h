@@ -114,8 +114,6 @@ namespace en {
 
 		void fight_loop();
 
-		void pause_loop();
-
 		void win_loop();
 
 		void loss_loop();

@@ -224,6 +224,9 @@ void en::Game::set_resources() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Enemy1_Spell.png", "Enemy1 Spell");
+
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Enemy2_Spell.png", "Enemy2 Spell");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1405,6 +1408,20 @@ void en::Game::set_drawables() {
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
+	Drawable* fight_enemy_1_spell = new ObjectDrawable(0,
+													   0,
+													   core->manager->get_texture("Enemy1 Spell"),
+													   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_enemy_1_spell, "Enemy1 Spell");
+
+	Drawable* fight_enemy_2_spell = new ObjectDrawable(0,
+													   0,
+													   core->manager->get_texture("Enemy2 Spell"),
+													   core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_enemy_2_spell, "Enemy2 Spell");
+
+	//------------------------------------------------------------------------------------------------------------------------------------
+
 	//====================================================================================================================================
 	//====================================================================================================================================
 	//====================================================================================================================================
@@ -1893,6 +1910,7 @@ void en::Game::stats_loop() {
 	};
 
 
+	player.barriers = player.barrier_strength / 10u;
 	core->manager->get_drawable("Stats Barriers")->set_text(std::to_string(player.barriers));
 	core->manager->get_drawable("Stats Damage")->set_text(std::to_string(player.damage));
 	core->manager->get_drawable("Stats Cooldown Time")->set_text(std::to_string(player.cooldown_time));
@@ -1924,21 +1942,26 @@ void en::Game::stats_loop() {
 
 void en::Game::fight_loop() {
 	//Setup.
-	DynamicFrame dynamic_frame;
-
-
+	player.barriers = player.barrier_strength / 10u;
 	player.drawable = core->manager->get_drawable("Player")->clone();
 	PlayerSpell* first_spell_entity = PlayerSpell::make_spell(player.first_spell, player.cooldown_time, core->manager, sf::Keyboard::Z);
 	PlayerSpell* second_spell_entity = PlayerSpell::make_spell(player.second_spell, player.cooldown_time, core->manager, sf::Keyboard::X);
 
 
+	std::vector<EnemySpell> enemy_spell_frame;
+
+
 	EnemyEntity enemy;
 	enemy.drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter))->clone();
+	enemy.spell_drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter) + " Spell")->clone();
+
 	enemy.move = enemy_move_functions[saves[saves_at].chapter - 1];
+	enemy.generate = enemy_generate_functions[saves[saves_at].chapter - 1];
+
 	enemy.health = enemy_stats[saves[saves_at].chapter - 1].health;
-	enemy.health = enemy_stats[saves[saves_at].chapter - 1].defense;
-	enemy.health = enemy_stats[saves[saves_at].chapter - 1].movement_speed;
-	enemy.health = enemy_stats[saves[saves_at].chapter - 1].cast_speed;
+	enemy.defense = enemy_stats[saves[saves_at].chapter - 1].defense;
+	enemy.movement_speed = enemy_stats[saves[saves_at].chapter - 1].movement_speed;
+	enemy.cast_speed = enemy_stats[saves[saves_at].chapter - 1].cast_speed;
 
 
 	std::vector<Drawable*> static_frame = {
@@ -1964,20 +1987,43 @@ void en::Game::fight_loop() {
 		first_spell_entity->generate(player.drawable->get_sprite()->getPosition(), core->time);
 		second_spell_entity->generate(player.drawable->get_sprite()->getPosition(), core->time);
 
-
+		enemy.generate(enemy_spell_frame, enemy, core->time);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
 		//Draws.
-		core->draw(static_frame, dynamic_frame);
+		std::vector<Drawable*> temp_enemy_spell_frame;
+		for (const auto& each : enemy_spell_frame) {
+			temp_enemy_spell_frame.push_back(each.drawable);
+		}
 
+		core->draw(static_frame, temp_enemy_spell_frame);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
 		//Checks.
-		first_spell_entity->collision_detection(enemy, core->manager);
-		second_spell_entity->collision_detection(enemy, core->manager);
+		first_spell_entity->collision_detection(player, enemy, core->manager);
+		second_spell_entity->collision_detection(player, enemy, core->manager);
 
+		for (auto& each : enemy_spell_frame) {
+			each.collision_detection(player, core->manager, core->width, core->height);
+		}
+
+		if (player.barriers < 0) {
+			game_state = LOSS;
+		}
+
+		if (enemy.health < 0.0f) {
+			++saves[saves_at].chapter;
+
+			if (saves[saves_at].chapter > 2) {
+				--saves[saves_at].chapter;
+				game_state = END;
+			}
+			else {
+				game_state = WIN;
+			}
+		}
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1988,13 +2034,17 @@ void en::Game::fight_loop() {
 		second_spell_entity->move(core->delta_x, core->delta_y, core->time);
 
 		enemy.move(enemy, core->width, core->height, core->delta_x, core->delta_y, core->time);
+
+		for (auto& each : enemy_spell_frame) {
+			each.move(each.drawable, core->width, core->height, core->delta_x, core->delta_y, core->time);
+		}
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
 		//Events.
 		core->window.pollEvent(core->event);
 		if (core->event.type == sf::Event::Resized) {
-			core->on_resize_event(dynamic_frame);
+			core->on_resize_event();
 			sizes_at = 99;
 
 			player.drawable->resize(core->delta_x, core->delta_y);
@@ -2003,12 +2053,32 @@ void en::Game::fight_loop() {
 			second_spell_entity->drawable->resize(core->delta_x, core->delta_y);
 
 			enemy.drawable->resize(core->delta_x, core->delta_y);
+
+			for (auto& each : enemy_spell_frame) {
+				each.drawable->resize(core->delta_x, core->delta_y);
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			game_state = CHAPTER;
+			//do the pause loop here.
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;
+		}
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+
+		//Removal.
+		for (auto it = enemy_spell_frame.begin(); it != enemy_spell_frame.end(); ) {
+			sf::Vector2f position = it->drawable->get_sprite()->getPosition();
+
+			if ((position.x < 0.0f) || (position.y < 0.0f)) {
+				delete it->drawable;
+				it = enemy_spell_frame.erase(it);
+			}
+			else {
+				++it;
+			}
 		}
 		//------------------------------------------------------------------------------------------------------------------------------------
 	}
@@ -2021,11 +2091,11 @@ void en::Game::fight_loop() {
 	delete second_spell_entity;
 
 	delete enemy.drawable;
+
+	for (auto& each : enemy_spell_frame) {
+		delete each.drawable;
+	}
 	//------------------------------------------------------------------------------------------------------------------------------------
-}
-
-void en::Game::pause_loop() {
-
 }
 
 void en::Game::win_loop() {

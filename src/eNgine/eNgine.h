@@ -27,23 +27,6 @@ namespace en {
 	//====================================================================================================================================
 	//====================================================================================================================================
 
-	struct DynamicFrame {
-		std::unordered_map<std::string, Drawable*> dynamic_drawables{};
-
-
-		~DynamicFrame();
-
-
-		void add_dynamic_drawable(const std::string& name, Drawable* drawable);
-		void delete_dynamic_drawable(const std::string& name);
-	};
-
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-
 	class ResourceManager {
 	private:
 		std::unordered_map<std::string, sf::Texture> textures;
@@ -73,7 +56,6 @@ namespace en {
 
 		//Scale functions.
 		void scale_drawables(const float delta_x, const float delta_y);
-		void scale_drawables(const float delta_x, const float delta_y, DynamicFrame& dynamic_frame);
 		void change_volume(const unsigned int volume);
 	};
 
@@ -134,13 +116,11 @@ namespace en {
 
 		void draw(const std::vector<Drawable*>& static_frame);
 
-		void draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame);
+		void draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame);
 
-		void draw(const std::vector<Drawable*>& static_frame, const DynamicFrame& dynamic_frame, const std::vector<Drawable*>& pop_up_frame);
+		void pause_draw(const std::vector<Drawable*>& static_frame);
 
 		void on_resize_event();
-
-		void on_resize_event(DynamicFrame& dynamic_frame);
 	};
 
 	//====================================================================================================================================

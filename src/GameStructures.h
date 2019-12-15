@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <iostream>
@@ -56,6 +57,46 @@ namespace en {
 	//====================================================================================================================================
 	//====================================================================================================================================
 
+	class PlayerEntity;
+
+	class EnemySpell {
+	private:
+
+	public:
+		Drawable* drawable{ nullptr };
+
+		std::function<void(Drawable* drawable, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)> move;
+
+
+		void collision_detection(PlayerEntity& player, ResourceManager* manager, const unsigned int window_width, const unsigned int window_height);
+	};
+
+	//====================================================================================================================================
+
+	class EnemyEntity {
+	private:
+
+	public:
+		float health{ 1.0f };
+		float defense{ 1.0f };
+		float movement_speed{ 1.0f };
+		float cast_speed{ 1.0f };
+
+		Drawable* drawable{ nullptr };
+		Drawable* spell_drawable{ nullptr };
+
+
+		std::function<void(EnemyEntity& enemy, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)> move;
+
+		std::function<void(std::vector<EnemySpell>& enemy_spell_frame, EnemyEntity& enemy, sf::Time time)> generate;
+	};
+
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+
 	class PlayerEntity {
 	private:
 
@@ -72,7 +113,7 @@ namespace en {
 		unsigned int magic_proficiency{ 0 };
 
 
-		unsigned int barriers{ 0u };				//Each point is a barrier.
+		int barriers{ 0u };							//Each point is a barrier.
 		float damage{ 0.0f };					    //Each point is a point of damage.
 		float cooldown_time{ 0.0f };				//Each point is time in milliseconds.
 		float secondary_effect_increase{ 0.0f };	//each point is a percent.
@@ -80,30 +121,10 @@ namespace en {
 
 		Drawable* drawable{ nullptr };
 
-		
+
 		void move(const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time);
 	};
 
-	//====================================================================================================================================
-
-	class EnemyEntity {
-	private:
-
-	public:
-		float health{ 1.0f };
-		float defense{ 1.0f };
-		float movement_speed{ 1.0f };
-		float cast_speed{ 1.0f };
-
-		Drawable* drawable{ nullptr };
-
-		std::function<void(EnemyEntity& enemy, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)> move;
-	};
-
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
 	//====================================================================================================================================
 
 	class PlayerSpell {
@@ -124,7 +145,7 @@ namespace en {
 
 		virtual void move(const float delta_x, const float delta_y, sf::Time time) = 0;
 
-		virtual void collision_detection(EnemyEntity& enemy, ResourceManager* manager) = 0;
+		virtual void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) = 0;
 
 
 		static PlayerSpell* make_spell(const unsigned type, const float cooldown_time, const ResourceManager* manager, const sf::Keyboard::Key key);
@@ -144,7 +165,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -160,7 +181,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -176,7 +197,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -192,7 +213,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -208,7 +229,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -224,7 +245,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -240,7 +261,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -256,20 +277,7 @@ namespace en {
 
 		void move(const float delta_x, const float delta_y, sf::Time time) override;
 
-		void collision_detection(EnemyEntity& enemy, ResourceManager* manager) override;
-	};
-
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-
-	class EnemySpell {
-	private:
-
-	public:
-
+		void collision_detection(PlayerEntity& player, EnemyEntity& enemy, ResourceManager* manager) override;
 	};
 
 	//====================================================================================================================================
@@ -364,7 +372,36 @@ namespace en {
 
 	//====================================================================================================================================
 
-	//TO DO: Enemy cast function here.
+	inline std::vector<std::function<void(std::vector<EnemySpell>& enemy_spell_frame,
+										  EnemyEntity & enemy,
+										  sf::Time time)>> enemy_generate_functions{
+
+		[](std::vector<EnemySpell>& enemy_spell_frame, EnemyEntity& enemy, sf::Time time)
+		{
+			auto move_function_for_enemy_spell = [](Drawable* drawable, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time _time)
+			{
+				float move_y = 1000 * delta_x * _time.asSeconds();
+				drawable->move(0, move_y);
+			};
+
+			static float timer = 1000.0f;
+
+			if (timer <= 0.0f) {
+				EnemySpell temp_enemy_spell;
+				temp_enemy_spell.drawable = enemy.spell_drawable->clone();
+				temp_enemy_spell.drawable->get_sprite()->setPosition(enemy.drawable->get_sprite()->getPosition());
+				temp_enemy_spell.move = move_function_for_enemy_spell;
+				temp_enemy_spell.drawable->play_sound();
+
+				enemy_spell_frame.push_back(std::move(temp_enemy_spell));
+
+				timer = 1000.0f;
+			}
+			else {
+				timer -= time.asMilliseconds();
+			}
+		},
+	};
 
 	//====================================================================================================================================
 	//====================================================================================================================================
