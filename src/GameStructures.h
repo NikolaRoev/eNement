@@ -292,15 +292,16 @@ namespace en {
 		float health{ 1.0f };
 		float defense{ 1.0f };
 		float movement_speed{ 1.0f };
-		float cast_speed{ 1.0f };
+		float cast_speed{ 1000.0f };
 	};
 
 	inline std::vector<Stats> enemy_stats{
 		//Chapter 1.
-		{100.0f, 1.0f, 1.0f, 1.0f},
+		{100.0f, 1.0f, 1.0f, 1000.0f},
 
 		//Chapter 2.
-		{100.0f, 1.0f, 1.0f, 1.0f},
+		{100.0f, 1.0f, 1.0f, 1000.0f},
+
 	};
 
 	//====================================================================================================================================
