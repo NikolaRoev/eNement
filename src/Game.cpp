@@ -1953,7 +1953,7 @@ void en::Game::fight_loop() {
 
 	EnemyEntity enemy;
 	enemy.drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter))->clone();
-	enemy.spell_drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter) + " Spell")->clone();
+	enemy.spell_drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter) + " Spell");
 
 	enemy.move = enemy_move_functions[saves[saves_at].chapter - 1];
 	enemy.generate = enemy_generate_functions[saves[saves_at].chapter - 1];
@@ -2053,7 +2053,6 @@ void en::Game::fight_loop() {
 			second_spell_entity->drawable->resize(core->delta_x, core->delta_y);
 
 			enemy.drawable->resize(core->delta_x, core->delta_y);
-			enemy.spell_drawable->resize(core->delta_x, core->delta_y);
 
 			for (auto& each : enemy_spell_frame) {
 				each.drawable->resize(core->delta_x, core->delta_y);
