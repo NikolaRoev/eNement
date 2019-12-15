@@ -2053,6 +2053,7 @@ void en::Game::fight_loop() {
 			second_spell_entity->drawable->resize(core->delta_x, core->delta_y);
 
 			enemy.drawable->resize(core->delta_x, core->delta_y);
+			enemy.spell_drawable->resize(core->delta_x, core->delta_y);
 
 			for (auto& each : enemy_spell_frame) {
 				each.drawable->resize(core->delta_x, core->delta_y);
