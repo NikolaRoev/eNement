@@ -1924,14 +1924,21 @@ void en::Game::stats_loop() {
 
 void en::Game::fight_loop() {
 	//Setup.
-	player.drawable = core->manager->get_drawable("Player")->clone();
+	DynamicFrame dynamic_frame;
 
+
+	player.drawable = core->manager->get_drawable("Player")->clone();
 	PlayerSpell* first_spell_entity = PlayerSpell::make_spell(player.first_spell, player.cooldown_time, core->manager, sf::Keyboard::Z);
 	PlayerSpell* second_spell_entity = PlayerSpell::make_spell(player.second_spell, player.cooldown_time, core->manager, sf::Keyboard::X);
 
 
 	EnemyEntity enemy;
 	enemy.drawable = core->manager->get_drawable("Enemy" + std::to_string(saves[saves_at].chapter))->clone();
+	enemy.move = enemy_move_functions[saves[saves_at].chapter - 1];
+	enemy.health = enemy_stats[saves[saves_at].chapter - 1].health;
+	enemy.health = enemy_stats[saves[saves_at].chapter - 1].defense;
+	enemy.health = enemy_stats[saves[saves_at].chapter - 1].movement_speed;
+	enemy.health = enemy_stats[saves[saves_at].chapter - 1].cast_speed;
 
 
 	std::vector<Drawable*> static_frame = {
@@ -1944,14 +1951,12 @@ void en::Game::fight_loop() {
 		first_spell_entity->drawable,
 		second_spell_entity->drawable,
 	};
-	DynamicFrame dynamic_frame;
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 
 	while (application_state == GAME && game_state == FIGHT) {
 		//Time.
 		core->time = core->clock.restart();
-		//std::cout << core->time.asSeconds() << '\n';
 		//------------------------------------------------------------------------------------------------------------------------------------
 		
 
@@ -1981,6 +1986,8 @@ void en::Game::fight_loop() {
 
 		first_spell_entity->move(core->delta_x, core->delta_y, core->time);
 		second_spell_entity->move(core->delta_x, core->delta_y, core->time);
+
+		enemy.move(enemy, core->width, core->height, core->delta_x, core->delta_y, core->time);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 

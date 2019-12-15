@@ -2,10 +2,11 @@
 #include "Drawable/Drawable.h"
 #include "eNgine\\eNgine.h"
 
+#include <functional>
 #include <string>
 #include <vector>
 
-
+#include <iostream>
 
 //====================================================================================================================================
 //====================================================================================================================================
@@ -14,18 +15,6 @@
 //====================================================================================================================================
 
 namespace en {
-
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-	//====================================================================================================================================
-
-	inline std::vector<std::string> lores{
-		R"(Lore 1)",
-
-		R"(Lore 2)",
-	};
 
 	//====================================================================================================================================
 	//====================================================================================================================================
@@ -101,7 +90,14 @@ namespace en {
 	private:
 
 	public:
+		float health{ 1.0f };
+		float defense{ 1.0f };
+		float movement_speed{ 1.0f };
+		float cast_speed{ 1.0f };
+
 		Drawable* drawable{ nullptr };
+
+		std::function<void(EnemyEntity& enemy, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)> move;
 	};
 
 	//====================================================================================================================================
@@ -275,6 +271,99 @@ namespace en {
 	public:
 
 	};
+
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+	//====================================================================================================================================
+
+	inline std::vector<std::string> lores{
+		//Chapter 1.
+		R"(Lore 1)",
+
+		//Chapter 2.
+		R"(Lore 2)",
+	};
+
+	//====================================================================================================================================
+
+	struct Stats {
+		float health{ 1.0f };
+		float defense{ 1.0f };
+		float movement_speed{ 1.0f };
+		float cast_speed{ 1.0f };
+	};
+
+	inline std::vector<Stats> enemy_stats{
+		//Chapter 1.
+		{100.0f, 1.0f, 1.0f, 1.0f},
+
+		//Chapter 2.
+		{100.0f, 1.0f, 1.0f, 1.0f},
+	};
+
+	//====================================================================================================================================
+
+	inline std::vector<std::function<void(EnemyEntity & enemy,
+										  const unsigned int window_width,
+										  const unsigned int window_height,
+										  const float delta_x,
+										  const float delta_y,
+										  sf::Time time)>> enemy_move_functions{
+		//Chapter 1.
+		[](EnemyEntity& enemy, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)
+		{
+			static int direction = 0;
+
+			if (direction == 0) {
+				float move_x = 1000 * delta_x * time.asSeconds() * enemy.movement_speed;
+				enemy.drawable->move(-move_x, 0);
+
+				if (enemy.drawable->get_sprite()->getPosition().x < (100.0f * delta_x)) {
+					direction = 1;
+				}
+			}
+
+			if (direction == 1) {
+				float move_x = 1000 * delta_x * time.asSeconds() * enemy.movement_speed;
+				enemy.drawable->move(move_x, 0);
+
+				if (enemy.drawable->get_sprite()->getPosition().x > (1800.0f * delta_x)) {
+					direction = 0;
+				}
+			}
+		},
+
+		//Chapter 2.
+		[](EnemyEntity& enemy, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)
+		{
+			static int direction = 0;
+
+			if (direction == 0) {
+				float move_x = 1000 * delta_x * time.asSeconds() * enemy.movement_speed;
+				enemy.drawable->move(-move_x, 0);
+
+				if (enemy.drawable->get_sprite()->getPosition().x < (100.0f * delta_x)) {
+					direction = 1;
+				}
+			}
+
+			if (direction == 1) {
+				float move_x = 1000 * delta_x * time.asSeconds() * enemy.movement_speed;
+				enemy.drawable->move(move_x, 0);
+
+				if (enemy.drawable->get_sprite()->getPosition().x > (1800.0f * delta_x)) {
+					direction = 0;
+				}
+			}
+		},
+
+	};
+
+	//====================================================================================================================================
+
+	//TO DO: Enemy cast function here.
 
 	//====================================================================================================================================
 	//====================================================================================================================================
