@@ -116,9 +116,7 @@ namespace en {
 
 		void draw(const std::vector<Drawable*>& static_frame);
 
-		void draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame, const std::vector<Drawable*>& ui_frame);
-
-		void pause_draw(const std::vector<Drawable*>& static_frame);
+		void draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame, const std::vector<Drawable*>& ui_frame, const std::vector<Drawable*>& spell_indicator_frame, const float& cooldown1, const float& cooldown2);
 
 		void on_resize_event();
 	};

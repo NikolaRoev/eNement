@@ -321,7 +321,7 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame) {
 	window.display();
 }
 
-void en::Core::draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame, const std::vector<Drawable*>& ui_frame) {
+void en::Core::draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame, const std::vector<Drawable*>& ui_frame, const std::vector<Drawable*>& spell_indicator_frame, const float& cooldown1, const float& cooldown2) {
 	for (const auto& each : static_frame) {
 		each->draw(window, event);
 	}
@@ -334,13 +334,8 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame, const std::vecto
 		each->draw(window, event);
 	}
 
-	window.display();
-}
-
-void en::Core::pause_draw(const std::vector<Drawable*>& static_frame) {
-	for (const auto& each : static_frame) {
-		each->draw(window);
-	}
+	spell_indicator_frame[0]->cooldown_draw(window, cooldown1);
+	spell_indicator_frame[1]->cooldown_draw(window, cooldown2);
 
 	window.display();
 }

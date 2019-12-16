@@ -96,6 +96,8 @@
     <None Include=".gitignore" />
     <None Include="openal32.dll" />
     <None Include="README.md" />
+    <None Include="save0.bin" />
+    <None Include="settings.bin" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Drawable\Drawable.cpp" />
@@ -109,6 +111,10 @@
     <ClInclude Include="src\eNgine\eNgine.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameStructures.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="eNement Game Design.txt" />
+    <Text Include="eNement Software Design.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -209,6 +209,12 @@ void en::Game::set_resources() {
 	core->manager->add_texture("assets/images/Fight/Fight_UI.png", "Fight UI");
 
 	core->manager->add_texture("assets/images/Fight/Fight_Barrier_Icon.png", "Fight Barrier Icon");
+	
+	core->manager->add_texture("assets/images/Fight/Fight_Spell_Indicator_Z.png", "Fight Spell Indicator Z");
+	core->manager->add_texture("assets/images/Fight/Fight_Spell_Indicator_Z_ON_COOLDOWN.png", "Fight Spell Indicator Z ON COOLDOWN");
+
+	core->manager->add_texture("assets/images/Fight/Fight_Spell_Indicator_X.png", "Fight Spell Indicator X");
+	core->manager->add_texture("assets/images/Fight/Fight_Spell_Indicator_X_ON_COOLDOWN.png", "Fight Spell Indicator X ON COOLDOWN");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1358,6 +1364,18 @@ void en::Game::set_drawables() {
 															 player.barriers);
 	core->manager->add_drawable(fight_barrier_indicator, "Fight Barrier Icon");
 
+	Drawable* fight_spell_indicator_z = new SpellIndicator(960,
+														   1000,
+														   core->manager->get_texture("Fight Spell Indicator Z"),
+														   core->manager->get_texture("Fight Spell Indicator Z ON COOLDOWN"));
+	core->manager->add_drawable(fight_spell_indicator_z, "Fight Spell Indicator Z");
+
+	Drawable* fight_spell_indicator_x = new SpellIndicator(1560,
+														   1000,
+														   core->manager->get_texture("Fight Spell Indicator X"),
+														   core->manager->get_texture("Fight Spell Indicator X ON COOLDOWN"));
+	core->manager->add_drawable(fight_spell_indicator_x, "Fight Spell Indicator X");
+
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	Drawable* fight_player = new ObjectDrawable(960,
@@ -2005,6 +2023,11 @@ void en::Game::fight_loop() {
 
 		core->manager->get_drawable("Fight Barrier Icon"),
 	};
+
+	std::vector<Drawable*> spell_indicator_frame = {
+		core->manager->get_drawable("Fight Spell Indicator Z"),
+		core->manager->get_drawable("Fight Spell Indicator X")
+	};
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -2028,7 +2051,7 @@ void en::Game::fight_loop() {
 			temp_enemy_spell_frame.push_back(each.drawable);
 		}
 
-		core->draw(static_frame, temp_enemy_spell_frame, ui_frame);
+		core->draw(static_frame, temp_enemy_spell_frame, ui_frame, spell_indicator_frame, first_spell_entity->cooldown, second_spell_entity->cooldown);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -2074,10 +2097,17 @@ void en::Game::fight_loop() {
 			for (auto& each : enemy_spell_frame) {
 				each.drawable->resize(core->delta_x, core->delta_y);
 			}
+
+			for (auto& each : ui_frame) {
+				each->resize(core->delta_x, core->delta_y);
+			}
+
+			for (auto& each : spell_indicator_frame) {
+				each->resize(core->delta_x, core->delta_y);
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			game_state = CHAPTER;
-			//do the pause loop here.
 		}
 		else if (core->event.type == sf::Event::Closed) {
 			application_state = EXIT;

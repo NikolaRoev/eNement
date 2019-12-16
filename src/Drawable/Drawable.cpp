@@ -466,6 +466,41 @@ void en::BarrierIndicator::draw(sf::RenderWindow& window, sf::Event& event) {
 }
 
 //====================================================================================================================================
+
+en::SpellIndicator::SpellIndicator(const float x, const float y, const sf::Texture& texture, const sf::Texture& on_cooldown_texture) {
+	sprite.setTexture(texture);
+	sprite.setPosition(x, y);
+
+	on_cooldown_sprite.setTexture(on_cooldown_texture);
+	on_cooldown_sprite.setPosition(x, y);
+}
+
+void en::SpellIndicator::resize(const float delta_x, const float delta_y) {
+	sf::FloatRect current_position = sprite.getGlobalBounds();
+	sf::Vector2 current_scale = sprite.getScale();
+
+	sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+
+	on_cooldown_sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+	on_cooldown_sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+}
+
+void en::SpellIndicator::draw(sf::RenderWindow& window) {
+	window.draw(*current_sprite);
+}
+
+void en::SpellIndicator::cooldown_draw(sf::RenderWindow& window, const float& cooldown) {
+	if (cooldown > 0.0f) {
+		current_sprite = &on_cooldown_sprite;
+	}
+	else {
+		current_sprite = &sprite;
+	}
+	window.draw(*current_sprite);
+}
+
+//====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
 

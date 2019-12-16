@@ -18,6 +18,12 @@
     <None Include=".gitignore" />
     <None Include="README.md" />
     <None Include="openal32.dll" />
+    <None Include="save0.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="settings.bin">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EntryPoint.cpp">
@@ -49,5 +55,9 @@
     <ClInclude Include="src\eNgine\eNgine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="eNement Game Design.txt" />
+    <Text Include="eNement Software Design.txt" />
   </ItemGroup>
 </Project>

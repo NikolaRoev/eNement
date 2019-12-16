@@ -38,6 +38,8 @@ namespace en {
 
 		virtual void draw(sf::RenderWindow& window, sf::Event& event) = 0;
 
+		virtual void cooldown_draw(sf::RenderWindow& window, const float& cooldown) = 0;
+
 
 		//Setters.
 		virtual void set_text(const std::string& new_text) = 0;
@@ -80,6 +82,8 @@ namespace en {
 		void draw(sf::RenderWindow& window) override;
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
 
 
 		void set_text(const std::string& new_text) override {}
@@ -131,6 +135,8 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
+
 
 		void set_text(const std::string& new_text) override;
 
@@ -176,6 +182,8 @@ namespace en {
 		void draw(sf::RenderWindow& window) override;
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
 
 
 		void set_text(const std::string& new_text) override {}
@@ -228,6 +236,8 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
+
 
 		void set_text(const std::string& new_text) override {}
 
@@ -278,6 +288,8 @@ namespace en {
 		void draw(sf::RenderWindow& window) override;
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
 
 
 		void set_text(const std::string& new_text) override {}
@@ -337,6 +349,8 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
+
 
 		void set_text(const std::string& new_text) override {}
 
@@ -388,6 +402,8 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
+
 
 		void set_text(const std::string& new_text) override {}
 
@@ -431,6 +447,8 @@ namespace en {
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
 
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
+
 
 		void set_text(const std::string& new_text) override {}
 
@@ -444,6 +462,52 @@ namespace en {
 		void play_sound() override {}
 
 		BarrierIndicator* clone() override { return nullptr; }
+	};
+
+	//====================================================================================================================================
+
+	class SpellIndicator : public Drawable {
+	private:
+		sf::Sprite* current_sprite{ nullptr };
+
+		sf::Sprite sprite;
+		sf::Sprite on_cooldown_sprite;
+
+	public:
+		SpellIndicator(const float x,
+					   const float y,
+					   const sf::Texture& texture,
+					   const sf::Texture& on_cooldown_texture);
+
+
+		SpellIndicator(const SpellIndicator&) = delete;
+		SpellIndicator(SpellIndicator&&) = delete;
+		SpellIndicator& operator=(const SpellIndicator&) = delete;
+		SpellIndicator& operator=(SpellIndicator&&) = delete;
+		~SpellIndicator() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override {}
+
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override {}
+
+
+		sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		SpellIndicator* clone() override { return nullptr; }
 	};
 
 	//====================================================================================================================================
@@ -476,6 +540,8 @@ namespace en {
 		void draw(sf::RenderWindow& window) override;
 
 		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+		void cooldown_draw(sf::RenderWindow& window, const float& cooldown) override {}
 
 
 		void set_text(const std::string& new_text) override {}
