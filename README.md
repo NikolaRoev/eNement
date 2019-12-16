@@ -1,2 +1,2 @@
 # eNement
-A 2D Bullet Hell RPG game.
+A 2D Bullet Hell RPG game. Built using SFML.
