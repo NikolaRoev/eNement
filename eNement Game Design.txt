@@ -1,0 +1,21 @@
+you have spells that you can change up before each encounter
+2 spell slots
+
+spells: /// fire / water / wind / earth /// ice / lightning / light / dark ///
+
+fire - more damage
+water - slow attack speed
+wind - faster speed and more aoe
+earth - stun //just reduce the enemy movespeed to 0 lul
+
+ice - slow speed
+lightning - next spell does more damage
+light - instant(fast) travel
+dark - defense shred
+
+
+Stats:
+barrier strength - more health orbs
+magic power - more damage
+spell mastery - better secondary effects
+magic proficiency - reduced cast time and reduced cooldown

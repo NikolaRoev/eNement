@@ -404,6 +404,49 @@ namespace en {
 	};
 
 	//====================================================================================================================================
+
+	class BarrierIndicator : public Drawable {
+	private:
+		std::array<sf::Sprite, 10> sprites{};
+
+		int* barriers_watcher{ nullptr };
+
+	public:
+		BarrierIndicator(const float x,
+						 const float y,
+						 const sf::Texture& texture,
+						 int& _barrier_watcher);
+
+
+		BarrierIndicator(const BarrierIndicator&) = delete;
+		BarrierIndicator(BarrierIndicator&&) = delete;
+		BarrierIndicator& operator=(const BarrierIndicator&) = delete;
+		BarrierIndicator& operator=(BarrierIndicator&&) = delete;
+		~BarrierIndicator() = default;
+
+
+		void resize(const float delta_x, const float delta_y) override;
+
+		void draw(sf::RenderWindow& window) override;
+
+		void draw(sf::RenderWindow& window, sf::Event& event) override;
+
+
+		void set_text(const std::string& new_text) override {}
+
+		void set_volume(const unsigned int volume) override {}
+
+
+		sf::Sprite* get_sprite() override { return nullptr; }
+
+		void move(const float delta_x, const float delta_y) override {}
+
+		void play_sound() override {}
+
+		BarrierIndicator* clone() override { return nullptr; }
+	};
+
+	//====================================================================================================================================
 	//====================================================================================================================================
 	//====================================================================================================================================
 

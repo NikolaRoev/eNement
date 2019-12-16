@@ -428,6 +428,44 @@ void en::PlusButton::set_volume(const unsigned int volume) {
 }
 
 //====================================================================================================================================
+
+en::BarrierIndicator::BarrierIndicator(const float x, const float y, const sf::Texture& texture, int& _barrier_watcher) {
+	float delta_x = x;
+	
+	for (auto& sprite : sprites) {
+		sprite.setTexture(texture);
+		sprite.setPosition(delta_x, y);
+
+		delta_x += texture.getSize().x;
+	}
+	
+
+	barriers_watcher = &_barrier_watcher;
+}
+
+void en::BarrierIndicator::resize(const float delta_x, const float delta_y) {
+	for (auto& sprite : sprites) {
+		sf::FloatRect current_position = sprite.getGlobalBounds();
+		sf::Vector2 current_scale = sprite.getScale();
+
+		sprite.setPosition((current_position.left * (1 / current_scale.x)) * delta_x, (current_position.top * (1 / current_scale.y)) * delta_y);
+		sprite.scale((1 / current_scale.x) * delta_x, (1 / current_scale.y) * delta_y);
+	}
+}
+
+void en::BarrierIndicator::draw(sf::RenderWindow& window) {
+	for (int i = 0; i < *barriers_watcher; ++i) {
+		window.draw(sprites[i]);
+	}
+}
+
+void en::BarrierIndicator::draw(sf::RenderWindow& window, sf::Event& event) {
+	for (int i = 0; i < *barriers_watcher; ++i) {
+		window.draw(sprites[i]);
+	}
+}
+
+//====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
 

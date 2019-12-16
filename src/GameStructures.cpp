@@ -96,7 +96,7 @@ void en::PlayerEntity::move(const unsigned int window_width, const unsigned int 
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		if (position.top < (window_height - position.height)) {
+		if (position.top < (window_height - position.height - 100.0f * delta_y)) {
 			float move_y = 1000 * delta_x * time.asSeconds();
 			drawable->move(0, move_y);
 		}

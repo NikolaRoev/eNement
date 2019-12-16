@@ -206,6 +206,10 @@ void en::Game::set_resources() {
 
 	core->manager->add_texture("assets/images/Fight/Fight_Background.png", "Fight Background");
 
+	core->manager->add_texture("assets/images/Fight/Fight_UI.png", "Fight UI");
+
+	core->manager->add_texture("assets/images/Fight/Fight_Barrier_Icon.png", "Fight Barrier Icon");
+
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Player.png", "Player");
@@ -1343,6 +1347,17 @@ void en::Game::set_drawables() {
 										   core->manager->get_texture("Fight Background"));
 	core->manager->add_drawable(fight_background, "Fight Background");
 
+	Drawable* fight_ui = new Image(0,
+								   980,
+								   core->manager->get_texture("Fight UI"));
+	core->manager->add_drawable(fight_ui, "Fight UI");
+
+	Drawable* fight_barrier_indicator = new BarrierIndicator(50,
+															 1000,
+															 core->manager->get_texture("Fight Barrier Icon"),
+															 player.barriers);
+	core->manager->add_drawable(fight_barrier_indicator, "Fight Barrier Icon");
+
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	Drawable* fight_player = new ObjectDrawable(960,
@@ -1984,6 +1999,12 @@ void en::Game::fight_loop() {
 		first_spell_entity->drawable,
 		second_spell_entity->drawable,
 	};
+
+	std::vector<Drawable*> ui_frame = {
+		core->manager->get_drawable("Fight UI"),
+
+		core->manager->get_drawable("Fight Barrier Icon"),
+	};
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -2007,7 +2028,7 @@ void en::Game::fight_loop() {
 			temp_enemy_spell_frame.push_back(each.drawable);
 		}
 
-		core->draw(static_frame, temp_enemy_spell_frame);
+		core->draw(static_frame, temp_enemy_spell_frame, ui_frame);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 

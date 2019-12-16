@@ -1,0 +1,22 @@
+For the cooldown bar use a mask with a hole and then move the sprite for each bar.
+
+Cooldown bar / spell icon - Watches its spell's cooldown variable and total cooldown time. Seen through a hole in the UI background;
+a sprite that moves to the right revealing another sprite.
+
+UI background - Static image.
+
+Barriers - Watches the player's health, drawing however many barriers they have left.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

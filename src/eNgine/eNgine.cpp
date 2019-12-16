@@ -321,12 +321,16 @@ void en::Core::draw(const std::vector<Drawable*>& static_frame) {
 	window.display();
 }
 
-void en::Core::draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame) {
+void en::Core::draw(const std::vector<Drawable*>& static_frame, const std::vector<Drawable*>& enemy_spell_frame, const std::vector<Drawable*>& ui_frame) {
 	for (const auto& each : static_frame) {
 		each->draw(window, event);
 	}
 
 	for (const auto& each : enemy_spell_frame) {
+		each->draw(window, event);
+	}
+
+	for (const auto& each : ui_frame) {
 		each->draw(window, event);
 	}
 
