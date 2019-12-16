@@ -2008,22 +2008,6 @@ void en::Game::fight_loop() {
 		for (auto& each : enemy_spell_frame) {
 			each.collision_detection(player, core->manager, core->width, core->height);
 		}
-
-		if (player.barriers < 0) {
-			game_state = LOSS;
-		}
-
-		if (enemy.health < 0.0f) {
-			++saves[saves_at].chapter;
-
-			if (saves[saves_at].chapter > 2) {
-				--saves[saves_at].chapter;
-				game_state = END;
-			}
-			else {
-				game_state = WIN;
-			}
-		}
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -2078,6 +2062,24 @@ void en::Game::fight_loop() {
 			}
 			else {
 				++it;
+			}
+		}
+		//------------------------------------------------------------------------------------------------------------------------------------
+
+		//Game checks.
+		if (player.barriers < 0) {
+			game_state = LOSS;
+		}
+
+		if (enemy.health < 0.0f) {
+			++saves[saves_at].chapter;
+
+			if (saves[saves_at].chapter > 2) {
+				--saves[saves_at].chapter;
+				game_state = END;
+			}
+			else {
+				game_state = WIN;
 			}
 		}
 		//------------------------------------------------------------------------------------------------------------------------------------
