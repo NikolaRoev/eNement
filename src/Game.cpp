@@ -9,6 +9,7 @@
 #include <functional>
 #include <ios>
 #include <vector>
+#include <string>
 
 
 #include <SFML/Audio.hpp>
@@ -221,6 +222,8 @@ void en::Game::set_resources() {
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Enemy1.png", "Enemy1");
+
+	core->manager->add_texture_for_pixel_perfect("assets/images/Fight/Enemy2.png", "Enemy2");
 
 	//------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1406,6 +1409,12 @@ void en::Game::set_drawables() {
 												 core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(fight_enemy_1, "Enemy1");
 
+	Drawable* fight_enemy_2 = new ObjectDrawable(960,
+												 100,
+												 core->manager->get_texture("Enemy2"),
+												 core->manager->get_sound_buffer("Test Sound"));
+	core->manager->add_drawable(fight_enemy_2, "Enemy2");
+
 	//------------------------------------------------------------------------------------------------------------------------------------
 
 	Drawable* fight_enemy_1_spell = new ObjectDrawable(0,
@@ -1518,9 +1527,10 @@ void en::Game::set_drawables() {
 										   800,
 										   core->manager->get_texture("Win Next Button"),
 										   core->manager->get_texture("Win Next Button HL"),
-										   [&application_state = application_state]()
+										   [&application_state = application_state, &game_state = game_state]()
 										   {
 										   	application_state = MAIN_MENU;
+											game_state = CHAPTER;
 										   },
 										   core->manager->get_sound_buffer("Test Sound"));
 	core->manager->add_drawable(end_next_button, "End Next Button");
@@ -2008,6 +2018,8 @@ void en::Game::fight_loop() {
 		for (auto& each : enemy_spell_frame) {
 			each.collision_detection(player, core->manager, core->width, core->height);
 		}
+
+		enemy.resolve_secondary_effects(core->time);
 		//------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -2072,11 +2084,15 @@ void en::Game::fight_loop() {
 		}
 
 		if (enemy.health < 0.0f) {
+			player.points += 5;
 			++saves[saves_at].chapter;
 
 			if (saves[saves_at].chapter > 2) {
-				--saves[saves_at].chapter;
+				std::string temp = "save" + std::to_string(saves_at) + ".bin";
+				saves[saves_at].chapter = 0;
+				std::remove(temp.c_str());
 				game_state = END;
+
 			}
 			else {
 				game_state = WIN;

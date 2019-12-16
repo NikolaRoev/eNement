@@ -33,6 +33,40 @@ void en::EnemySpell::collision_detection(PlayerEntity& player, ResourceManager* 
 }
 
 //====================================================================================================================================
+
+
+void en::EnemyEntity::resolve_secondary_effects(sf::Time time) {
+	static float timer = 1000.0f;
+
+	if (timer < 0.0f) {
+		if (fire_damage_tick > 0) {
+			--fire_damage_tick;
+			health -= fire_damage;
+			if (fire_damage_tick == 0) fire_damage = 0.0f;
+		}
+		if (cast_speed_slow_tick > 0) {
+			--cast_speed_slow_tick;
+			if (cast_speed_slow_tick == 0) cast_speed_slow = 0.0f;
+		}
+		if (move_speed_slow_tick > 0) {
+			--move_speed_slow_tick;
+			if (move_speed_slow_tick == 0) move_speed_slow = 0.0f;
+		}
+		if (defense_shred_tick > 0) {
+			--defense_shred_tick;
+			if (defense_shred_tick == 0) defense_shred = 0.0f;
+		}
+
+
+		timer = 1000.0f;
+	}
+	else {
+		timer -= time.asMilliseconds();
+	}
+}
+
+
+//====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
 //====================================================================================================================================
@@ -151,7 +185,17 @@ void en::FireSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
+		
+		
+		enemy.fire_damage_tick = 3;
+		enemy.fire_damage = 50.0f + (50.0f * (player.secondary_effect_increase/100));
 	}
 }
 
@@ -193,7 +237,16 @@ void en::WaterSpell::collision_detection(PlayerEntity& player, EnemyEntity& enem
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
+
+		enemy.cast_speed_slow_tick = 3;
+		enemy.cast_speed_slow = 1.0f * (player.secondary_effect_increase / 100);
 	}
 }
 
@@ -235,7 +288,13 @@ void en::WindSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
 	}
 }
 
@@ -277,7 +336,16 @@ void en::EarthSpell::collision_detection(PlayerEntity& player, EnemyEntity& enem
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
+
+		enemy.move_speed_slow_tick = 3;
+		enemy.move_speed_slow = 0.99999f;
 	}
 }
 
@@ -319,7 +387,16 @@ void en::IceSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy,
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
+
+		enemy.move_speed_slow_tick = 3;
+		enemy.move_speed_slow = 1.0f * (player.secondary_effect_increase / 100);
 	}
 }
 
@@ -361,7 +438,15 @@ void en::LightningSpell::collision_detection(PlayerEntity& player, EnemyEntity& 
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
+
+		enemy.bonus_damage = true;
 	}
 }
 
@@ -410,7 +495,13 @@ void en::LightSpell::collision_detection(PlayerEntity& player, EnemyEntity& enem
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
 	}
 }
 
@@ -452,7 +543,16 @@ void en::DarkSpell::collision_detection(PlayerEntity& player, EnemyEntity& enemy
 		drawable->play_sound();
 		enemy.drawable->play_sound();
 
-		//Do the effects here, like damage and stuff.
+		if (enemy.bonus_damage) {
+			enemy.health -= (player.damage / (enemy.defense - enemy.defense_shred)) * 2.0f;
+			enemy.bonus_damage = false;
+		}
+		else {
+			enemy.health -= player.damage / (enemy.defense - enemy.defense_shred);
+		}
+
+		enemy.defense_shred_tick = 3;
+		enemy.defense_shred = 1.0f * (player.secondary_effect_increase / 100);
 	}
 }
 

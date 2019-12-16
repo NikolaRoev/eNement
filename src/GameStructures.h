@@ -82,6 +82,22 @@ namespace en {
 		float movement_speed{ 1.0f };
 		float cast_speed{ 1.0f };
 
+
+		int fire_damage_tick{ 0 };
+		float fire_damage{ 0.0f };
+
+		int cast_speed_slow_tick{ 0 };
+		float cast_speed_slow{ 0.0f };
+
+		int move_speed_slow_tick{ 0 };
+		float move_speed_slow{ 0.0f };
+
+		bool bonus_damage{ false };
+
+		int defense_shred_tick{ 0 };
+		float defense_shred{ 0.0f };
+
+
 		Drawable* drawable{ nullptr };
 		Drawable* spell_drawable{ nullptr };
 
@@ -89,6 +105,8 @@ namespace en {
 		std::function<void(EnemyEntity& enemy, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time time)> move;
 
 		std::function<void(std::vector<EnemySpell>& enemy_spell_frame, EnemyEntity& enemy, sf::Time time)> generate;
+
+		void resolve_secondary_effects(sf::Time time);
 	};
 
 	//====================================================================================================================================
@@ -326,7 +344,7 @@ namespace en {
 			static int direction = 0;
 
 			if (direction == 0) {
-				float move_x = 1000 * delta_x * time.asSeconds() * enemy.movement_speed;
+				float move_x = 1000 * delta_x * time.asSeconds() * (enemy.movement_speed - enemy.move_speed_slow);
 				enemy.drawable->move(-move_x, 0);
 
 				if (enemy.drawable->get_sprite()->getPosition().x < (100.0f * delta_x)) {
@@ -335,7 +353,7 @@ namespace en {
 			}
 
 			if (direction == 1) {
-				float move_x = 1000 * delta_x * time.asSeconds() * enemy.movement_speed;
+				float move_x = 1000 * delta_x * time.asSeconds() * (enemy.movement_speed - enemy.move_speed_slow);
 				enemy.drawable->move(move_x, 0);
 
 				if (enemy.drawable->get_sprite()->getPosition().x > (1800.0f * delta_x)) {
@@ -375,7 +393,7 @@ namespace en {
 	inline std::vector<std::function<void(std::vector<EnemySpell>& enemy_spell_frame,
 										  EnemyEntity & enemy,
 										  sf::Time time)>> enemy_generate_functions{
-
+		//Chapter 1.
 		[](std::vector<EnemySpell>& enemy_spell_frame, EnemyEntity& enemy, sf::Time time)
 		{
 			auto move_function_for_enemy_spell = [](Drawable* drawable, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time _time)
@@ -395,7 +413,34 @@ namespace en {
 
 				enemy_spell_frame.push_back(std::move(temp_enemy_spell));
 
-				timer = 1000.0f;
+				timer = 1000.0f + 1000.0f * enemy.cast_speed_slow;
+			}
+			else {
+				timer -= time.asMilliseconds();
+			}
+		},
+
+		//Chapter 2.
+		[](std::vector<EnemySpell>& enemy_spell_frame, EnemyEntity& enemy, sf::Time time)
+		{
+			auto move_function_for_enemy_spell = [](Drawable* drawable, const unsigned int window_width, const unsigned int window_height, const float delta_x, const float delta_y, sf::Time _time)
+			{
+				float move_y = 1000 * delta_x * _time.asSeconds();
+				drawable->move(0, move_y);
+			};
+
+			static float timer = 1000.0f;
+
+			if (timer <= 0.0f) {
+				EnemySpell temp_enemy_spell;
+				temp_enemy_spell.drawable = enemy.spell_drawable->clone();
+				temp_enemy_spell.drawable->get_sprite()->setPosition(enemy.drawable->get_sprite()->getPosition());
+				temp_enemy_spell.move = move_function_for_enemy_spell;
+				temp_enemy_spell.drawable->play_sound();
+
+				enemy_spell_frame.push_back(std::move(temp_enemy_spell));
+
+				timer = 1000.0f + 1000.0f * enemy.cast_speed_slow;
 			}
 			else {
 				timer -= time.asMilliseconds();
